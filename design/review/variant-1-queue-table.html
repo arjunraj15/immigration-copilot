@@ -1,0 +1,160 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Review queue, Variant 1</title>
+<link rel="stylesheet" href="base.css">
+<style>
+.top{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin-bottom:10px}
+.top p{margin:2px 0 0;color:var(--muted)}
+.role{display:inline-flex;align-items:center;gap:8px}
+.role .tabs button{white-space:nowrap}
+.need{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;background:var(--warn-soft);color:var(--warn);border-radius:12px;padding:8px 12px;margin-bottom:10px;font-weight:600}
+.need b{font-size:18px}
+.need.calm{background:var(--soft);color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;cursor:pointer;font-weight:600}
+.chip:hover{background:var(--soft)}
+.chip[aria-pressed=true]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip span{font-weight:500;opacity:.8;margin-left:4px}
+.card.tbl{padding:4px 6px 8px;overflow:hidden}
+th button{all:unset;cursor:pointer;font:inherit;text-transform:inherit;letter-spacing:inherit;color:inherit;font-weight:700}
+th button:focus-visible{outline:3px solid #2f6fe0;border-radius:4px}
+tr.row.open>td{background:var(--soft);border-bottom-color:transparent}
+td.act{white-space:nowrap}
+.cid{font-weight:700}
+.sum{display:block;margin-top:2px}
+.flags{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.ev{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.ev .pill{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;font-weight:500;background:var(--soft);color:var(--ink);border:1px solid var(--line)}
+.who{display:block;font-size:12px;color:var(--muted)}
+.dec{margin-top:6px;font-size:13px}
+.dec.rej{border-left:3px solid var(--bad);padding-left:8px}
+.panel{padding:10px 6px 12px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px}
+.panel h3{margin-bottom:4px}
+.panel dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:3px 10px}
+.panel dt{color:var(--muted);font-size:12px;font-weight:600}.panel dd{margin:0}
+.panel .note{font-size:12.5px;color:var(--muted);margin:6px 0 0}
+.ctrl label.f{margin-top:8px}
+.btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.btn.rej{background:var(--bad)}.btn.sb{background:var(--warn)}
+.err{color:var(--bad);font-size:12.5px;font-weight:600;margin-top:4px}
+.ro{background:var(--soft);border-radius:10px;padding:8px 10px}
+.empty{text-align:center;padding:36px 12px;color:var(--muted)}
+.empty h2{color:var(--ink);margin-bottom:4px}
+.sim{font-size:12.5px;color:var(--muted);margin-top:8px}
+.sr{position:absolute;left:-9999px}
+@media (max-width:900px){
+ .panel{grid-template-columns:1fr}
+ table,tbody,tr,td{display:block;width:100%}
+ thead{display:none}
+ tr.row{border-bottom:1px solid var(--line);padding:6px 4px}
+ tr.row>td{border:0;padding:2px 6px}
+ tr.row>td[data-l]::before{content:attr(data-l) ": ";color:var(--muted);font-size:12px;font-weight:600}
+ tr.row.open>td{background:transparent}
+ tr.detail>td{padding:0 4px}
+ td.act{padding-top:6px}
+ td.act .btn{width:100%}
+}
+@media (max-width:480px){.role{width:100%}.chip{padding:5px 10px}}
+</style></head><body>
+<header class="app"><span class="logo">Case Desk</span><nav aria-label="Main"><a href="#">Home</a><a href="#">Cases</a><a href="#">Documents</a><a class="on" href="#" aria-current="page">Review</a></nav><span class="variant">Variant 1 · Queue table</span></header>
+<div class="wrap">
+ <div class="top">
+  <div><h1>Review</h1><p>Proposals that need a legal decision. Nothing is filed or sent from this app.</p></div>
+  <div class="role"><span class="muted" id="rl">Viewing as</span>
+   <div class="tabs" role="group" aria-labelledby="rl"><button type="button" id="r-att" aria-pressed="true" aria-selected="true">Attorney (LEGAL-01)</button><button type="button" id="r-ops" aria-pressed="false" aria-selected="false">Operations (OPS-01)</button></div></div>
+ </div>
+ <div id="need" class="need" role="status"></div>
+ <div class="chips" id="chips" role="group" aria-label="Filter by status"></div>
+ <div class="card tbl">
+  <table>
+   <thead><tr><th>Proposal</th><th>Case and client</th><th>Kind</th><th>What is proposed</th><th><button type="button" id="sort" aria-label="Sort by proposed time">Proposed</button> <span id="sortd" class="muted" aria-hidden="true"></span></th><th>Status</th><th><span class="sr">Action</span></th></tr></thead>
+   <tbody id="rows"></tbody>
+  </table>
+  <div id="empty" class="empty hide"><h2>Nothing is waiting for a decision</h2><p>New proposals from Operations show up here. Choose another filter to see decided items.</p><button type="button" class="btn quiet" id="seeall">Show all proposals</button></div>
+ </div>
+ <p class="sim">Simulated approval. A decision here is recorded in the audit trail only. Nothing is filed or sent. All dates are as of Oct 23, 2026.</p>
+</div>
+<div class="sr" aria-live="polite" id="live"></div>
+<script>
+const NOW="Oct 23, 2026";
+const KIND={dl:"Deadline activation",form:"Form export",pack:"Packet approval",msg:"Message approval",stage:"Case stage change"};
+const ST={pending:["Pending legal review","warn"],approved:["Approved","ok"],rejected:["Rejected","bad"],sent:["Sent back","ai"],committed:["Committed","mute"]};
+const FL={cal:"Calendar reminder differs",ident:"Identity mismatch",doc:"Missing or unusable document",draft:"DRAFT, NOT SENT. Unpredictable question",inj:"Suspicious PDF text flagged, not followed",rej:"Earlier rejection preserved",wrong:"Restricted. Wrong-client file hidden"};
+const CASES={"CASE-0001":"Mira Dhawan","CASE-0002":"Ayan Dhawan","CASE-0003":"Leena Dhawan","CASE-0004":"Kiran Dhawan","CASE-0005":"Nila Dhawan","CASE-0006":"Arun Suri","CASE-0007":"Devika Suri","CASE-0008":"Ishan Suri"};
+// ts is minutes-resolution sortable, t is the display time
+const P=[
+{id:"PR-0005",c:"CASE-0005",k:"pack",s:"pending",by:"OPS-01",ts:"2026-10-20T11:10",t:"Oct 20, 2026, 11:10 AM",sum:"Approve packet of 7 documents for the work status renewal review",fl:["inj"],ev:["UP-000026","UP-000030","UP-000032"],more:"Text in UP-000030 tells the reader to approve without review. It was flagged as untrusted and is not followed. Only a person can approve this packet."},
+{id:"PR-0007",c:"CASE-0007",k:"form",s:"rejected",by:"OPS-01",ts:"2026-10-19T15:25",t:"Oct 19, 2026, 3:25 PM",sum:"Export full_name = Devika Suri to the draft form",fl:[],ev:["PROFILE-CASE-0007-full_name","UP-000033"],rb:"LEGAL-01",rt:"Oct 20, 2026, 10:40 AM",rr:"Preserve human correction. Automated re-import may not overwrite.",more:""},
+{id:"PR-0003",c:"CASE-0003",k:"pack",s:"pending",by:"OPS-01",ts:"2026-10-21T14:05",t:"Oct 21, 2026, 2:05 PM",sum:"Approve packet of 6 documents, 1 required pay statement missing",fl:["doc"],ev:["UP-000014","UP-000017","EV-0003-2"],more:"UP-000017 could not be read (unusable scan). No September pay statement was found. The packet is incomplete as it stands."},
+{id:"PR-0001",c:"CASE-0001",k:"form",s:"pending",by:"OPS-01",ts:"2026-10-22T09:40",t:"Oct 22, 2026, 9:40 AM",sum:"Export full_name = Mira Dhawan to the draft form",fl:["ident"],ev:["PROFILE-CASE-0001-full_name","UP-000001","Z-0001"],more:"The field is held. Verified profile reads Mira Dhawan. Passport scan UP-000001 reads Mira Dhavan (machine reading, low certainty). Intake call Z-0001 says Mira Dawan. A person must decide which value is right.",hold:true},
+{id:"PR-0002",c:"CASE-0002",k:"dl",s:"pending",by:"OPS-01",ts:"2026-10-22T16:20",t:"Oct 22, 2026, 4:20 PM",sum:"Activate response deadline Oct 26, 2026 (verified request Oct 16, 2026 plus 10 days)",fl:["cal"],ev:["EV-0002-RFE","CAL-0002","SYN-DEADLINE-V1"],more:"Verified portal request on Oct 16, 2026 plus 10 calendar days gives Oct 26, 2026. Calendar reminder CAL-0002 says Oct 30, 2026 and is not verified. Never activate from the calendar alone."},
+{id:"PR-0004",c:"CASE-0004",k:"msg",s:"pending",by:"OPS-01",ts:"2026-10-22T16:30",t:"Oct 22, 2026, 4:30 PM",sum:"Reply to client question: When will my case be decided?",fl:["draft"],ev:["MSG-0004-3","EV-0004-2"],more:"Draft reply is DRAFT, NOT SENT. The client asks for a timing we cannot predict. The draft only restates the last portal status (Processing) and gives no estimate."},
+{id:"PR-0015",c:"CASE-0008",k:"pack",s:"pending",by:"OPS-01",ts:"2026-10-23T08:05",t:"Oct 23, 2026, 8:05 AM",sum:"Approve packet of 7 documents",fl:["wrong"],ev:["UP-000044","UP-000050"],more:"One file in the folder belongs to a different client. Its contents are hidden here. Only the case owner can open it.",restricted:true},
+{id:"PR-0006",c:"CASE-0006",k:"stage",s:"pending",by:"OPS-01",ts:"2026-10-23T07:50",t:"Oct 23, 2026, 7:50 AM",sum:"Move stage from Evidence review to Waiting for portal event",fl:[],ev:["EV-0006-2","UP-000036"],more:"Latest verified portal event is the Oct 15, 2026 status snapshot (Processing)."},
+{id:"PR-0008",c:"CASE-0007",k:"form",s:"pending",by:"OPS-01",ts:"2026-10-23T09:10",t:"Oct 23, 2026, 9:10 AM",sum:"Export full_name = Devika Suri again, no change from PR-0007",fl:["rej"],ev:["PROFILE-CASE-0007-full_name","PR-0007"],more:"PR-0007 was rejected by LEGAL-01 on Oct 20, 2026 with the reason shown in the rejected row. That decision is preserved and this re-proposal has no new evidence."},
+{id:"PR-0009",c:"CASE-0008",k:"dl",s:"approved",by:"OPS-01",ts:"2026-10-22T10:00",t:"Oct 22, 2026, 10:00 AM",sum:"Activate response deadline Oct 25, 2026 (verified request Oct 15, 2026 plus 10 days)",fl:[],ev:["EV-0008-RFE","SYN-DEADLINE-V1"],rb:"LEGAL-01",rt:"Oct 22, 2026, 3:20 PM",rr:"Matches the verified request date plus 10 days."},
+{id:"PR-0010",c:"CASE-0003",k:"msg",s:"sent",by:"OPS-01",ts:"2026-10-21T13:30",t:"Oct 21, 2026, 1:30 PM",sum:"Reply to client about missing pay statement (DRAFT, NOT SENT)",fl:["draft"],ev:["MSG-0003-2"],rb:"LEGAL-01",rt:"Oct 21, 2026, 5:00 PM",rr:"Remove the sentence about timing and propose again."},
+{id:"PR-0011",c:"CASE-0002",k:"pack",s:"committed",by:"OPS-01",ts:"2026-10-20T09:30",t:"Oct 20, 2026, 9:30 AM",sum:"Approve packet of 6 documents",fl:[],ev:["UP-000008","UP-000013"],rb:"LEGAL-01",rt:"Oct 21, 2026, 11:00 AM",rr:"All six documents are present and readable.",cb:"OPS-01",ct:"Oct 22, 2026, 1:10 PM"},
+{id:"PR-0012",c:"CASE-0004",k:"form",s:"rejected",by:"OPS-01",ts:"2026-10-21T10:15",t:"Oct 21, 2026, 10:15 AM",sum:"Export employer_name = Fictional Employer 4 LLC",fl:["rej"],ev:["PROFILE-CASE-0004-employer_name","UP-000022"],rb:"LEGAL-01",rt:"Oct 22, 2026, 9:05 AM",rr:"Employer name differs from the verified profile (Fictional Employer 04 LLC)."},
+{id:"PR-0013",c:"CASE-0005",k:"dl",s:"committed",by:"OPS-01",ts:"2026-10-19T10:00",t:"Oct 19, 2026, 10:00 AM",sum:"Activate response deadline Oct 22, 2026 (verified request Oct 12, 2026 plus 10 days)",fl:[],ev:["EV-0005-RFE","SYN-DEADLINE-V1"],rb:"LEGAL-01",rt:"Oct 19, 2026, 2:45 PM",rr:"Verified source and rule version match.",cb:"OPS-01",ct:"Oct 20, 2026, 8:30 AM"},
+{id:"PR-0014",c:"CASE-0006",k:"msg",s:"approved",by:"OPS-01",ts:"2026-10-22T11:40",t:"Oct 22, 2026, 11:40 AM",sum:"Reply asking client to upload the prior notice (DRAFT, NOT SENT)",fl:["draft"],ev:["MSG-0006-2"],rb:"LEGAL-01",rt:"Oct 22, 2026, 2:10 PM",rr:"Wording is a document request only."}
+];
+const CH=[["pending","Waiting for your decision"],["approved","Approved"],["sent","Sent back"],["rejected","Rejected"],["committed","Committed"],["all","All"]];
+let role="att",filter="pending",asc=true,openId=null;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pill=(c,t)=>`<span class="pill ${c}">${esc(t)}</span>`;
+const live=m=>{$("live").textContent=m};
+function count(f){return f==="all"?P.length:P.filter(p=>p.s===f).length}
+function chips(){$("chips").innerHTML=CH.map(([k,l])=>`<button type="button" class="chip" data-f="${k}" aria-pressed="${filter===k}">${l}<span>${count(k)}</span></button>`).join("");
+ $("chips").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{filter=b.dataset.f;openId=null;render();live("Showing "+b.firstChild.textContent)})}
+function need(){const n=count("pending"),e=$("need");
+ if(role==="att"){e.className="need"+(n?"":" calm");e.innerHTML=n?`<b>${n}</b> <span>proposals need your decision. Oldest first.</span>`:"<span>No proposals need your decision.</span>"}
+ else{const a=count("approved");e.className="need calm";e.innerHTML=`<span>Read only for Operations. ${count("pending")} waiting on legal.</span> ${a?`<a href="#apply" data-apply="all">Apply ${a} approved change${a>1?"s":""}</a>`:""}`;
+  const l=e.querySelector("[data-apply]");if(l)l.onclick=ev=>{ev.preventDefault();P.filter(p=>p.s==="approved").forEach(applyP);render();live("Approved changes applied")}}}
+function applyP(p){p.s="committed";p.cb="OPS-01";p.ct=NOW+", 9:30 AM"}
+function flags(p){return p.fl.length?`<div class="flags">${p.fl.map(f=>pill(f==="rej"?"bad":(f==="draft"?"ai":"warn"),FL[f])).join("")}</div>`:""}
+function decided(p){let h="";
+ if(p.rb){const lab={approved:"Approved",committed:"Approved",rejected:"Rejected",sent:"Sent back"}[p.s]||"Reviewed";
+  h+=`<div class="dec ${p.s==="rejected"?"rej":""}"><b>${lab} by ${p.rb}</b> on ${esc(p.rt)}<br>${p.s==="sent"?"Note":"Reason"}: ${esc(p.rr)}</div>`}
+ if(p.cb)h+=`<div class="dec">Committed by ${p.cb} on ${esc(p.ct)}</div>`;
+ return h}
+function detail(p){
+ const ev=`<div class="ev">${p.ev.map(e=>`<span class="pill">${esc(e)}</span>`).join("")}</div>`;
+ let ctrl;
+ if(p.s==="pending"&&role==="att")ctrl=`<div class="ctrl"><h3>Your decision</h3>
+  <label class="f" for="rs-${p.id}">Reason or note (required to reject or send back)</label><textarea id="rs-${p.id}" rows="3" placeholder="Why, in a sentence or two"></textarea>
+  <div class="err hide" id="er-${p.id}" role="alert">Add a reason before you reject or send back.</div>
+  <div class="btns"><button type="button" class="btn" data-a="approved" data-id="${p.id}">Approve</button><button type="button" class="btn rej" data-a="rejected" data-id="${p.id}">Reject</button><button type="button" class="btn sb" data-a="sent" data-id="${p.id}">Send back</button><button type="button" class="btn quiet" data-a="close" data-id="${p.id}">Close</button></div>
+  ${p.hold?'<p class="note">Approving does not choose a value. The field stays held until a person confirms it.</p>':""}</div>`;
+ else if(p.s==="pending")ctrl=`<div class="ctrl"><div class="ro"><b>Read only.</b> Only the attorney (LEGAL-01) can approve, reject or send back. You will see the decision here once it is made.</div><div class="btns"><button type="button" class="btn quiet" data-a="close" data-id="${p.id}">Close</button></div></div>`;
+ else if(p.s==="approved"&&role==="ops")ctrl=`<div class="ctrl"><div class="ro">Approved and ready to apply. Applying records the change in the audit trail. It does not file or send anything.</div><div class="btns"><a href="#apply" class="btn" data-a="apply" data-id="${p.id}" style="text-decoration:none">Apply approved changes</a><button type="button" class="btn quiet" data-a="close" data-id="${p.id}">Close</button></div></div>`;
+ else ctrl=`<div class="ctrl"><div class="ro">Decision is recorded. No further action here.</div><div class="btns"><button type="button" class="btn quiet" data-a="close" data-id="${p.id}">Close</button></div></div>`;
+ return `<div class="panel"><div><h3>${esc(KIND[p.k])} for ${p.c}</h3><dl><dt>Proposal</dt><dd class="mono">${p.id}</dd><dt>Proposed by</dt><dd>${p.by} (operations), ${esc(p.t)}</dd><dt>Value</dt><dd>${esc(p.sum)}</dd>${p.more?`<dt>Details</dt><dd>${esc(p.more)}</dd>`:""}</dl><div class="muted" style="font-size:12px;margin-top:8px">Evidence</div>${ev}${p.restricted?'<p class="note">Restricted matter. File names and contents of the other client are not shown.</p>':""}</div>${ctrl}</div>`}
+function actLabel(p){if(p.s==="pending")return role==="att"?"Review":"View";if(p.s==="approved"&&role==="ops")return "Apply";return "View"}
+function render(){chips();need();
+ let L=P.filter(p=>filter==="all"||p.s===filter).sort((a,b)=>asc?a.ts.localeCompare(b.ts):b.ts.localeCompare(a.ts));
+ $("sortd").textContent=asc?"oldest first":"newest first";
+ $("empty").classList.toggle("hide",L.length>0);
+ $("rows").innerHTML=L.map(p=>{const o=openId===p.id,[sl,sc]=ST[p.s];
+  const primary=actLabel(p);
+  return `<tr class="row ${o?"open":""}"><td data-l="Proposal" class="mono">${p.id}</td>
+  <td data-l="Case"><a href="#${p.c.toLowerCase()}" class="cid">${p.c}</a><span class="who" style="color:var(--ink)">${esc(CASES[p.c])}</span></td>
+  <td data-l="Kind">${esc(KIND[p.k])}</td>
+  <td data-l="Proposed"><span class="sum">${esc(p.sum)}</span>${flags(p)}<div class="ev">${p.ev.map(e=>`<span class="pill">${esc(e)}</span>`).join("")}</div>${decided(p)}</td>
+  <td data-l="By">${esc(p.t)}<span class="who">by ${p.by}</span></td>
+  <td data-l="Status">${pill(sc,sl)}</td>
+  <td class="act"><button type="button" class="btn ${p.s==="pending"&&role==="att"?"":"quiet"}" data-open="${p.id}" aria-expanded="${o}" aria-controls="d-${p.id}" aria-label="${primary} ${p.id}">${primary}</button></td></tr>`+
+  (o?`<tr class="detail" id="d-${p.id}"><td colspan="7">${detail(p)}</td></tr>`:"")}).join("");
+ document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{openId=openId===b.dataset.open?null:b.dataset.open;render();const f=document.querySelector("#d-"+b.dataset.open+" textarea,#d-"+b.dataset.open+" button,#d-"+b.dataset.open+" a");if(openId&&f)f.focus()});
+ document.querySelectorAll("[data-a]").forEach(b=>b.onclick=e=>{e.preventDefault();act(b.dataset.id,b.dataset.a)})}
+function act(id,a){const p=P.find(x=>x.id===id);
+ if(a==="close"){openId=null;render();return}
+ if(a==="apply"){applyP(p);openId=null;render();live(id+" committed");return}
+ const r=($("rs-"+id).value||"").trim();
+ if((a==="rejected"||a==="sent")&&!r){$("er-"+id).classList.remove("hide");$("rs-"+id).focus();return}
+ p.s=a;p.rb="LEGAL-01";p.rt=NOW+", 9:15 AM";p.rr=r||"Approved with no note.";openId=null;render();live(id+" "+ST[a][0])}
+$("r-att").onclick=()=>setRole("att");$("r-ops").onclick=()=>setRole("ops");
+function setRole(r){role=r;openId=null;[["r-att","att"],["r-ops","ops"]].forEach(([i,v])=>{$(i).setAttribute("aria-pressed",role===v);$(i).setAttribute("aria-selected",role===v)});render();live("Viewing as "+(r==="att"?"attorney":"operations"))}
+$("sort").onclick=()=>{asc=!asc;render()};
+$("seeall").onclick=()=>{filter="all";render()};
+render();
+</script></body></html>

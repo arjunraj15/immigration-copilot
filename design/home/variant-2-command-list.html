@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case Desk Home Variant 2 Command List</title>
+<style>
+:root{--hdr:#1c2a5a;--hdr2:#2a3a74;--accent:#1c2a5a;--accent-ink:#fff;--bg:#e8ecf4;--surface:#fff;--soft:#eef0f8;--ink:#14213a;--muted:#5c6884;--line:#d9deea;--teal:#0f7a63;--teal-soft:#e0f3ec;--red:#b3261e;--red-soft:#fbe4e2;--amber:#9a6200;--amber-soft:#fdf0d0;--violet:#5b3aa8;--violet-soft:#ece6f8;--blue:#1d4f9c;--blue-soft:#e3ecfa;--thh:34px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input{font:inherit;color:inherit}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid #2f6fe0;outline-offset:2px;border-radius:6px}
+header{background:var(--hdr);color:#fff;display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;padding:8px 16px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px}
+.logo i{width:30px;height:30px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;font:700 11px system-ui;font-style:normal}
+.variant{background:rgba(255,255,255,.14);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:600}
+.who{margin-left:auto;display:flex;gap:10px;align-items:center;font-size:13px}
+.av{width:30px;height:30px;border-radius:50%;background:#fff;color:#14213a;display:grid;place-items:center;font-weight:700;font-size:12px}
+.upload{background:#fff;color:var(--hdr);border:0;border-radius:10px;padding:7px 14px;font-weight:700;cursor:pointer}
+.upload:hover{background:var(--soft)}
+.wrap{max-width:1600px;margin:0 auto;padding:12px}
+h1{font-size:20px;margin:2px 0 8px}
+.asof{color:var(--muted);font-weight:400;font-size:13px;margin-left:8px}
+.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-bottom:10px}
+.kpi{background:var(--surface);border:2px solid transparent;border-radius:14px;padding:10px 14px;text-align:left;cursor:pointer;display:flex;flex-direction:column;box-shadow:0 1px 2px rgba(20,33,58,.06)}
+.kpi:hover{background:var(--soft)}
+.kpi[aria-pressed=true]{border-color:var(--accent);background:var(--soft)}
+.kpi b{font-size:26px;line-height:1.1}
+.kpi span{color:var(--muted);font-size:13px}
+.kpi.red b{color:var(--red)}.kpi.amber b{color:var(--amber)}.kpi.violet b{color:var(--violet)}
+.card{background:var(--surface);border-radius:14px;box-shadow:0 1px 2px rgba(20,33,58,.06)}
+.filters{padding:10px 12px;margin-bottom:10px;display:grid;gap:6px}
+.frow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.flabel{width:54px;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:2px 10px;cursor:pointer;font-size:13px;white-space:nowrap}
+.chip:hover{background:var(--soft)}
+.chip[aria-pressed=true]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip em{font-style:normal;opacity:.75;margin-left:4px;font-variant-numeric:tabular-nums}
+.chip.zero{opacity:.5}
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.search{flex:1 1 260px;max-width:420px;padding:7px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.toggle{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 12px 3px 4px;cursor:pointer}
+.toggle i{width:34px;height:20px;border-radius:999px;background:#9aa3b8;position:relative;display:block}
+.toggle i:after{content:"";position:absolute;left:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .12s}
+.toggle[aria-pressed=true] i{background:var(--teal)}
+.toggle[aria-pressed=true] i:after{left:16px}
+.sel{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:13px;font-weight:600}
+.sel select{border:1px solid var(--line);border-radius:10px;padding:6px 8px;background:var(--surface);color:var(--ink);font-size:13px}
+.hint{color:var(--muted);font-size:12px;margin-left:auto}
+kbd{font:600 11px ui-monospace,Menlo,monospace;background:var(--soft);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 5px}
+.main{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:12px;align-items:start}
+@media (max-width:1180px){.main{grid-template-columns:1fr}}
+.tablecard{padding:0}
+table{width:100%;border-collapse:separate;border-spacing:0}
+thead th{position:sticky;top:0;z-index:4;background:var(--soft);text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding:0;border-bottom:1px solid var(--line);height:34px}
+thead th:first-child{border-top-left-radius:14px}thead th:last-child{border-top-right-radius:14px}
+thead th button{all:unset;box-sizing:border-box;cursor:pointer;padding:8px 8px;display:block;width:100%;height:100%;font-weight:700}
+thead th button:focus-visible{outline:3px solid #2f6fe0;outline-offset:-3px}
+thead th[aria-sort=ascending] button:after{content:" \25B2";font-size:9px}
+thead th[aria-sort=descending] button:after{content:" \25BC";font-size:9px}
+thead th.na{padding:8px}
+tr.grp th{position:sticky;top:var(--thh);z-index:3;background:var(--surface);text-align:left;padding:0;border-bottom:1px solid var(--line);border-top:1px solid var(--line)}
+.gbtn{all:unset;box-sizing:border-box;display:flex;gap:8px;align-items:center;width:100%;padding:10px 14px;cursor:pointer;font-weight:700;font-size:13px;background:var(--soft)}
+.gbtn:focus-visible{outline:3px solid #2f6fe0;outline-offset:-3px}
+.gbtn .n{background:var(--ink);color:#fff;border-radius:999px;font-size:11px;padding:0 8px}
+.gbtn small{font-weight:400;color:var(--muted);font-size:12px}
+.gbtn .tw{margin-left:auto;color:var(--muted);font-weight:500;font-size:12px}
+td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+tr.row{cursor:default}
+tr.row:hover td{background:#f6f8fc}
+tr.row.cur td{background:var(--blue-soft);box-shadow:inset 0 0 0 0 #000}
+tr.row.cur td:first-child{box-shadow:inset 4px 0 0 #2f6fe0}
+tr.row:focus-visible{outline:3px solid #2f6fe0;outline-offset:-3px}
+.cid{display:flex;gap:4px;align-items:flex-start}
+.ex{all:unset;box-sizing:border-box;width:22px;height:22px;display:grid;place-items:center;cursor:pointer;border-radius:6px;color:var(--muted);flex:0 0 22px}
+.ex:hover{background:var(--soft)}.ex:focus-visible{outline:3px solid #2f6fe0}
+.ex:before{content:"\25B8";transition:transform .1s}
+.ex[aria-expanded=true]:before{transform:rotate(90deg)}
+.cid a{font:600 12px ui-monospace,Menlo,monospace;text-decoration:none;color:var(--ink)}
+.cid a:hover{text-decoration:underline}
+.sub{display:block;color:var(--muted);font-size:12px;line-height:1.3}
+.client{font-weight:600}
+.reasonline{display:block;color:var(--muted);font-size:13px;margin-top:4px;line-height:1.3}
+.pill{display:inline-block;border-radius:999px;padding:0 9px;font-size:11px;font-weight:700;letter-spacing:.03em;line-height:18px;white-space:nowrap;border:1px solid transparent}
+.p-red{background:var(--red-soft);color:var(--red);border-color:var(--red)}
+.p-amber{background:var(--amber-soft);color:var(--amber);border-color:var(--amber)}
+.p-violet{background:var(--violet-soft);color:var(--violet);border-color:var(--violet)}
+.p-teal{background:var(--teal-soft);color:var(--teal);border-color:var(--teal)}
+.p-blue{background:var(--blue-soft);color:var(--blue);border-color:var(--blue)}
+.p-grey{background:var(--soft);color:var(--muted);border-color:var(--line)}
+.p-solid{background:var(--ink);color:#fff}
+.due b{font-weight:600;white-space:nowrap}
+.due .over{color:var(--red);font-weight:700}
+.act{border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:8px;padding:3px 10px;cursor:pointer;font-size:13px;font-weight:600;white-space:nowrap}
+.act:hover{background:var(--hdr2)}
+.act.ghost{background:var(--surface);color:var(--accent)}
+.act.ghost:hover{background:var(--soft)}
+tr.det td{background:#fafbfe;padding:10px 12px 12px 36px}
+.dgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.dgrid h4{margin:0 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.ref{display:inline-block;font:600 12px ui-monospace,Menlo,monospace;background:var(--soft);border-radius:6px;padding:0 7px;margin:2px 4px 2px 0}
+.docs{display:flex;flex-wrap:wrap;gap:4px}
+.docs span.d{display:inline-flex;gap:4px;align-items:center;font-size:12px;border:1px solid var(--line);border-radius:8px;padding:1px 6px;background:var(--surface)}
+.dn{margin:0;font-size:13px}
+.hid{color:var(--muted);font-style:italic}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+.side{display:grid;gap:12px}
+.side h2{font-size:14px;margin:0;padding:10px 12px 6px}
+.side .sc{padding:0 12px 12px}
+ul.tl,ul.feed{list-style:none;margin:0;padding:0}
+.tl li{padding:6px 0;border-top:1px solid var(--line)}
+.tl li:first-child{border-top:0}
+.tlh{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:8px 0 0}
+.tlh.over{color:var(--red)}
+.tl .line{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.tl .line a{font:700 12px ui-monospace,Menlo,monospace;color:var(--ink)}
+.track{position:relative;height:5px;background:var(--line);border-radius:9px;margin-top:5px}
+.track i{position:absolute;top:-3px;width:11px;height:11px;border-radius:50%;background:var(--accent);border:2px solid #fff;margin-left:-5px}
+.track i.o{background:var(--red)}
+.feed li{padding:7px 0;border-top:1px solid var(--line);font-size:13px}
+.feed li:first-child{border-top:0}
+.feed .meta{color:var(--muted);font-size:12px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.feed code{font:700 11px ui-monospace,Menlo,monospace;background:var(--soft);border-radius:6px;padding:0 6px}
+.feed a{font:700 12px ui-monospace,Menlo,monospace;color:var(--ink)}
+.foot{color:var(--muted);font-size:12px;padding:10px 4px}
+#toast{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:10px;padding:8px 14px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .15s;z-index:20;max-width:92vw}
+#toast.on{opacity:1}
+.sr{position:absolute;left:-9999px}
+@media (max-width:900px){
+ .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpis .kpi:last-child{grid-column:1/-1}
+ .hint{display:none}
+ .flabel{width:100%}
+ table,tbody,tr,td{display:block}
+ thead{display:none}
+ tr.row{display:flex;flex-wrap:wrap;gap:4px 10px;padding:8px 10px;border-bottom:1px solid var(--line);align-items:flex-start}
+ tr.row td{border:0;padding:0}
+ tr.row td.c-reason{flex:1 1 100%;order:5}
+ tr.row td.c-act{order:6;margin-left:auto}
+ tr.row td.c-due{order:4}
+ tr.row.cur td,tr.row:hover td{background:none}
+ tr.row.cur{background:var(--blue-soft)}
+ tr.grp th{display:block;top:0}
+ tr.det td{padding:10px}
+ .dgrid{grid-template-columns:1fr}
+ .wrap{padding:8px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><i>CD</i>Case Desk</div>
+  <span class="variant" aria-label="Home page design variant 2 of 3, Command list">Home variant 2 of 3: Command list</span>
+  <button class="upload" id="upBtn" type="button">+ Upload a new case</button>
+  <div class="who"><span>Operations</span><span class="av" aria-hidden="true">O2</span><span>OPS-02</span></div>
+</header>
+
+<div class="wrap">
+  <h1>Case queue<span class="asof">As of Oct 23, 2026. All matters are restricted.</span></h1>
+
+  <div class="kpis" id="kpis" role="group" aria-label="Summary tiles. Each tile filters the table"></div>
+
+  <section class="card filters" aria-label="Filters">
+    <div class="tools">
+      <label class="sr" for="q">Search by name, case id or receipt number</label>
+      <input class="search" id="q" type="search" placeholder="Search name, case id or receipt number" autocomplete="off">
+      <button class="toggle" id="me" type="button" aria-pressed="true"><i></i>Just me (OPS-02)</button>
+      <label class="sel">Stage <select id="selStage"></select></label>
+      <label class="sel">Reason <select id="selReason"></select></label>
+      <button class="chip" id="clear" type="button">Clear filters</button>
+      <span class="hint"><kbd>/</kbd> search &nbsp; <kbd>j</kbd> <kbd>k</kbd> move &nbsp; <kbd>Enter</kbd> details</span>
+    </div>
+  </section>
+
+  <div class="main">
+    <section class="card tablecard" aria-label="All cases">
+      <table id="tbl">
+        <thead><tr id="thr"></tr></thead>
+        <tbody id="tb"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden>No cases match these filters.</div>
+    </section>
+
+    <aside class="side">
+      <section class="card" aria-labelledby="dlh">
+        <h2 id="dlh">Deadlines, next 14 days</h2>
+        <div class="sc" id="tl"></div>
+      </section>
+      <section class="card" aria-labelledby="rah">
+        <h2 id="rah">Recent activity</h2>
+        <div class="sc"><ul class="feed" id="feed"></ul></div>
+      </section>
+    </aside>
+  </div>
+  <p class="foot">All 100 matters are restricted. A candidate deadline is the verified portal evidence request date plus 10 calendar days. It is a proposal only and needs legal approval. Calendar entries never activate a deadline. Real case ids, names and event ids come from the starter kit. Situations on other cases are sample rows and nothing here is a real record. Ids that are not in the starter kit data are marked as sample.</p>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+var TODAY=Date.UTC(2026,9,23), ME="OPS-02";
+var MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function T(iso){var p=iso.split("-");return Date.UTC(+p[0],p[1]-1,+p[2]);}
+function fmt(t){var d=new Date(t);return MON[d.getUTCMonth()]+" "+d.getUTCDate()+", "+d.getUTCFullYear();}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+
+/* [case, name, stage, ops, legal, priority] from 01_cases.csv and 07_case_profiles.csv */
+var RAW=[["0001","Mira Dhawan","INTAKE_REVIEW","02","02","D"],["0002","Ayan Dhawan","EVIDENCE_REVIEW","03","03","D"],["0003","Leena Dhawan","WAITING_FOR_PORTAL_EVENT","04","01","D"],["0004","Kiran Dhawan","DOCUMENT_COLLECTION","05","02","D"],["0005","Nila Dhawan","INTAKE_REVIEW","01","03","D"],["0006","Arun Suri","EVIDENCE_REVIEW","02","01","D"],["0007","Devika Suri","WAITING_FOR_PORTAL_EVENT","03","02","D"],["0008","Ishan Suri","DOCUMENT_COLLECTION","04","03","D"],["0009","Riya Suri","INTAKE_REVIEW","05","01","N"],["0010","Rohan Batra","EVIDENCE_REVIEW","01","02","N"],["0011","Tara Batra","WAITING_FOR_PORTAL_EVENT","02","03","N"],["0012","Meera Batra","DOCUMENT_COLLECTION","03","01","N"],["0013","Naveen Batra","INTAKE_REVIEW","04","02","N"],["0014","Zoya Shah","EVIDENCE_REVIEW","05","03","N"],["0015","Nikhil Shah","WAITING_FOR_PORTAL_EVENT","01","01","N"],["0016","Anika Shah","DOCUMENT_COLLECTION","02","02","N"],["0017","Ravi Shah","INTAKE_REVIEW","03","03","N"],["0018","Shreya Shah","EVIDENCE_REVIEW","04","01","N"],["0019","Pavan Mehta","WAITING_FOR_PORTAL_EVENT","05","02","N"],["0020","Neha Mehta","DOCUMENT_COLLECTION","01","03","N"],["0021","Kabir Mehta","INTAKE_REVIEW","02","01","N"],["0022","Sanya Mehta","EVIDENCE_REVIEW","03","02","N"],["0023","Rehan Kapoor","WAITING_FOR_PORTAL_EVENT","04","03","N"],["0024","Priya Kapoor","DOCUMENT_COLLECTION","05","01","N"],["0025","Aditi Kapoor","INTAKE_REVIEW","01","02","N"],["0026","Omar Kapoor","EVIDENCE_REVIEW","02","03","N"],["0027","Sahil Bose","WAITING_FOR_PORTAL_EVENT","03","01","N"],["0028","Diya Bose","DOCUMENT_COLLECTION","04","02","N"],["0029","Vikram Bose","INTAKE_REVIEW","05","03","N"],["0030","Nina Bose","EVIDENCE_REVIEW","01","01","N"],["0031","Mira Ahuja-1","WAITING_FOR_PORTAL_EVENT","02","02","N"],["0032","Ayan Verma-1","DOCUMENT_COLLECTION","03","03","N"],["0033","Leena Shah-1","INTAKE_REVIEW","04","01","N"],["0034","Kiran Basu-1","EVIDENCE_REVIEW","05","02","N"],["0035","Nila Kaul-1","WAITING_FOR_PORTAL_EVENT","01","03","N"],["0036","Arun Bose-1","DOCUMENT_COLLECTION","02","01","N"],["0037","Devika Khan-1","INTAKE_REVIEW","03","02","N"],["0038","Ishan Nanda-1","EVIDENCE_REVIEW","04","03","N"],["0039","Riya Rao-1","WAITING_FOR_PORTAL_EVENT","05","01","N"],["0040","Rohan Anand-1","DOCUMENT_COLLECTION","01","02","N"],["0041","Tara Suri-1","INTAKE_REVIEW","02","03","N"],["0042","Meera Nair-1","EVIDENCE_REVIEW","03","01","N"],["0043","Naveen Raman-1","WAITING_FOR_PORTAL_EVENT","04","02","N"],["0044","Zoya Mehta-1","DOCUMENT_COLLECTION","05","03","N"],["0045","Nikhil Goyal-1","INTAKE_REVIEW","01","01","N"],["0046","Anika Singh-1","EVIDENCE_REVIEW","02","02","N"],["0047","Ravi Kohli-1","WAITING_FOR_PORTAL_EVENT","03","03","N"],["0048","Shreya Arora-1","DOCUMENT_COLLECTION","04","01","N"],["0049","Pavan Kumar-1","INTAKE_REVIEW","05","02","N"],["0050","Neha Sethi-1","EVIDENCE_REVIEW","01","03","N"],["0051","Kabir Jain-1","WAITING_FOR_PORTAL_EVENT","02","01","N"],["0052","Sanya Batra-1","DOCUMENT_COLLECTION","03","02","N"],["0053","Rehan Joshi-1","INTAKE_REVIEW","04","03","N"],["0054","Priya Sen-1","EVIDENCE_REVIEW","05","01","N"],["0055","Aditi Kapoor-1","WAITING_FOR_PORTAL_EVENT","01","02","N"],["0056","Omar Desai-1","DOCUMENT_COLLECTION","02","03","N"],["0057","Sahil Bedi-1","INTAKE_REVIEW","03","01","N"],["0058","Diya Malik-1","EVIDENCE_REVIEW","04","02","N"],["0059","Vikram Gupta-1","WAITING_FOR_PORTAL_EVENT","05","03","N"],["0060","Nina Dhawan-2","DOCUMENT_COLLECTION","01","01","N"],["0061","Mira Ahuja-2","INTAKE_REVIEW","02","02","N"],["0062","Ayan Verma-2","EVIDENCE_REVIEW","03","03","N"],["0063","Leena Shah-2","WAITING_FOR_PORTAL_EVENT","04","01","N"],["0064","Kiran Basu-2","DOCUMENT_COLLECTION","05","02","N"],["0065","Nila Kaul-2","INTAKE_REVIEW","01","03","N"],["0066","Arun Bose-2","EVIDENCE_REVIEW","02","01","N"],["0067","Devika Khan-2","WAITING_FOR_PORTAL_EVENT","03","02","N"],["0068","Ishan Nanda-2","DOCUMENT_COLLECTION","04","03","N"],["0069","Riya Rao-2","INTAKE_REVIEW","05","01","N"],["0070","Rohan Anand-2","EVIDENCE_REVIEW","01","02","N"],["0071","Tara Suri-2","WAITING_FOR_PORTAL_EVENT","02","03","N"],["0072","Meera Nair-2","DOCUMENT_COLLECTION","03","01","N"],["0073","Naveen Raman-2","INTAKE_REVIEW","04","02","N"],["0074","Zoya Mehta-2","EVIDENCE_REVIEW","05","03","N"],["0075","Nikhil Goyal-2","WAITING_FOR_PORTAL_EVENT","01","01","N"],["0076","Anika Singh-2","DOCUMENT_COLLECTION","02","02","N"],["0077","Ravi Kohli-2","INTAKE_REVIEW","03","03","N"],["0078","Shreya Arora-2","EVIDENCE_REVIEW","04","01","N"],["0079","Pavan Kumar-2","WAITING_FOR_PORTAL_EVENT","05","02","N"],["0080","Neha Sethi-2","DOCUMENT_COLLECTION","01","03","N"],["0081","Kabir Jain-2","INTAKE_REVIEW","02","01","N"],["0082","Sanya Batra-2","EVIDENCE_REVIEW","03","02","N"],["0083","Rehan Joshi-2","WAITING_FOR_PORTAL_EVENT","04","03","N"],["0084","Priya Sen-2","DOCUMENT_COLLECTION","05","01","N"],["0085","Aditi Kapoor-2","INTAKE_REVIEW","01","02","N"],["0086","Omar Desai-2","EVIDENCE_REVIEW","02","03","N"],["0087","Sahil Bedi-2","WAITING_FOR_PORTAL_EVENT","03","01","N"],["0088","Diya Malik-2","DOCUMENT_COLLECTION","04","02","N"],["0089","Vikram Gupta-2","INTAKE_REVIEW","05","03","N"],["0090","Nina Dhawan-3","EVIDENCE_REVIEW","01","01","N"],["0091","Mira Ahuja-3","WAITING_FOR_PORTAL_EVENT","02","02","N"],["0092","Ayan Verma-3","DOCUMENT_COLLECTION","03","03","N"],["0093","Leena Shah-3","INTAKE_REVIEW","04","01","N"],["0094","Kiran Basu-3","EVIDENCE_REVIEW","05","02","N"],["0095","Nila Kaul-3","WAITING_FOR_PORTAL_EVENT","01","03","N"],["0096","Arun Bose-3","DOCUMENT_COLLECTION","02","01","N"],["0097","Devika Khan-3","INTAKE_REVIEW","03","02","N"],["0098","Ishan Nanda-3","EVIDENCE_REVIEW","04","03","N"],["0099","Riya Rao-3","WAITING_FOR_PORTAL_EVENT","05","01","N"],["0100","Rohan Anand-3","DOCUMENT_COLLECTION","01","02","N"]];
+
+var STAGES=[["INTAKE_REVIEW","Intake review"],["DOCUMENT_COLLECTION","Document collection"],["EVIDENCE_REVIEW","Evidence review"],["READY_FOR_LEGAL_REVIEW","Ready for legal review"],["WAITING_FOR_PORTAL_EVENT","Waiting for portal event"],["ON_HOLD","On hold"]];
+var SL={};STAGES.forEach(function(s){SL[s[0]]=s[1];});
+/* group order is the order of urgency */
+var GROUPS=[["DUE","Deadlines due or overdue","Deadline proposals and overdue items"],["CONFLICT","Deadline conflict","Portal and calendar disagree"],["LEGAL","Waiting on legal","Approvals, rejections and attorney requests"],["QUAR","Quarantined or restricted files","Details hidden"],["SEC","Suspicious text in a PDF","Flagged and never followed"],["IDENT","Fact conflicts","Names, employer, dates, address"],["DOC","Document defects","Fix or replace the file"],["MISS","Missing required document","Ask the client"],["CLIENT","Client messages","Drafts and questions"],["OK","No open issue","Monitoring only"]];
+var GL={},GI={};GROUPS.forEach(function(g,i){GL[g[0]]=g[1];GI[g[0]]=i;});
+var DOCS=["Passport","Arrival record","Employer letter","August pay","September pay","Prior notice"];
+
+/* curated situations. keys: g group, l label, t tone, x reason line, a action, r portal request date, cal calendar date, ok approved, s sources, bad doc defects, st stage override, cm client message flag */
+var X={
+"0001":{g:"IDENT",l:"IDENTITY MISMATCH",t:"red",x:"Passport and verified profile say Mira Dhawan. Intake call notes say Mira Dawan.",a:"Review mismatch",s:["UP-000001","PROFILE-CASE-0001-full_name","Z-0001"],cf:"Spelling differs across three sources. The verified profile is not changed by the call notes."},
+"0002":{g:"LEGAL",l:"WAITING FOR LEGAL",t:"violet",x:"Evidence packet sent to LEGAL-03 and not yet reviewed.",a:"Open packet",s:["REV-REQ-0002","EV-0002-2"]},
+"0003":{g:"MISS",l:"MISSING PASSPORT",t:"amber",x:"No passport on file. Arrival record is present.",a:"Draft client request",bad:{"Passport":"MISSING"},s:["EV-0003-2"]},
+"0004":{g:"DOC",l:"PRIOR NOTICE, NO REFERENCE",t:"amber",x:"Prior notice has no reference number.",a:"Open documents",bad:{"Prior notice":"NO REFERENCE NO."},s:["UP-000019"]},
+"0005":{g:"LEGAL",l:"SENT BACK TO OPS",t:"violet",x:"LEGAL-03 sent the file back with a note to correct the pay stub dates.",a:"Open note",s:["REV-0005-1","UP-000025"],st:"ON_HOLD"},
+"0006":{g:"DOC",l:"DUPLICATE",t:"amber",x:"Second copy of the passport scan. Same hash as the first.",a:"Confirm duplicate",bad:{"Passport":"DUPLICATE"},s:["UP-000031","UP-000032"]},
+"0007":{g:"CLIENT",l:"UNSUPPORTED QUESTION",t:"blue",x:"Client asked about the result. Do not predict. Route to the attorney.",a:"Send to attorney",s:["MSG-0007-1"],cm:true},
+"0008":{g:"DOC",l:"DUPLICATE",t:"amber",x:"Employer letter uploaded twice.",a:"Confirm duplicate",bad:{"Employer letter":"DUPLICATE"},s:["UP-000043","UP-000044"]},
+"0009":{g:"CONFLICT",l:"DEADLINE CONFLICT",t:"red",x:"Portal request Oct 14, 2026. Calendar says Oct 27, 2026.",a:"Review conflict",r:"2026-10-14",cal:"2026-10-27",s:["EV-0009-RFE","EV-0009-CAL","RFE-SYN-0009","UP-000051"]},
+"0010":{g:"MISS",l:"MISSING EMPLOYER LETTER",t:"amber",x:"Employer letter not uploaded.",a:"Draft client request",bad:{"Employer letter":"MISSING"},s:["EV-0010-2"]},
+"0011":{g:"DUE",l:"PROPOSED, DUE SOON",t:"violet",x:"Proposed deadline waits for legal approval.",a:"Send to attorney",r:"2026-10-16",s:["EV-0011-RFE (sample)"]},
+"0012":{g:"LEGAL",l:"PROPOSAL REJECTED",t:"red",x:"LEGAL-01 rejected the name Ayan Sury and set Meera Batra on Oct 20, 2026. A rerun must not overwrite it.",a:"View reason",s:["REV-SEED-001","PROFILE-CASE-0012-full_name"],cf:"Rejected value Ayan Sury, corrected value Meera Batra. Preserve the human correction."},
+"0013":{g:"QUAR",l:"WRONG CLIENT",t:"red",x:"One file belongs to another client. It is quarantined and its details are hidden.",a:"Open quarantine",bad:{"Arrival record":"QUARANTINED"},hide:true,st:"ON_HOLD",s:["QUARANTINE-0013-1"]},
+"0014":{g:"SEC",l:"SUSPICIOUS TEXT",t:"red",x:"Instruction-like text inside a PDF was flagged. It was not followed.",a:"Review flag",bad:{"Prior notice":"FLAGGED"},s:["UP-000066","FLAG-0014-1"]},
+"0015":{g:"DUE",l:"OVERDUE",t:"red",x:"Portal request Oct 5, 2026 plus 10 days has passed. Proposal only.",a:"Escalate to attorney",r:"2026-10-05",s:["EV-0015-RFE","RFE-SYN-0015","UP-000086"]},
+"0016":{g:"CONFLICT",l:"CALENDAR SAYS APPROVED",t:"red",x:"Calendar note says APPROVED. The portal has no support.",a:"Review conflict",s:["CAL-APP-0016","EV-0016-FALSEAPP"],cf:"Calendar entry CAL-APP-0016 is a placeholder and not substantiated. No deadline is active."},
+"0017":{g:"MISS",l:"MISSING AUGUST PAY",t:"amber",x:"August pay record not on file.",a:"Draft client request",bad:{"August pay":"MISSING"},s:["EV-0017-2"]},
+"0018":{g:"MISS",l:"MISSING SEPTEMBER PAY",t:"amber",x:"September pay record not on file.",a:"Draft client request",bad:{"September pay":"MISSING"},s:["EV-0018-2"]},
+"0019":{g:"LEGAL",l:"DEADLINE ACTIVATION",t:"violet",x:"Waiting for LEGAL-02 to approve the proposed deadline.",a:"Open proposal",r:"2026-10-15",s:["EV-0019-RFE (sample)","PROP-0019-1"]},
+"0020":{g:"QUAR",l:"MIXED CLIENTS BY PAGE",t:"red",x:"Pages from two clients in one PDF. Quarantined and details hidden.",a:"Open quarantine",bad:{"Employer letter":"QUARANTINED"},hide:true,s:["QUARANTINE-0020-1"]},
+"0021":{g:"LEGAL",l:"FORM DRAFT AT LEGAL",t:"violet",x:"Form draft waits for LEGAL-01 review.",a:"Open draft",st:"READY_FOR_LEGAL_REVIEW",s:["DRAFT-0021-1","AI-0021-1"]},
+"0022":{g:"IDENT",l:"ADDRESS CONFLICT",t:"red",x:"Pay stub address differs from the verified profile.",a:"Review conflict",s:["UP-000106","PROFILE-CASE-0022-mailing_address"],cf:"Pay stub and profile addresses differ. Profile is human verified."},
+"0023":{g:"IDENT",l:"DATES CONFLICT",t:"red",x:"Employment start date differs between letter and intake call.",a:"Review conflict",s:["UP-000112","Z-0023","PROFILE-CASE-0023-employment_start_date"],cf:"Employer letter and call notes give different start dates."},
+"0024":{g:"DOC",l:"NEEDS TRANSLATION",t:"amber",x:"Prior notice is not in English.",a:"Order translation",bad:{"Prior notice":"NEEDS TRANSLATION"},s:["UP-000118"]},
+"0026":{g:"QUAR",l:"WRONG CLIENT",t:"red",x:"File shows another client name. Quarantined and details hidden.",a:"Open quarantine",bad:{"Passport":"QUARANTINED"},hide:true,s:["QUARANTINE-0026-1"]},
+"0027":{g:"DUE",l:"OVERDUE",t:"red",x:"Portal request Oct 9, 2026 plus 10 days has passed. Proposal only.",a:"Escalate to attorney",r:"2026-10-09",s:["EV-0027-RFE (sample)"]},
+"0030":{g:"DUE",l:"APPROVED, DUE SOON",t:"teal",x:"LEGAL-01 approved this deadline.",a:"Open deadline",r:"2026-10-14",ok:true,s:["EV-0030-RFE (sample)","REV-0030-1"]},
+"0031":{g:"SEC",l:"SUSPICIOUS TEXT",t:"red",x:"Hidden text in a PDF asks to skip review. Flagged and not followed.",a:"Review flag",bad:{"Employer letter":"FLAGGED"},s:["UP-000151","FLAG-0031-1"]},
+"0036":{g:"MISS",l:"MISSING ARRIVAL RECORD",t:"amber",x:"Arrival record not on file.",a:"Draft client request",bad:{"Arrival record":"MISSING"},s:["EV-0036-2"]},
+"0039":{g:"DUE",l:"DEADLINE PROPOSED",t:"violet",x:"Proposed deadline waits for legal approval.",a:"Send to attorney",r:"2026-10-20",s:["EV-0039-RFE (sample)"]},
+"0041":{g:"DOC",l:"STALE EMPLOYER LETTER",t:"amber",x:"Letter dated Aug 14, 2026. Required date is Sep 1, 2026 or later.",a:"Request new letter",bad:{"Employer letter":"STALE"},s:["UP-000201"]},
+"0046":{g:"CLIENT",l:"DRAFT, NOT SENT",t:"blue",x:"Client message is a draft and has not been sent.",a:"Review draft",s:["MSG-0046-1","AI-0046-1"],cm:true},
+"0047":{g:"DUE",l:"APPROVED",t:"teal",x:"Approved by LEGAL-03. Due next week.",a:"Open deadline",r:"2026-10-22",ok:true,s:["EV-0047-RFE (sample)"]},
+"0051":{g:"DOC",l:"UNREADABLE SCAN",t:"amber",x:"Scan is rotated and unreadable.",a:"Request rescan",bad:{"August pay":"UNREADABLE"},s:["UP-000251"]},
+"0056":{g:"LEGAL",l:"CLIENT MESSAGE AT LEGAL",t:"violet",x:"Client message DRAFT, NOT SENT. Waiting for LEGAL-03 review.",a:"Open message",st:"READY_FOR_LEGAL_REVIEW",s:["MSG-0056-1"],cm:true},
+"0059":{g:"DUE",l:"APPROVED",t:"teal",x:"Approved by LEGAL-03.",a:"Open deadline",r:"2026-10-18",ok:true,s:["EV-0059-RFE (sample)"]},
+"0061":{g:"DOC",l:"EXPIRED PASSPORT",t:"amber",x:"Passport expired on Sep 12, 2026.",a:"Request new passport",bad:{"Passport":"EXPIRED"},s:["UP-000301"]},
+"0066":{g:"IDENT",l:"EMPLOYER CONFLICT",t:"red",x:"Employer letter names a different employer than the verified profile.",a:"Review conflict",s:["UP-000331","PROFILE-CASE-0066-employer_name"],cf:"Letter and profile name different employers."},
+"0071":{g:"LEGAL",l:"INFO REQUESTED",t:"violet",x:"LEGAL-03 asked for the August pay record.",a:"Reply to attorney",s:["INFO-0071-1"]},
+"0081":{g:"DOC",l:"NEEDS TRANSLATION",t:"amber",x:"Employer letter is not in English.",a:"Order translation",bad:{"Employer letter":"NEEDS TRANSLATION"},s:["UP-000401"]},
+"0086":{g:"DOC",l:"WRONG PAY PERIOD",t:"amber",x:"Pay stub covers July. September is required.",a:"Request new file",bad:{"September pay":"WRONG PERIOD"},s:["UP-000431"]},
+"0091":{g:"DOC",l:"OLDER VERSION",t:"amber",x:"A newer employer letter supersedes this one.",a:"Confirm version",bad:{"Employer letter":"OLDER VERSION"},s:["UP-000451","UP-000452"]},
+"0096":{g:"DOC",l:"UNREADABLE SCAN",t:"amber",x:"Arrival record scan is unreadable.",a:"Request rescan",bad:{"Arrival record":"UNREADABLE"},s:["UP-000481"]}
+};
+
+var CASES=RAW.map(function(r){
+  var id="CASE-"+r[0], x=X[r[0]]||{};
+  var c={n:r[0],id:id,name:r[1],stage:x.st||r[2],ops:"OPS-"+r[3],legal:"LEGAL-"+r[4],pri:r[5]==="D"?"DEMO":"NORMAL",
+    g:x.g||"OK",l:x.l||"NO OPEN ISSUE",t:x.t||"grey",x:x.x||"Nothing waiting on a person.",a:x.a||"Open case",
+    r:x.r?T(x.r):null,cal:x.cal?T(x.cal):null,ok:!!x.ok,bad:x.bad||{},hide:!!x.hide,cm:!!x.cm,cf:x.cf||"",
+    s:x.s&&x.s.length?x.s:["EV-"+r[0]+"-2","PROFILE-"+id+"-full_name"],rcpt:"SYN-RCPT-00"+r[0]};
+  c.due=c.r?c.r+10*864e5:null;
+  c.days=c.due!==null?Math.round((c.due-TODAY)/864e5):null;
+  c.ds=null;
+  if(c.due!==null){c.ds=(c.cal&&c.cal!==c.due)?"CONFLICT":(c.days<0&&!c.ok?"OVERDUE":(c.ok?"APPROVED":"PROPOSED"));}
+  c.lg=(c.g==="LEGAL")||c.ds==="PROPOSED";
+  c.att=c.g!=="OK";
+  return c;
+});
+var BYID={};CASES.forEach(function(c){BYID[c.id]=c;});
+
+var ACT=[
+["9:42 AM","Oct 23","SYSTEM","UPLOAD_RECEIVED","CASE-0061","3 files received from the client portal.","UP-000301"],
+["9:31 AM","Oct 23","SYSTEM","DUPLICATE_DETECTED","CASE-0006","Passport scan matches an earlier upload.","UP-000032"],
+["9:20 AM","Oct 23","AI","DOCUMENT_READ","CASE-0066","Employer letter read. Employer name differs from profile.","UP-000331"],
+["9:05 AM","Oct 23","SYSTEM","QUARANTINED","CASE-0026","File from another client moved to quarantine. Details hidden.","QUARANTINE-0026-1"],
+["8:58 AM","Oct 23","SYSTEM","INJECTION_FLAGGED","CASE-0031","Instruction-like text found in a PDF and not followed.","FLAG-0031-1"],
+["8:40 AM","Oct 23","SYSTEM","CONFLICT_OPENED","CASE-0009","Portal date Oct 14, 2026 and calendar date Oct 27, 2026 differ.","EV-0009-CAL"],
+["5:12 PM","Oct 22","OPS-02","REVIEW_REQUESTED","CASE-0021","Form draft sent to LEGAL-01.","DRAFT-0021-1"],
+["4:48 PM","Oct 22","OPS-03","PROPOSE","CASE-0019","Deadline proposed from the portal request date.","EV-0019-RFE (sample)"],
+["3:30 PM","Oct 22","LEGAL-01","REVIEW_APPROVE","CASE-0030","Deadline approved.","REV-0030-1"],
+["2:15 PM","Oct 22","LEGAL-01","REVIEW_REJECT","CASE-0012","Name proposal rejected with a reason.","REV-SEED-001"],
+["1:50 PM","Oct 22","OPS-04","COMMIT","CASE-0047","Approved deadline saved to the case.","EV-0047-RFE (sample)"],
+["11:05 AM","Oct 22","AI","AI_DRAFT","CASE-0046","Client message drafted. DRAFT, NOT SENT.","MSG-0046-1"],
+["10:22 AM","Oct 22","LEGAL-03","INFO_REQUESTED","CASE-0071","Attorney asked for the August pay record.","INFO-0071-1"]
+];
+
+/* state */
+var S={kpi:"",stage:"",reason:"",owner:"",me:true,q:"",sort:"reason",dir:1,open:{},collapsed:{OK:1,CLIENT:1},cur:""};
+var COLS=[["case","Case and client"],["stage","Stage"],["reason","Reason"],["due","Due"],["act","Next action"]];
+
+function pass(c,skip){
+  if(S.me&&c.ops!==ME&&skip!=="me")return false;
+  if(S.q){var q=S.q.toLowerCase();if((c.id+" "+c.name+" "+c.rcpt+" "+(c.r?"RFE-SYN-00"+c.n:"")).toLowerCase().indexOf(q)<0)return false;}
+  if(S.kpi&&skip!=="kpi"&&!kpiTest(S.kpi,c))return false;
+  if(S.stage&&skip!=="stage"&&c.stage!==S.stage)return false;
+  if(S.reason&&skip!=="reason"&&c.g!==S.reason)return false;
+  if(S.owner&&skip!=="owner"&&c.ops!==S.owner)return false;
+  return true;
+}
+function kpiTest(k,c){
+  if(k==="attn")return c.att;
+  if(k==="soon")return c.due!==null&&c.days>=0&&c.days<=3;
+  if(k==="over")return c.ds==="OVERDUE";
+  if(k==="legal")return c.lg;
+  if(k==="quar")return c.g==="QUAR";
+  return true;
+}
+var KP=[["attn","Needs attention","amber"],["soon","Due in 3 days","amber"],["over","Overdue","red"],["legal","Waiting on legal","violet"],["quar","Quarantined","red"]];
+
+function buildKpis(){
+  var h="";
+  KP.forEach(function(k){
+    var n=0;CASES.forEach(function(c){if((!S.me||c.ops===ME)&&kpiTest(k[0],c))n++;});
+    h+='<button type="button" class="kpi '+k[2]+'" data-k="'+k[0]+'" aria-pressed="'+(S.kpi===k[0])+'"><b>'+n+'</b><span>'+k[1]+'</span></button>';
+  });
+  document.getElementById("kpis").innerHTML=h;
+}
+function chip(attr,val,label,n,on){
+  return '<button type="button" class="chip'+(n===0&&!on?" zero":"")+'" data-'+attr+'="'+val+'" aria-pressed="'+on+'">'+esc(label)+'<em>'+n+'</em></button>';
+}
+function buildChips(){
+  function fill(id,attr,items,key,label){
+    var counts={},tot=0;CASES.forEach(function(c){if(pass(c,attr)){var v=key(c);counts[v]=(counts[v]||0)+1;tot++;}});
+    var h='<option value="">All '+label+' ('+tot+')</option>';
+    items.forEach(function(i){h+='<option value="'+i[0]+'"'+(S[attr]===i[0]?" selected":"")+'>'+esc(i[1])+' ('+(counts[i[0]]||0)+')</option>';});
+    var el=document.getElementById(id);el.innerHTML=h;el.value=S[attr];
+  }
+  fill("selStage","stage",STAGES,function(c){return c.stage;},"stages");
+  fill("selReason","reason",GROUPS.map(function(g){return[g[0],g[1]];}),function(c){return c.g;},"reasons");
+}
+function buildHead(){
+  var h="";
+  COLS.forEach(function(c){
+    if(c[0]==="act"){h+='<th class="na" scope="col">'+c[1]+'</th>';return;}
+    var a=S.sort===c[0]?(S.dir>0?"ascending":"descending"):"none";
+    h+='<th scope="col" aria-sort="'+a+'"><button type="button" data-sort="'+c[0]+'">'+c[1]+'</button></th>';
+  });
+  document.getElementById("thr").innerHTML=h;
+}
+function cmp(a,b){
+  var k=S.sort,d=S.dir,v;
+  if(k==="due"){
+    if(a.due===null&&b.due===null)return a.id<b.id?-1:1;
+    if(a.due===null)return 1;if(b.due===null)return -1;
+    v=a.due-b.due;return v?v*d:(a.id<b.id?-1:1);
+  }
+  if(k==="reason"){
+    var ga=GI[a.g],gb=GI[b.g];
+    if(ga!==gb)return (ga-gb)*d;
+    if(a.due!==b.due){if(a.due===null)return 1;if(b.due===null)return -1;return a.due-b.due;}
+    return a.id<b.id?-1:1;
+  }
+  var f={case:function(c){return c.id;},client:function(c){return c.name;},stage:function(c){return c.stage;},owner:function(c){return c.ops;},pri:function(c){return c.pri;},reason:function(c){return c.l;}}[k];
+  var x=f(a),y=f(b);if(x===y)return a.id<b.id?-1:1;return (x<y?-1:1)*d;
+}
+function dueCell(c){
+  if(c.due===null)return '<span class="sub">None</span>';
+  var rel=c.days<0?'<span class="over">'+(-c.days)+(c.days===-1?" day":" days")+' overdue</span>':(c.days===0?"Today":"in "+c.days+(c.days===1?" day":" days"));
+  return '<b>'+fmt(c.due)+'</b><span class="sub">'+rel+'</span>';
+}
+function detail(c){
+  var src=c.hide?'<span class="hid">Details hidden for restricted matters.</span> ':'';
+  src+=c.s.map(function(s){return '<span class="ref">'+esc(s)+'</span>';}).join("");
+  var docs=DOCS.map(function(d){
+    var b=c.bad[d];
+    return '<span class="d">'+d+' <span class="pill p-'+(b?(b==="QUARANTINED"||b==="FLAGGED"||b==="EXPIRED"?"red":"amber"):"teal")+'">'+(b||"ON FILE")+'</span></span>';
+  }).join("");
+  var cf;
+  if(c.r){
+    cf='Portal request '+fmt(c.r)+' (EV-'+c.n+'-RFE) plus 10 days gives '+fmt(c.due)+'. State: '+c.ds+'. Legal approval required.';
+    if(c.cal)cf+=' Calendar entry shows '+fmt(c.cal)+' (EV-'+c.n+'-CAL). It differs and never activates a deadline.';
+  }else cf=c.cf||"No verified portal evidence request. No deadline proposed.";
+  if(c.r&&c.cf)cf+=" "+c.cf;
+  var note=c.cm?'<p class="dn"><span class="pill p-blue">DRAFT, NOT SENT</span> Client messages need review before sending.</p>':'';
+  return '<tr class="det" id="det-'+c.n+'"><td colspan="5"><div class="dgrid"><div><h4>Sources</h4>'+src+'</div><div><h4>Documents status</h4><div class="docs">'+docs+'</div></div><div><h4>Deadline conflict</h4><p class="dn">'+esc(cf)+'</p>'+note+'<p class="dn" style="margin-top:6px"><span class="pill p-grey">RESTRICTED</span> Legal reviewer '+c.legal+'. Receipt '+c.rcpt+'.</p></div></div></td></tr>';
+}
+function row(c){
+  var o=!!S.open[c.id], cur=S.cur===c.id;
+  var pri=c.pri==="DEMO"?' <span class="pill p-blue">DEMO</span>':'';
+  return '<tr class="row'+(cur?" cur":"")+'" id="r-'+c.n+'" data-id="'+c.id+'" tabindex="'+(cur?0:-1)+'">'+
+   '<td class="c-case"><div class="cid"><button type="button" class="ex" data-ex="'+c.id+'" aria-expanded="'+o+'" aria-controls="det-'+c.n+'" aria-label="Details for '+c.id+' '+esc(c.name)+'"></button><div><span class="client">'+esc(c.name)+'</span>'+pri+'<span class="sub"><a href="#'+c.id+'" data-open="'+c.id+'">'+c.id+'</a> &middot; '+c.ops+', Legal '+c.legal.slice(6)+'</span></div></div></td>'+
+   '<td class="c-stage">'+SL[c.stage]+'</td>'+
+   '<td class="c-reason"><span class="pill p-'+c.t+'">'+esc(c.l)+'</span><span class="reasonline">'+esc(c.x)+'</span></td>'+
+   '<td class="c-due due">'+dueCell(c)+'</td>'+
+   '<td class="c-act"><button type="button" class="act'+(c.g==="OK"?" ghost":"")+'" data-act="'+c.id+'">'+esc(c.a)+'</button></td></tr>'+(o?detail(c):"");
+}
+function render(){
+  buildKpis();buildChips();buildHead();
+  var list=CASES.filter(function(c){return pass(c);});
+  var h="",vis=[];
+  list.sort(cmp).forEach(function(c){h+=row(c);vis.push(c.id);});
+  document.getElementById("tb").innerHTML=h;
+  document.getElementById("empty").hidden=list.length>0;
+  if(S.cur&&vis.indexOf(S.cur)<0)S.cur="";
+  var th=document.querySelector("thead th");if(th)document.documentElement.style.setProperty("--thh",th.offsetHeight+"px");
+  buildTimeline();
+}
+function buildTimeline(){
+  var items=CASES.filter(function(c){return c.due!==null&&c.days<=13&&(!S.me||c.ops===ME||true);}).sort(function(a,b){return a.due-b.due;});
+  var over=items.filter(function(c){return c.days<0;}),up=items.filter(function(c){return c.days>=0;});
+  function li(c){
+    var tone={PROPOSED:"violet",APPROVED:"teal",CONFLICT:"red",OVERDUE:"red"}[c.ds];
+    var pos=Math.max(0,Math.min(13,c.days))/13*100;
+    return '<li><div class="line"><b>'+fmt(c.due).slice(0,6)+'</b><a href="#'+c.id+'" data-open="'+c.id+'">'+c.id+'</a><span class="pill p-'+tone+'">'+c.ds+'</span></div><span class="sub">'+esc(c.name)+' - '+(c.days<0?(-c.days)+" days overdue":(c.days===0?"today":"in "+c.days+(c.days===1?" day":" days")))+'</span><div class="track" aria-hidden="true"><i class="'+(c.days<0?"o":"")+'" style="left:'+pos+'%"></i></div></li>';
+  }
+  var h='';
+  if(over.length)h+='<p class="tlh over">Overdue</p><ul class="tl">'+over.map(li).join("")+'</ul>';
+  h+='<p class="tlh">Oct 23 to Nov 5, 2026</p><ul class="tl">'+(up.length?up.map(li).join(""):'<li class="sub">Nothing due.</li>')+'</ul><p class="sub" style="margin:6px 0 0">Proposals only. Legal approval required. Calendar entries never activate a deadline.</p>';
+  document.getElementById("tl").innerHTML=h;
+}
+function buildFeed(){
+  document.getElementById("feed").innerHTML=ACT.map(function(a){
+    return '<li><div class="meta"><span>'+a[1]+', '+a[0]+'</span><span>'+a[2]+'</span><code>'+a[3]+'</code></div><div><a href="#'+a[4]+'" data-open="'+a[4]+'">'+a[4]+'</a> '+esc(a[5])+' <span class="ref">'+esc(a[6])+'</span></div></li>';
+  }).join("");
+}
+
+/* helpers */
+var tt;
+function toast(m){var t=document.getElementById("toast");t.textContent=m;t.className="on";clearTimeout(tt);tt=setTimeout(function(){t.className="";},2400);}
+function reveal(id){
+  var c=BYID[id];if(!c)return;
+  if(S.me&&c.ops!==ME)S.me=false;
+  if(S.stage&&c.stage!==S.stage)S.stage="";
+  if(S.reason&&c.g!==S.reason)S.reason="";
+  if(S.owner&&c.ops!==S.owner)S.owner="";
+  if(S.kpi&&!kpiTest(S.kpi,c))S.kpi="";
+  if(S.q&&(c.id+" "+c.name+" "+c.rcpt).toLowerCase().indexOf(S.q.toLowerCase())<0){S.q="";document.getElementById("q").value="";}
+  S.collapsed[c.g]=0;
+  S.open[id]=true;S.cur=id;syncMe();render();focusCur();
+}
+function focusCur(){var e=S.cur&&document.getElementById("r-"+S.cur.slice(5));if(e){e.focus({preventScroll:false});}}
+function syncMe(){document.getElementById("me").setAttribute("aria-pressed",S.me);}
+function move(d){
+  var rows=[].slice.call(document.querySelectorAll("tr.row"));if(!rows.length)return;
+  var i=rows.findIndex(function(r){return r.dataset.id===S.cur;});
+  i=i<0?(d>0?0:rows.length-1):Math.max(0,Math.min(rows.length-1,i+d));
+  rows.forEach(function(r){r.classList.remove("cur");r.tabIndex=-1;});
+  var r=rows[i];S.cur=r.dataset.id;r.classList.add("cur");r.tabIndex=0;r.focus();
+  r.scrollIntoView({block:"nearest"});
+}
+function toggle(id){
+  if(S.open[id])delete S.open[id];else S.open[id]=true;
+  S.cur=id;render();focusCur();
+}
+
+/* events */
+document.addEventListener("click",function(e){
+  var b;
+  if((b=e.target.closest("[data-k]"))){S.kpi=S.kpi===b.dataset.k?"":b.dataset.k;render();return;}
+  if((b=e.target.closest("[data-stage]"))){S.stage=b.dataset.stage;render();return;}
+  if((b=e.target.closest("[data-reason]"))){S.reason=b.dataset.reason;render();return;}
+  if((b=e.target.closest("[data-owner]"))){S.owner=b.dataset.owner;if(S.owner){S.me=false;syncMe();}render();return;}
+  if((b=e.target.closest("[data-sort]"))){var k=b.dataset.sort;if(S.sort===k)S.dir=-S.dir;else{S.sort=k;S.dir=1;}render();return;}
+  if((b=e.target.closest("[data-g]"))){var g=b.dataset.g;S.collapsed[g]=S.collapsed[g]?0:1;render();return;}
+  if((b=e.target.closest("[data-ex]"))){toggle(b.dataset.ex);return;}
+  if((b=e.target.closest("[data-act]"))){var c=BYID[b.dataset.act];toast(c.a+": "+c.id+" "+c.name+" (prototype, nothing is sent)");return;}
+  if((b=e.target.closest("[data-open]"))){e.preventDefault();reveal(b.dataset.open);return;}
+  if(e.target.closest("tr.row")&&!e.target.closest("button,a")){var r=e.target.closest("tr.row");S.cur=r.dataset.id;document.querySelectorAll("tr.row").forEach(function(x){x.classList.toggle("cur",x===r);x.tabIndex=x===r?0:-1;});}
+});
+document.getElementById("me").addEventListener("click",function(){S.me=!S.me;syncMe();render();});
+document.getElementById("selStage").addEventListener("change",function(e){S.stage=e.target.value;render();});
+document.getElementById("selReason").addEventListener("change",function(e){S.reason=e.target.value;render();});
+document.getElementById("clear").addEventListener("click",function(){S.kpi=S.stage=S.reason=S.owner=S.q="";S.me=true;document.getElementById("q").value="";syncMe();render();});
+document.getElementById("q").addEventListener("input",function(e){S.q=e.target.value.trim();render();});
+document.getElementById("upBtn").addEventListener("click",function(){toast("Opens the upload wizard (prototype)");});
+document.addEventListener("keydown",function(e){
+  var t=e.target,typing=t&&(t.tagName==="INPUT"||t.tagName==="TEXTAREA");
+  if(e.key==="Escape"&&typing){t.blur();return;}
+  if(typing||e.metaKey||e.ctrlKey||e.altKey)return;
+  if(e.key==="/"){e.preventDefault();var q=document.getElementById("q");q.focus();q.select();return;}
+  if(e.key==="j"){e.preventDefault();move(1);return;}
+  if(e.key==="k"){e.preventDefault();move(-1);return;}
+  if(e.key==="Enter"&&t.tagName==="TR"&&t.classList.contains("row")){e.preventDefault();toggle(t.dataset.id);}
+});
+buildFeed();render();
+})();
+</script>
+</body>
+</html>

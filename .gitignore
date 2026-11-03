@@ -1,0 +1,36 @@
+# Secrets and local config
+.env
+.env.*
+!.env.example
+
+# Local starter kit data (mounted, never committed)
+data/*
+!data/.gitkeep
+project_requirmnt/
+
+# Uploads and caches
+backend/storage/
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+
+# Node
+node_modules/
+dist/
+.vite/
+*.tsbuildinfo
+
+# Editors and OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db

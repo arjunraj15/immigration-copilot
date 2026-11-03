@@ -1,0 +1,14 @@
+{
+  "note": "Document sources this app adds to the form field map of the starter kit, so a supporting document is cross-checked against the passport and the profile. The kit names no document for the mailing address. Judges' own field map is still read first.",
+  "source_candidates": {
+    "applicant.mailing_address": [
+      "ADDRESS_PROOF.Address"
+    ],
+    "applicant.legal_name": [
+      "ADDRESS_PROOF.Applicant"
+    ],
+    "applicant.date_of_birth": [
+      "ADDRESS_PROOF.Date of Birth"
+    ]
+  }
+}

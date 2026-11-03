@@ -1,0 +1,13 @@
+{
+  "note": "Required documents this app could add to the starter kit's document rules. The kit makes six categories mandatory and none for the mailing address, and the hackathon rules are followed, so this is off. An address proof is still read and counts as supporting evidence when one is uploaded. Set enabled to true to make it a seventh required document.",
+  "enabled": false,
+  "required_document_categories": [
+    {
+      "category": "ADDRESS_PROOF",
+      "tests": [
+        "legible",
+        "name_consistent"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Review Variant 3 Grouped by case</title>
+<link rel="stylesheet" href="base.css">
+<style>
+.top{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin-bottom:10px}
+.role{display:inline-flex;align-items:center;gap:8px}
+.role .tabs button{padding:4px 12px}
+.sim{background:var(--soft);border-radius:10px;padding:6px 12px;color:var(--muted);font-size:13px;margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;cursor:pointer;font-weight:600}
+.chip:hover{background:var(--soft)}
+.chip[aria-pressed=true]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip b{font-weight:800;margin-left:4px}
+.sec{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:14px 2px 6px}
+.case{margin-bottom:10px;overflow:hidden}
+.case.r4{border-left:5px solid var(--warn)}.case.r3{border-left:5px solid var(--bad)}.case.r2{border-left:5px solid var(--ai)}
+.chead{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;padding:10px 14px;background:var(--soft)}
+.chead a{font-weight:700;color:var(--accent)}
+.chead .why{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto}
+.prop{padding:10px 14px;border-top:1px solid var(--line)}
+.prow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:start}
+.pmeta{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+.pid{font-weight:700}
+.sum{margin:4px 0}
+.chipsrow{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.ev{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:0 6px}
+.flag{display:inline-block;border-radius:6px;padding:1px 8px;font-size:12px;font-weight:600;border:1px solid currentColor}
+.flag.bad{color:var(--bad)}.flag.warn{color:var(--warn)}.flag.ai{color:var(--ai)}.flag.mute{color:var(--muted)}
+.decided{margin-top:4px;font-size:13px}
+.decided q{quotes:none;font-style:normal}
+.panel{margin-top:8px;padding:10px;background:var(--soft);border-radius:10px}
+.panel textarea{font-family:inherit;font-size:14px}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.err{color:var(--bad);font-weight:600;font-size:13px;min-height:18px}
+details.done{margin-top:14px}
+details.done>summary{cursor:pointer;font-weight:700;padding:8px 12px;background:var(--surface);border-radius:12px;list-style:none}
+details.done>summary::-webkit-details-marker{display:none}
+details.done>summary::before{content:"\25B8  "}
+details.done[open]>summary::before{content:"\25BE  "}
+details.done[open]>summary{margin-bottom:8px}
+.empty{padding:28px;text-align:center}
+.empty h2{margin-bottom:4px}
+.link{color:var(--accent);font-weight:600}
+.legend{font-size:12px;color:var(--muted);margin-top:14px}
+@media (max-width:760px){.prow{grid-template-columns:1fr}.chead .why{margin-left:0}.acts .btn{flex:1 1 100%}.top{align-items:flex-start}}
+</style></head><body>
+<header class="app"><span class="logo">Case Desk</span><nav aria-label="Main"><a href="#">Home</a><a href="#">Cases</a><a href="#">Documents</a><a class="on" href="#" aria-current="page">Review</a></nav><span class="variant">Variant 3 · Grouped by case</span></header>
+<div class="wrap">
+ <div class="top">
+  <div><h1>Review</h1><div class="muted" id="sub">Proposals that need a legal decision, grouped by case. Risk first. As of Oct 23, 2026.</div></div>
+  <div class="role" role="group" aria-label="Viewing as"><span class="muted">Viewing as</span>
+   <div class="tabs"><button type="button" id="r-att" aria-pressed="true" aria-selected="true">Attorney (LEGAL-01)</button><button type="button" id="r-ops" aria-pressed="false" aria-selected="false">Operations (OPS-01)</button></div></div>
+ </div>
+ <div class="sim" role="note">Simulated approval. Nothing is filed or sent from this app. Client messages stay DRAFT, NOT SENT.</div>
+ <div class="chips" id="chips" role="group" aria-label="Filter by status"></div>
+ <div id="opsnote" class="sim hide" role="note">Read only for Operations. Only the attorney can approve, reject or send back. <a class="link" href="#" id="applyAll">Apply approved changes</a></div>
+ <div id="live" class="muted" role="status" aria-live="polite" style="min-height:18px"></div>
+ <div id="main"></div>
+ <details class="done" id="done"><summary id="donesum">Already decided</summary><div id="donebody"></div></details>
+ <div class="legend">Dates are shown as of Oct 23, 2026. Flags mark items that need care and never carry a recommendation. Instructions found inside PDFs are flagged and never followed.</div>
+</div>
+<script>
+// status keys: pending, approved, sent, rejected, committed
+const CASES={
+ "CASE-0001":{n:"Mira Dhawan"},"CASE-0002":{n:"Ayan Dhawan"},"CASE-0003":{n:"Leena Dhawan"},"CASE-0004":{n:"Kiran Dhawan"},
+ "CASE-0005":{n:"Nila Dhawan"},"CASE-0006":{n:"Arun Suri"},"CASE-0007":{n:"Devika Suri"},"CASE-0008":{n:"Ishan Suri"}};
+const KINDS={deadline:"Deadline activation",form:"Form export",packet:"Packet approval",message:"Message approval",stage:"Case stage change"};
+const ST={pending:["Pending legal review","warn"],approved:["Approved","ok"],sent:["Sent back","ai"],rejected:["Rejected","bad"],committed:["Committed","ok"]};
+const FL={
+ conflict:["Date differs from calendar","warn"],identity:["Identity mismatch holds a field","bad"],packet:["Missing or unusable document","warn"],
+ draft:["DRAFT, NOT SENT. Answers a question we cannot predict","ai"],pdf:["Suspicious text in PDF, flagged not followed","bad"],
+ rej:["Earlier rejection preserved","mute"],restricted:["Restricted. Wrong-client file, details hidden","bad"]};
+let P=[
+ {id:"PR-0002",c:"CASE-0003",k:"deadline",s:"pending",by:"OPS-01",at:"Oct 23, 2026, 9:05 AM",f:["conflict"],
+  sum:"Activate due date Oct 26, 2026. Verified portal request received Oct 16, 2026 plus 10 days (rule SYN-DEADLINE-V1). Calendar reminder CAL-0003 shows Oct 30, 2026 and is unverified.",
+  ev:["EV-0003-RFE","CAL-0003","SYN-RCPT-00003"]},
+ {id:"PR-0003",c:"CASE-0007",k:"deadline",s:"pending",by:"OPS-01",at:"Oct 23, 2026, 9:40 AM",f:["conflict"],
+  sum:"Activate due date Oct 22, 2026. Verified portal request received Oct 12, 2026 plus 10 days. That date is before today. Calendar reminder CAL-0007 shows Oct 30, 2026 and is unverified.",
+  ev:["EV-0007-RFE","CAL-0007","SYN-RCPT-00007"]},
+ {id:"PR-0001",c:"CASE-0001",k:"form",s:"pending",by:"OPS-01",at:"Oct 22, 2026, 4:10 PM",f:["identity","rej"],
+  sum:"Export prefilled form worksheet with 7 fields. The full_name field is held. Verified profile reads Mira Dhawan, intake call notes read Mira Dawan, passport scan reading is unconfirmed. Earlier export PR-0012 was rejected.",
+  ev:["PROFILE-CASE-0001-full_name","Z-0001","UP-000001"]},
+ {id:"PR-0005",c:"CASE-0003",k:"packet",s:"pending",by:"OPS-01",at:"Oct 22, 2026, 6:45 PM",f:["restricted"],restricted:true,
+  sum:"Packet of 6 uploads. One file may belong to another client. Details are hidden for this restricted matter.",ev:[]},
+ {id:"PR-0006",c:"CASE-0004",k:"packet",s:"pending",by:"OPS-01",at:"Oct 22, 2026, 2:20 PM",f:["pdf"],
+  sum:"Packet of 6 uploads. UP-000022 contains text that tells the reader to approve the packet. The text was flagged and not followed.",
+  ev:["UP-000022","UP-000020","UP-000021"]},
+ {id:"PR-0004",c:"CASE-0005",k:"packet",s:"pending",by:"OPS-01",at:"Oct 21, 2026, 11:15 AM",f:["packet"],
+  sum:"Packet of 7 uploads. UP-000029 is unreadable and no employer letter is on file.",ev:["UP-000029","UP-000028","UP-000026"]},
+ {id:"PR-0007",c:"CASE-0006",k:"message",s:"pending",by:"OPS-01",at:"Oct 23, 2026, 8:30 AM",f:["draft"],
+  sum:"Draft reply to the client. It answers: I only uploaded one pay statement this time. Is that enough? Not sent. Wording needs a legal read.",
+  ev:["MSG-0006-4","UP-000037"]},
+ {id:"PR-0008",c:"CASE-0008",k:"stage",s:"pending",by:"OPS-01",at:"Oct 22, 2026, 10:00 AM",f:[],
+  sum:"Move stage from DOCUMENT_COLLECTION to EVIDENCE_REVIEW.",ev:["EV-0008-2"]},
+ {id:"PR-0010",c:"CASE-0005",k:"form",s:"sent",by:"OPS-01",at:"Oct 20, 2026, 3:00 PM",f:[],
+  rb:"LEGAL-01",rt:"Oct 22, 2026, 2:15 PM",why:"Employment start date needs a source document before export.",
+  sum:"Export prefilled form worksheet with 7 fields.",ev:["PROFILE-CASE-0005-employment_start_date"]},
+ {id:"PR-0011",c:"CASE-0002",k:"deadline",s:"rejected",by:"OPS-01",at:"Oct 21, 2026, 9:00 AM",f:["rej"],
+  rb:"LEGAL-01",rt:"Oct 21, 2026, 1:30 PM",why:"A calendar reminder alone cannot activate a due date. No verified portal request is on file.",
+  sum:"Activate due date Oct 30, 2026 from calendar reminder CAL-0002.",ev:["CAL-0002"]},
+ {id:"PR-0012",c:"CASE-0001",k:"form",s:"rejected",by:"OPS-01",at:"Oct 19, 2026, 1:00 PM",f:["rej"],
+  rb:"LEGAL-01",rt:"Oct 20, 2026, 10:40 AM",why:"Preserve human correction. Automated re-import may not overwrite.",
+  sum:"Export form worksheet using the intake call spelling for full_name.",ev:["PROFILE-CASE-0001-full_name","Z-0001"]},
+ {id:"PR-0013",c:"CASE-0004",k:"message",s:"approved",by:"OPS-01",at:"Oct 22, 2026, 9:10 AM",f:[],
+  rb:"LEGAL-01",rt:"Oct 22, 2026, 11:30 AM",why:"Factual status wording only.",
+  sum:"Draft reply to MSG-0004-3 with the status the portal shows. DRAFT, NOT SENT.",ev:["MSG-0004-3","EV-0004-2"]},
+ {id:"PR-0014",c:"CASE-0006",k:"stage",s:"committed",by:"OPS-01",at:"Oct 19, 2026, 10:00 AM",f:[],
+  rb:"LEGAL-01",rt:"Oct 20, 2026, 9:20 AM",cb:"OPS-01",ct:"Oct 21, 2026, 8:45 AM",why:"Stage matches the documents on file.",
+  sum:"Move stage from DOCUMENT_COLLECTION to EVIDENCE_REVIEW.",ev:["EV-0006-2"]},
+ {id:"PR-0015",c:"CASE-0007",k:"packet",s:"committed",by:"OPS-01",at:"Oct 18, 2026, 2:00 PM",f:[],
+  rb:"LEGAL-01",rt:"Oct 19, 2026, 4:05 PM",cb:"OPS-01",ct:"Oct 20, 2026, 9:30 AM",why:"All five uploads are readable and match this client.",
+  sum:"Packet of 5 uploads.",ev:["UP-000038","UP-000039","UP-000040"]}
+];
+let role="att",filter="pending",open=new Set();
+const $=id=>document.getElementById(id);
+const NOW="Oct 23, 2026, 10:15 AM";
+function rank(cid){const ps=P.filter(p=>p.c===cid&&p.s==="pending");
+ if(ps.some(p=>p.f.includes("conflict")))return 4;
+ if(ps.some(p=>p.f.includes("identity")))return 3;
+ if(ps.some(p=>p.restricted))return 2;
+ return ps.some(p=>p.f.length)?1:0}
+const RL={4:"Date conflict",3:"Identity hold",2:"Restricted",1:"Needs care",0:""};
+function pill(s){return `<span class="pill ${ST[s][1]}">${ST[s][0]}</span>`}
+function row(p){
+ const x=open.has(p.id),cl=CASES[p.c].n;
+ const ev=p.restricted?`<span class="ev">Hidden</span>`:p.ev.map(e=>`<span class="ev">${e}</span>`).join("");
+ let dec="";
+ if(p.rb){dec=`<div class="decided"><b>${p.s==="sent"?"Sent back":p.s==="rejected"?"Rejected":"Approved"}</b> by ${p.rb} on ${p.rt}. Reason: <q>${p.why}</q>`+(p.cb?` Committed by ${p.cb} on ${p.ct}.`:"")+`</div>`}
+ let act="";
+ if(p.s==="pending"){act=role==="att"?`<button type="button" class="btn" data-r="${p.id}" aria-expanded="${x}" aria-controls="pn-${p.id}">Review</button>`:`<span class="muted">Waiting for attorney</span>`}
+ else if(p.s==="approved"){act=role==="ops"?`<a class="link" href="#" data-apply="${p.id}">Apply approved changes</a>`:`<button type="button" class="btn quiet" data-r="${p.id}" aria-expanded="${x}" aria-controls="pn-${p.id}">View</button>`}
+ else act=`<button type="button" class="btn quiet" data-r="${p.id}" aria-expanded="${x}" aria-controls="pn-${p.id}">View</button>`;
+ let panel="";
+ if(x){
+  panel=`<div class="panel" id="pn-${p.id}"><div><b>${KINDS[p.k]}</b> for ${cl}, proposed by ${p.by} on ${p.at}.</div><div class="sum">${p.restricted?"Details hidden. This matter is restricted and a file may belong to another client.":p.sum}</div>`+
+  (p.s==="pending"&&role==="att"?`<label class="f" for="t-${p.id}">Reason or note (required to reject, optional note to send back)</label><textarea id="t-${p.id}" rows="2" placeholder="Why"></textarea><div class="err" id="e-${p.id}" role="alert"></div><div class="acts"><button type="button" class="btn" data-d="approved" data-id="${p.id}">Approve</button><button type="button" class="btn quiet bad" data-d="rejected" data-id="${p.id}">Reject</button><button type="button" class="btn quiet" data-d="sent" data-id="${p.id}">Send back</button></div>`:`<div class="muted">${p.s==="pending"?"Read only for Operations.":"Decision is recorded above."}</div>`)+`</div>`}
+ return `<div class="prop"><div class="prow"><div><div class="pmeta"><span class="pid">${p.id}</span>${pill(p.s)}<span>${KINDS[p.k]}</span><span class="muted">${p.by}, ${p.at}</span></div>
+ <div class="sum">${p.restricted?"Details hidden. A file in this packet may belong to another client.":p.sum}</div>
+ <div class="pmeta">${p.f.map(f=>`<span class="flag ${FL[f][1]}">${FL[f][0]}</span>`).join("")}</div>
+ <div class="chipsrow" aria-label="Evidence for ${p.id}">${ev}</div>${dec}</div><div>${act}</div></div>${panel}</div>`}
+function group(cid,ps,pendingGroup){
+ const r=pendingGroup?rank(cid):0,why=r?`<span class="why"><span class="flag ${r>=3?"bad":r===2?"ai":"warn"}">${RL[r]}</span></span>`:"";
+ const rs=P.filter(p=>p.c===cid&&p.restricted).length?`<span class="pill mute">Restricted matter</span>`:"";
+ return `<section class="card case ${pendingGroup&&r>=2?"r"+r:""}" aria-label="${cid} ${CASES[cid].n}"><div class="chead"><a href="#">${cid}</a><b>${CASES[cid].n}</b>${rs}<span class="muted">${ps.length} proposal${ps.length>1?"s":""}</span>${why}</div>${ps.map(row).join("")}</section>`}
+function render(){
+ const cnt={pending:0,approved:0,sent:0,rejected:0,committed:0};P.forEach(p=>cnt[p.s]++);
+ const defs=[["pending","Waiting for your decision"],["approved","Approved"],["sent","Sent back"],["rejected","Rejected"],["committed","Committed"],["all","All"]];
+ $("chips").innerHTML=defs.map(([k,l])=>`<button type="button" class="chip" data-f="${k}" aria-pressed="${filter===k}">${l}<b>${k==="all"?P.length:cnt[k]}</b></button>`).join("");
+ $("opsnote").classList.toggle("hide",role!=="ops");
+ const show=p=>filter==="all"||p.s===filter;
+ // waiting groups
+ const waiting=P.filter(p=>p.s==="pending"&&show(p));
+ let ids=[...new Set(waiting.map(p=>p.c))].sort((a,b)=>rank(b)-rank(a)||a.localeCompare(b));
+ let html="";
+ if(waiting.length){html+=`<div class="sec">${role==="att"?"Waiting for your decision":"Waiting for legal review"}, ${waiting.length} in ${ids.length} case${ids.length>1?"s":""}, risk first</div>`+ids.map(c=>group(c,waiting.filter(p=>p.c===c),true)).join("")}
+ else if(filter==="pending"){html=`<div class="card empty"><h2>Nothing is waiting for a decision</h2><div class="muted">New proposals from Operations will appear here, grouped by case.</div></div>`}
+ $("main").innerHTML=html;
+ // decided
+ const dec=P.filter(p=>p.s!=="pending"&&show(p)),dids=[...new Set(dec.map(p=>p.c))].sort();
+ $("donesum").textContent=`Already decided, ${P.filter(p=>p.s!=="pending").length} proposals (${cnt.approved} approved, ${cnt.sent} sent back, ${cnt.rejected} rejected, ${cnt.committed} committed)`;
+ $("donebody").innerHTML=dec.length?dids.map(c=>group(c,dec.filter(p=>p.c===c),false)).join(""):`<div class="muted" style="padding:8px">No decided proposals match this filter.</div>`;
+ $("done").classList.toggle("hide",filter==="pending"&&false);
+ bind()}
+function bind(){
+ document.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{filter=b.dataset.f;if(filter!=="pending"&&filter!=="all")$("done").open=true;render();});
+ document.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{const i=b.dataset.r;open.has(i)?open.delete(i):open.add(i);render();const t=document.getElementById("t-"+i)||document.querySelector(`[data-r="${i}"]`);t&&t.focus()});
+ document.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{
+  const id=b.dataset.id,d=b.dataset.d,t=$("t-"+id).value.trim();
+  if(d==="rejected"&&!t){$("e-"+id).textContent="A reason is required to reject.";$("t-"+id).focus();return}
+  const p=P.find(x=>x.id===id);p.s=d;p.rb="LEGAL-01";p.rt=NOW;p.why=t||(d==="approved"?"No note added.":"No note added.");open.delete(id);
+  if(d==="rejected"&&!p.f.includes("rej"))p.f.push("rej");
+  $("live").textContent=`${id} ${ST[d][0].toLowerCase()} by LEGAL-01. Simulated, nothing sent or filed.`;
+  render();$("live").focus&&0});
+ document.querySelectorAll("[data-apply]").forEach(a=>a.onclick=e=>{e.preventDefault();apply([a.dataset.apply])});
+}
+function apply(ids){ids.forEach(i=>{const p=P.find(x=>x.id===i);if(p&&p.s==="approved"){p.s="committed";p.cb="OPS-01";p.ct=NOW}});$("live").textContent="Approved changes applied by OPS-01 (simulated, nothing filed or sent).";render()}
+$("applyAll").onclick=e=>{e.preventDefault();apply(P.filter(p=>p.s==="approved").map(p=>p.id))};
+function setRole(r){role=r;$("r-att").setAttribute("aria-pressed",r==="att");$("r-att").setAttribute("aria-selected",r==="att");$("r-ops").setAttribute("aria-pressed",r==="ops");$("r-ops").setAttribute("aria-selected",r==="ops");open.clear();render()}
+$("r-att").onclick=()=>setRole("att");$("r-ops").onclick=()=>setRole("ops");
+render();
+</script></body></html>

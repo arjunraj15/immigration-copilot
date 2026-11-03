@@ -1,0 +1,384 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1066" width="1600" height="1066" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" style="fill:#475569"/>
+    </marker>
+    <style>
+      .bg { fill: #F8FAFC; }
+      .card { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.2; }
+      .claude { fill: #F3EEFF; stroke: #7C5CD6; stroke-width: 1.4; }
+      .code { fill: #EAF2FF; stroke: #3B7DD8; stroke-width: 1.4; }
+      .human { fill: #FFF4E0; stroke: #D98E04; stroke-width: 1.4; }
+      .ledger { fill: #1F2937; }
+      .no { fill: #FDECEC; stroke: #DC2626; stroke-width: 1; }
+      .hu { fill: #FFF4E0; stroke: #D98E04; stroke-width: 1; }
+      .ok { fill: #E7F7EE; stroke: #16A34A; stroke-width: 1; }
+      .bk { fill: #F1F5F9; stroke: #64748B; stroke-width: 1; }
+      .chip { fill: #EEF2F7; stroke: #CBD5E1; stroke-width: 1; }
+      .rule { fill: #E2E8F0; stroke: #94A3B8; stroke-width: 1; }
+      .num { fill: #1F2937; }
+      .title { font-size: 30px; font-weight: 800; fill: #0F172A; }
+      .sub { font-size: 15px; fill: #475569; }
+      .h { font-size: 16px; font-weight: 800; fill: #0F172A; }
+      .z { font-size: 12px; fill: #334155; font-weight: 600; }
+      .t { font-size: 13px; font-weight: 700; fill: #0F172A; }
+      .s { font-size: 11.5px; fill: #334155; }
+      .tag { font-size: 10px; font-weight: 700; fill: #1E293B; }
+      .pno { font-size: 10px; font-weight: 800; fill: #B91C1C; }
+      .phu { font-size: 10px; font-weight: 800; fill: #9A6400; }
+      .pok { font-size: 10px; font-weight: 800; fill: #15803D; }
+      .pbk { font-size: 10px; font-weight: 800; fill: #475569; }
+      .w { font-size: 13px; fill: #FFFFFF; font-weight: 700; }
+      .wl { font-size: 12.5px; fill: #CBD5E1; }
+      .lbl { font-size: 11.5px; fill: #334155; font-weight: 600; }
+      .line { stroke: #475569; stroke-width: 1.6; fill: none; }
+    </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="1600" height="1066"/>
+  <text class="title" x="40" y="54">Edge case handling</text>
+  <text class="sub" x="40" y="80">Where each trap is caught in the pipeline, and what the system does instead of guessing. Case ids come from the synthetic starter kit.</text>
+  <rect class="claude" x="40" y="108" width="18" height="14" rx="3"/>
+  <text class="lbl" x="66" y="120">Claude reads and drafts</text>
+  <rect class="code" x="245.79999999999998" y="108" width="18" height="14" rx="3"/>
+  <text class="lbl" x="271.79999999999995" y="120">Deterministic code</text>
+  <rect class="human" x="418.6" y="108" width="18" height="14" rx="3"/>
+  <text class="lbl" x="444.6" y="120">People decide</text>
+  <rect class="no" x="578.4000000000001" y="108" width="18" height="14" rx="7"/>
+  <text class="lbl" x="604.4000000000001" y="120">Refused, held or flagged</text>
+  <rect class="hu" x="790.8000000000001" y="108" width="18" height="14" rx="7"/>
+  <text class="lbl" x="816.8000000000001" y="120">Sent to a person</text>
+  <rect class="ok" x="950.4000000000001" y="108" width="18" height="14" rx="7"/>
+  <text class="lbl" x="976.4000000000001" y="120">Handled and kept</text>
+  <rect class="bk" x="1110.0" y="108" width="18" height="14" rx="7"/>
+  <text class="lbl" x="1136.0" y="120">Set aside or left blank</text>
+  <rect class="rule" x="1315.8" y="108" width="34" height="14" rx="3"/>
+  <text class="tag" x="1332.8" y="118.5" text-anchor="middle">RULE</text>
+  <text class="lbl" x="1357.8" y="120">Applies to every case</text>
+  <rect class="code" x="40" y="168" width="236" height="72" rx="10"/>
+  <circle class="num" cx="64" cy="194" r="13"/>
+  <text class="w" x="64" y="199" text-anchor="middle">1</text>
+  <text class="h" x="86" y="200">Upload and scope</text>
+  <text class="z" x="54" y="226">Code</text>
+  <line class="line" x1="278" y1="204.0" x2="294" y2="204.0" marker-end="url(#a)"/>
+  <rect class="card" x="40" y="262" width="236" height="84" rx="8"/>
+  <rect class="chip" x="50" y="271" width="70" height="16" rx="3"/>
+  <text class="tag" x="84.8" y="282.5" text-anchor="middle">CASE-0001</text>
+  <rect class="bk" x="192.6" y="271" width="73" height="16" rx="8"/>
+  <text class="pbk" x="229.3" y="282.5" text-anchor="middle">DUPLICATE</text>
+  <text class="t" x="52" y="305">Same file uploaded twice</text>
+  <text class="s" x="52" y="323">Exact sha256 match counts once.</text>
+  <text class="s" x="52" y="338">Second copy set aside with a reason.</text>
+  <rect class="card" x="40" y="356" width="236" height="84" rx="8"/>
+  <rect class="rule" x="50" y="365" width="38" height="16" rx="3"/>
+  <text class="tag" x="68.8" y="376.5" text-anchor="middle">RULE</text>
+  <rect class="no" x="205.8" y="365" width="60" height="16" rx="8"/>
+  <text class="pno" x="235.9" y="376.5" text-anchor="middle">REFUSED</text>
+  <text class="t" x="52" y="399">Zip, empty or fake PDF</text>
+  <text class="s" x="52" y="417">Screened before upload.</text>
+  <text class="s" x="52" y="432">Each file left out with a reason.</text>
+  <rect class="card" x="40" y="450" width="236" height="84" rx="8"/>
+  <rect class="chip" x="50" y="459" width="70" height="16" rx="3"/>
+  <text class="tag" x="84.8" y="470.5" text-anchor="middle">CASE-0003</text>
+  <rect class="no" x="179.4" y="459" width="87" height="16" rx="8"/>
+  <text class="pno" x="222.7" y="470.5" text-anchor="middle">QUARANTINED</text>
+  <text class="t" x="52" y="493">Wrong client&#x27;s document</text>
+  <text class="s" x="52" y="511">Owner read from content, not the</text>
+  <text class="s" x="52" y="526">folder name. No data crosses cases.</text>
+  <rect class="card" x="40" y="544" width="236" height="84" rx="8"/>
+  <rect class="chip" x="50" y="553" width="70" height="16" rx="3"/>
+  <text class="tag" x="84.8" y="564.5" text-anchor="middle">CASE-0026</text>
+  <rect class="no" x="179.4" y="553" width="87" height="16" rx="8"/>
+  <text class="pno" x="222.7" y="564.5" text-anchor="middle">QUARANTINED</text>
+  <text class="t" x="52" y="587">Mixed PDF, two clients</text>
+  <text class="s" x="52" y="605">Only the foreign page is held.</text>
+  <text class="s" x="52" y="620">The rest of the file is kept.</text>
+  <rect class="card" x="40" y="638" width="236" height="84" rx="8"/>
+  <rect class="chip" x="50" y="647" width="70" height="16" rx="3"/>
+  <text class="tag" x="84.8" y="658.5" text-anchor="middle">CASE-0005</text>
+  <rect class="bk" x="186.0" y="647" width="80" height="16" rx="8"/>
+  <text class="pbk" x="226.0" y="658.5" text-anchor="middle">SUPERSEDED</text>
+  <text class="t" x="52" y="681">Older version of a document</text>
+  <text class="s" x="52" y="699">Old copy marked superseded.</text>
+  <text class="s" x="52" y="714">The newest version is accepted.</text>
+  <rect class="claude" x="296" y="168" width="236" height="72" rx="10"/>
+  <circle class="num" cx="320" cy="194" r="13"/>
+  <text class="w" x="320" y="199" text-anchor="middle">2</text>
+  <text class="h" x="342" y="200">Read the document</text>
+  <text class="z" x="310" y="226">Claude reads, code checks</text>
+  <line class="line" x1="534" y1="204.0" x2="550" y2="204.0" marker-end="url(#a)"/>
+  <rect class="card" x="296" y="262" width="236" height="84" rx="8"/>
+  <rect class="chip" x="306" y="271" width="70" height="16" rx="3"/>
+  <text class="tag" x="340.8" y="282.5" text-anchor="middle">CASE-0004</text>
+  <rect class="hu" x="428.8" y="271" width="93" height="16" rx="8"/>
+  <text class="phu" x="475.4" y="282.5" text-anchor="middle">NEEDS REVIEW</text>
+  <text class="t" x="308" y="305">Unreadable passport</text>
+  <text class="s" x="308" y="323">Marked not usable. A person</text>
+  <text class="s" x="308" y="338">reviews it. Nothing is guessed.</text>
+  <rect class="card" x="296" y="356" width="236" height="84" rx="8"/>
+  <rect class="chip" x="306" y="365" width="70" height="16" rx="3"/>
+  <text class="tag" x="340.8" y="376.5" text-anchor="middle">CASE-0025</text>
+  <rect class="hu" x="428.8" y="365" width="93" height="16" rx="8"/>
+  <text class="phu" x="475.4" y="376.5" text-anchor="middle">NEEDS REVIEW</text>
+  <text class="t" x="308" y="399">Rotated scan</text>
+  <text class="s" x="308" y="417">OCR fallback first, then sent</text>
+  <text class="s" x="308" y="432">to human review when unclear.</text>
+  <rect class="card" x="296" y="450" width="236" height="84" rx="8"/>
+  <rect class="chip" x="306" y="459" width="70" height="16" rx="3"/>
+  <text class="tag" x="340.8" y="470.5" text-anchor="middle">CASE-0008</text>
+  <rect class="hu" x="435.4" y="459" width="87" height="16" rx="8"/>
+  <text class="phu" x="478.7" y="470.5" text-anchor="middle">TRANSLATION</text>
+  <text class="t" x="308" y="493">Letter in another language</text>
+  <text class="s" x="308" y="511">Marked as needing translation.</text>
+  <text class="s" x="308" y="526">Not used as evidence yet.</text>
+  <rect class="card" x="296" y="544" width="236" height="84" rx="8"/>
+  <rect class="chip" x="306" y="553" width="70" height="16" rx="3"/>
+  <text class="tag" x="340.8" y="564.5" text-anchor="middle">CASE-0021</text>
+  <rect class="hu" x="428.8" y="553" width="93" height="16" rx="8"/>
+  <text class="phu" x="475.4" y="564.5" text-anchor="middle">NEEDS REVIEW</text>
+  <text class="t" x="308" y="587">Translation with no original</text>
+  <text class="s" x="308" y="605">Orphan translation is held</text>
+  <text class="s" x="308" y="620">for review and not counted.</text>
+  <rect class="card" x="296" y="638" width="236" height="84" rx="8"/>
+  <rect class="chip" x="306" y="647" width="70" height="16" rx="3"/>
+  <text class="tag" x="340.8" y="658.5" text-anchor="middle">CASE-0017</text>
+  <rect class="no" x="461.8" y="647" width="60" height="16" rx="8"/>
+  <text class="pno" x="491.9" y="658.5" text-anchor="middle">FLAGGED</text>
+  <text class="t" x="308" y="681">Hidden instruction in a PDF</text>
+  <text class="s" x="308" y="699">Wrapped as untrusted data.</text>
+  <text class="s" x="308" y="714">Flagged and logged, never followed.</text>
+  <rect class="card" x="296" y="732" width="236" height="84" rx="8"/>
+  <rect class="rule" x="306" y="741" width="38" height="16" rx="3"/>
+  <text class="tag" x="324.8" y="752.5" text-anchor="middle">RULE</text>
+  <rect class="bk" x="442.0" y="741" width="80" height="16" rx="8"/>
+  <text class="pbk" x="482.0" y="752.5" text-anchor="middle">UNVERIFIED</text>
+  <text class="t" x="308" y="775">Quote not in the source</text>
+  <text class="s" x="308" y="793">Code searches the source text.</text>
+  <text class="s" x="308" y="808">No match means unverified.</text>
+  <rect class="card" x="296" y="826" width="236" height="84" rx="8"/>
+  <rect class="rule" x="306" y="835" width="38" height="16" rx="3"/>
+  <text class="tag" x="324.8" y="846.5" text-anchor="middle">RULE</text>
+  <rect class="hu" x="428.8" y="835" width="93" height="16" rx="8"/>
+  <text class="phu" x="475.4" y="846.5" text-anchor="middle">NOT READ YET</text>
+  <text class="t" x="308" y="869">AI service down or refusal</text>
+  <text class="s" x="308" y="887">The file stays safe and is</text>
+  <text class="s" x="308" y="902">marked for review. Retry later.</text>
+  <rect class="code" x="552" y="168" width="236" height="72" rx="10"/>
+  <circle class="num" cx="576" cy="194" r="13"/>
+  <text class="w" x="576" y="199" text-anchor="middle">3</text>
+  <text class="h" x="598" y="200">Facts and conflicts</text>
+  <text class="z" x="566" y="226">Code</text>
+  <line class="line" x1="790" y1="204.0" x2="806" y2="204.0" marker-end="url(#a)"/>
+  <rect class="card" x="552" y="262" width="236" height="84" rx="8"/>
+  <rect class="chip" x="562" y="271" width="70" height="16" rx="3"/>
+  <text class="tag" x="596.8" y="282.5" text-anchor="middle">CASE-0001</text>
+  <rect class="hu" x="711.2" y="271" width="67" height="16" rx="8"/>
+  <text class="phu" x="744.6" y="282.5" text-anchor="middle">CONFLICT</text>
+  <text class="t" x="564" y="305">Name: Dawan vs Dhawan</text>
+  <text class="s" x="564" y="323">Both sides cited with quote and</text>
+  <text class="s" x="564" y="338">page. Review opens, no silent pick.</text>
+  <rect class="card" x="552" y="356" width="236" height="84" rx="8"/>
+  <rect class="chip" x="562" y="365" width="70" height="16" rx="3"/>
+  <text class="tag" x="596.8" y="376.5" text-anchor="middle">CASE-0002</text>
+  <rect class="hu" x="711.2" y="365" width="67" height="16" rx="8"/>
+  <text class="phu" x="744.6" y="376.5" text-anchor="middle">CONFLICT</text>
+  <text class="t" x="564" y="399">Date of birth off by one day</text>
+  <text class="s" x="564" y="417">1991-03-05 vs 1991-03-04 is</text>
+  <text class="s" x="564" y="432">kept as a conflict for LEGAL.</text>
+  <rect class="card" x="552" y="450" width="236" height="84" rx="8"/>
+  <rect class="chip" x="562" y="459" width="70" height="16" rx="3"/>
+  <text class="tag" x="596.8" y="470.5" text-anchor="middle">CASE-0013</text>
+  <rect class="hu" x="691.4" y="459" width="87" height="16" rx="8"/>
+  <text class="phu" x="734.7" y="470.5" text-anchor="middle">NEEDS PROOF</text>
+  <text class="t" x="564" y="493">Address change in a message</text>
+  <text class="s" x="564" y="511">A message is a claim. The field</text>
+  <text class="s" x="564" y="526">is never updated without proof.</text>
+  <rect class="card" x="552" y="544" width="236" height="84" rx="8"/>
+  <rect class="chip" x="562" y="553" width="70" height="16" rx="3"/>
+  <text class="tag" x="596.8" y="564.5" text-anchor="middle">CASE-0023</text>
+  <rect class="hu" x="711.2" y="553" width="67" height="16" rx="8"/>
+  <text class="phu" x="744.6" y="564.5" text-anchor="middle">CONFLICT</text>
+  <text class="t" x="564" y="587">Start date: Zoom vs profile</text>
+  <text class="s" x="564" y="605">Zoom note says 2025, profile 2023.</text>
+  <text class="s" x="564" y="620">Claim and evidence both cited.</text>
+  <rect class="card" x="552" y="638" width="236" height="84" rx="8"/>
+  <rect class="chip" x="562" y="647" width="70" height="16" rx="3"/>
+  <text class="tag" x="596.8" y="658.5" text-anchor="middle">CASE-0016</text>
+  <rect class="bk" x="698.0" y="647" width="80" height="16" rx="8"/>
+  <text class="pbk" x="738.0" y="658.5" text-anchor="middle">UNVERIFIED</text>
+  <text class="t" x="564" y="681">Calendar says APPROVED</text>
+  <text class="s" x="564" y="699">Status stays Processing.</text>
+  <text class="s" x="564" y="714">A calendar entry is not evidence.</text>
+  <rect class="card" x="552" y="732" width="236" height="84" rx="8"/>
+  <rect class="rule" x="562" y="741" width="38" height="16" rx="3"/>
+  <text class="tag" x="580.8" y="752.5" text-anchor="middle">RULE</text>
+  <rect class="bk" x="731.0" y="741" width="47" height="16" rx="8"/>
+  <text class="pbk" x="754.5" y="752.5" text-anchor="middle">BLANK</text>
+  <text class="t" x="564" y="775">No evidence for a form field</text>
+  <text class="s" x="564" y="793">Unknown stays blank with a reason.</text>
+  <text class="s" x="564" y="808">No value is invented.</text>
+  <rect class="code" x="808" y="168" width="236" height="72" rx="10"/>
+  <circle class="num" cx="832" cy="194" r="13"/>
+  <text class="w" x="832" y="199" text-anchor="middle">4</text>
+  <text class="h" x="854" y="200">Checklist and deadline</text>
+  <text class="z" x="822" y="226">Code</text>
+  <line class="line" x1="1046" y1="204.0" x2="1062" y2="204.0" marker-end="url(#a)"/>
+  <rect class="card" x="808" y="262" width="236" height="84" rx="8"/>
+  <rect class="chip" x="818" y="271" width="70" height="16" rx="3"/>
+  <text class="tag" x="852.8" y="282.5" text-anchor="middle">CASE-0014</text>
+  <rect class="no" x="973.8" y="271" width="60" height="16" rx="8"/>
+  <text class="pno" x="1003.9" y="282.5" text-anchor="middle">MISSING</text>
+  <text class="t" x="820" y="305">No passport uploaded</text>
+  <text class="s" x="820" y="323">Checklist item shows Missing.</text>
+  <text class="s" x="820" y="338">Reason shown on the case queue.</text>
+  <rect class="card" x="808" y="356" width="236" height="84" rx="8"/>
+  <rect class="chip" x="818" y="365" width="70" height="16" rx="3"/>
+  <text class="tag" x="852.8" y="376.5" text-anchor="middle">CASE-0006</text>
+  <rect class="no" x="973.8" y="365" width="60" height="16" rx="8"/>
+  <text class="pno" x="1003.9" y="376.5" text-anchor="middle">MISSING</text>
+  <text class="t" x="820" y="399">September payslip missing</text>
+  <text class="s" x="820" y="417">The checklist names the exact</text>
+  <text class="s" x="820" y="432">item that is still missing.</text>
+  <rect class="card" x="808" y="450" width="236" height="84" rx="8"/>
+  <rect class="chip" x="818" y="459" width="70" height="16" rx="3"/>
+  <text class="tag" x="852.8" y="470.5" text-anchor="middle">CASE-0024</text>
+  <rect class="no" x="973.8" y="459" width="60" height="16" rx="8"/>
+  <text class="pno" x="1003.9" y="470.5" text-anchor="middle">MISSING</text>
+  <text class="t" x="820" y="493">Prior notice missing</text>
+  <text class="s" x="820" y="511">Required item flagged as</text>
+  <text class="s" x="820" y="526">not yet satisfied.</text>
+  <rect class="card" x="808" y="544" width="236" height="84" rx="8"/>
+  <rect class="chip" x="818" y="553" width="70" height="16" rx="3"/>
+  <text class="tag" x="852.8" y="564.5" text-anchor="middle">CASE-0007</text>
+  <rect class="no" x="973.8" y="553" width="60" height="16" rx="8"/>
+  <text class="pno" x="1003.9" y="564.5" text-anchor="middle">EXPIRED</text>
+  <text class="t" x="820" y="587">Passport expired 2026-09-30</text>
+  <text class="s" x="820" y="605">Expiry checked by code.</text>
+  <text class="s" x="820" y="620">Not counted as valid identity.</text>
+  <rect class="card" x="808" y="638" width="236" height="84" rx="8"/>
+  <rect class="chip" x="818" y="647" width="70" height="16" rx="3"/>
+  <text class="tag" x="852.8" y="658.5" text-anchor="middle">CASE-0009</text>
+  <rect class="hu" x="967.2" y="647" width="67" height="16" rx="8"/>
+  <text class="phu" x="1000.6" y="658.5" text-anchor="middle">CONFLICT</text>
+  <text class="t" x="820" y="681">Calendar vs portal deadline</text>
+  <text class="s" x="820" y="699">Verified portal event + 10 days.</text>
+  <text class="s" x="820" y="714">Calendar date flagged for LEGAL.</text>
+  <rect class="card" x="808" y="732" width="236" height="84" rx="8"/>
+  <rect class="chip" x="818" y="741" width="70" height="16" rx="3"/>
+  <text class="tag" x="852.8" y="752.5" text-anchor="middle">CASE-0015</text>
+  <rect class="no" x="973.8" y="741" width="60" height="16" rx="8"/>
+  <text class="pno" x="1003.9" y="752.5" text-anchor="middle">OVERDUE</text>
+  <text class="t" x="820" y="775">Deadline already passed</text>
+  <text class="s" x="820" y="793">2026-10-15 shown as overdue</text>
+  <text class="s" x="820" y="808">with the rule that set it.</text>
+  <rect class="card" x="808" y="826" width="236" height="84" rx="8"/>
+  <rect class="rule" x="818" y="835" width="38" height="16" rx="3"/>
+  <text class="tag" x="836.8" y="846.5" text-anchor="middle">RULE</text>
+  <rect class="bk" x="973.8" y="835" width="60" height="16" rx="8"/>
+  <text class="pbk" x="1003.9" y="846.5" text-anchor="middle">IGNORED</text>
+  <text class="t" x="820" y="869">Calendar entry as deadline</text>
+  <text class="s" x="820" y="887">Never creates a deadline.</text>
+  <text class="s" x="820" y="902">Shown as Calendar, not evidence.</text>
+  <rect class="claude" x="1064" y="168" width="236" height="72" rx="10"/>
+  <circle class="num" cx="1088" cy="194" r="13"/>
+  <text class="w" x="1088" y="199" text-anchor="middle">5</text>
+  <text class="h" x="1110" y="200">Drafts and chat</text>
+  <text class="z" x="1078" y="226">Claude drafts, code limits</text>
+  <line class="line" x1="1302" y1="204.0" x2="1318" y2="204.0" marker-end="url(#a)"/>
+  <rect class="card" x="1064" y="262" width="236" height="84" rx="8"/>
+  <rect class="chip" x="1074" y="271" width="70" height="16" rx="3"/>
+  <text class="tag" x="1108.8" y="282.5" text-anchor="middle">CASE-0010</text>
+  <rect class="ok" x="1190.2" y="271" width="100" height="16" rx="8"/>
+  <text class="pok" x="1240.1" y="282.5" text-anchor="middle">NO PREDICTION</text>
+  <text class="t" x="1076" y="305">Will I be approved?</text>
+  <text class="s" x="1076" y="323">The reply refuses to predict.</text>
+  <text class="s" x="1076" y="338">Marked DRAFT, NOT SENT.</text>
+  <rect class="card" x="1064" y="356" width="236" height="84" rx="8"/>
+  <rect class="chip" x="1074" y="365" width="70" height="16" rx="3"/>
+  <text class="tag" x="1108.8" y="376.5" text-anchor="middle">CASE-0019</text>
+  <rect class="no" x="1229.8" y="365" width="60" height="16" rx="8"/>
+  <text class="pno" x="1259.9" y="376.5" text-anchor="middle">REFUSED</text>
+  <text class="t" x="1076" y="399">Chat about another client</text>
+  <text class="s" x="1076" y="417">Retrieval filtered by case_id.</text>
+  <text class="s" x="1076" y="432">Question refused and logged.</text>
+  <rect class="card" x="1064" y="450" width="236" height="84" rx="8"/>
+  <rect class="rule" x="1074" y="459" width="38" height="16" rx="3"/>
+  <text class="tag" x="1092.8" y="470.5" text-anchor="middle">RULE</text>
+  <rect class="bk" x="1183.6" y="459" width="106" height="16" rx="8"/>
+  <text class="pbk" x="1236.8" y="470.5" text-anchor="middle">NOT FOR FILING</text>
+  <text class="t" x="1076" y="493">Form draft generated</text>
+  <text class="s" x="1076" y="511">Every field cited to a source.</text>
+  <text class="s" x="1076" y="526">PDF stamped NOT FOR FILING.</text>
+  <rect class="card" x="1064" y="544" width="236" height="84" rx="8"/>
+  <rect class="chip" x="1074" y="553" width="70" height="16" rx="3"/>
+  <text class="tag" x="1108.8" y="564.5" text-anchor="middle">CASE-0020</text>
+  <rect class="hu" x="1229.8" y="553" width="60" height="16" rx="8"/>
+  <text class="phu" x="1259.9" y="564.5" text-anchor="middle">FLAGGED</text>
+  <text class="t" x="1076" y="587">Payment amount mismatch</text>
+  <text class="s" x="1076" y="605">The mismatch is shown for a</text>
+  <text class="s" x="1076" y="620">person to resolve.</text>
+  <rect class="human" x="1320" y="168" width="236" height="72" rx="10"/>
+  <circle class="num" cx="1344" cy="194" r="13"/>
+  <text class="w" x="1344" y="199" text-anchor="middle">6</text>
+  <text class="h" x="1366" y="200">Review and commit</text>
+  <text class="z" x="1334" y="226">People decide, code enforces</text>
+  <rect class="card" x="1320" y="262" width="236" height="84" rx="8"/>
+  <rect class="rule" x="1330" y="271" width="38" height="16" rx="3"/>
+  <text class="tag" x="1348.8" y="282.5" text-anchor="middle">RULE</text>
+  <rect class="no" x="1492.4" y="271" width="54" height="16" rx="8"/>
+  <text class="pno" x="1519.2" y="282.5" text-anchor="middle">DENIED</text>
+  <text class="t" x="1332" y="305">OPS tries to approve</text>
+  <text class="s" x="1332" y="323">The server answers 403.</text>
+  <text class="s" x="1332" y="338">The denied attempt is logged.</text>
+  <rect class="card" x="1320" y="356" width="236" height="84" rx="8"/>
+  <rect class="rule" x="1330" y="365" width="38" height="16" rx="3"/>
+  <text class="tag" x="1348.8" y="376.5" text-anchor="middle">RULE</text>
+  <rect class="no" x="1492.4" y="365" width="54" height="16" rx="8"/>
+  <text class="pno" x="1519.2" y="376.5" text-anchor="middle">DENIED</text>
+  <text class="t" x="1332" y="399">Commit before approval</text>
+  <text class="s" x="1332" y="417">Refused unless the proposal</text>
+  <text class="s" x="1332" y="432">state is APPROVED.</text>
+  <rect class="card" x="1320" y="450" width="236" height="84" rx="8"/>
+  <rect class="rule" x="1330" y="459" width="38" height="16" rx="3"/>
+  <text class="tag" x="1348.8" y="470.5" text-anchor="middle">RULE</text>
+  <rect class="no" x="1479.2" y="459" width="67" height="16" rx="8"/>
+  <text class="pno" x="1512.6" y="470.5" text-anchor="middle">REQUIRED</text>
+  <text class="t" x="1332" y="493">Reject with no reason</text>
+  <text class="s" x="1332" y="511">LEGAL must give a reason.</text>
+  <text class="s" x="1332" y="526">A blank reason is refused.</text>
+  <rect class="card" x="1320" y="544" width="236" height="84" rx="8"/>
+  <rect class="rule" x="1330" y="553" width="38" height="16" rx="3"/>
+  <text class="tag" x="1348.8" y="564.5" text-anchor="middle">RULE</text>
+  <rect class="ok" x="1505.6" y="553" width="40" height="16" rx="8"/>
+  <text class="pok" x="1525.8" y="564.5" text-anchor="middle">KEPT</text>
+  <text class="t" x="1332" y="587">Rerun after a rejection</text>
+  <text class="s" x="1332" y="605">The rejection stays. The skipped</text>
+  <text class="s" x="1332" y="620">rerun is logged on the ledger.</text>
+  <rect class="card" x="1320" y="638" width="236" height="84" rx="8"/>
+  <rect class="rule" x="1330" y="647" width="38" height="16" rx="3"/>
+  <text class="tag" x="1348.8" y="658.5" text-anchor="middle">RULE</text>
+  <rect class="ok" x="1459.4" y="647" width="87" height="16" rx="8"/>
+  <text class="pok" x="1502.7" y="658.5" text-anchor="middle">SAME RESULT</text>
+  <text class="t" x="1332" y="681">Same idempotency key twice</text>
+  <text class="s" x="1332" y="699">Returns the same proposal.</text>
+  <text class="s" x="1332" y="714">A key from another case is refused.</text>
+  <rect class="card" x="1320" y="732" width="236" height="84" rx="8"/>
+  <rect class="chip" x="1330" y="741" width="70" height="16" rx="3"/>
+  <text class="tag" x="1364.8" y="752.5" text-anchor="middle">CASE-0012</text>
+  <rect class="ok" x="1505.6" y="741" width="40" height="16" rx="8"/>
+  <text class="pok" x="1525.8" y="752.5" text-anchor="middle">KEPT</text>
+  <text class="t" x="1332" y="775">Re-import after a human fix</text>
+  <text class="s" x="1332" y="793">The correction Meera Batra stays.</text>
+  <text class="s" x="1332" y="808">Same snapshot stored once.</text>
+  <rect class="card" x="1320" y="826" width="236" height="84" rx="8"/>
+  <rect class="rule" x="1330" y="835" width="38" height="16" rx="3"/>
+  <text class="tag" x="1348.8" y="846.5" text-anchor="middle">RULE</text>
+  <rect class="no" x="1512.2" y="835" width="34" height="16" rx="8"/>
+  <text class="pno" x="1529.1" y="846.5" text-anchor="middle">401</text>
+  <text class="t" x="1332" y="869">Missing or unknown actor</text>
+  <text class="s" x="1332" y="887">Refused before any case</text>
+  <text class="s" x="1332" y="902">data is read.</text>
+  <rect class="ledger" x="40" y="936" width="1516" height="96" rx="12"/>
+  <text class="w" x="64" y="968" font-size="16">Audit ledger, under every column</text>
+  <text class="wl" x="64" y="992">Every outcome above, including DENIED, QUARANTINED and FLAGGED, writes one hash-chained audit line in the same transaction as the change.</text>
+  <text class="wl" x="64" y="1014">Verify chain recomputes every hash and reports the first broken seq. Entries hold ids, hashes and states, never document text.</text>
+</svg>

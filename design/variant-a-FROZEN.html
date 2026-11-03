@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case Desk Variant A Guided Steps</title>
+<style>
+:root{--hdr:#1c2a5a;--hdr2:#2a3a74;--accent:#1c2a5a;--accent-ink:#fff;--bg:#e8ecf4;--surface:#fff;--soft:#eef0f8;--ink:#14213a;--muted:#5c6884;--line:#d9deea;--teal:#0f7a63;--teal-soft:#e0f3ec;--red:#b3261e;--red-soft:#fbe4e2;--amber:#9a6200;--amber-soft:#fdf0d0;--violet:#5b3aa8;--violet-soft:#ece6f8;--bubble:#1c2a5a}
+:root[data-role=attorney]{--hdr:#5e1f3d;--hdr2:#7a2d52;--accent:#5e1f3d;--soft:#f6ecf1;--bubble:#5e1f3d}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0d1220;--surface:#161d30;--soft:#1e2740;--ink:#e8ecf5;--muted:#9ba7c3;--line:#2b3552;--teal:#4fd1a8;--teal-soft:#10372e;--red:#ff8d86;--red-soft:#41191a;--amber:#f0c060;--amber-soft:#40310f;--violet:#c4a8f4;--violet-soft:#2b2047;--accent:#5b72d6}:root[data-role=attorney]:not([data-theme=light]){--soft:#2a1a24;--accent:#c4607f}}
+:root[data-theme=dark]{--bg:#0d1220;--surface:#161d30;--soft:#1e2740;--ink:#e8ecf5;--muted:#9ba7c3;--line:#2b3552;--teal:#4fd1a8;--teal-soft:#10372e;--red:#ff8d86;--red-soft:#41191a;--amber:#f0c060;--amber-soft:#40310f;--violet:#c4a8f4;--violet-soft:#2b2047;--accent:#5b72d6}
+:root[data-theme=dark][data-role=attorney]{--soft:#2a1a24;--accent:#c4607f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select{font:inherit;color:inherit}
+header{background:var(--hdr);color:#fff;display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:10px 20px;transition:background .2s}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px}
+.logo i{width:34px;height:34px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;font:700 12px system-ui;font-style:normal}
+.roles{display:flex;gap:4px;background:rgba(255,255,255,.12);padding:4px;border-radius:12px;margin-left:24px}
+.role{border:0;background:none;color:#fff;opacity:.75;padding:6px 14px;border-radius:9px;text-align:left;cursor:pointer;line-height:1.2}
+.role small{display:block;font-size:12px}
+.role[aria-pressed=true]{background:#fff;color:#14213a;opacity:1}
+.who{margin-left:auto;display:flex;gap:12px;align-items:center;font-size:14px}
+.av{width:36px;height:36px;border-radius:50%;background:#fff;color:#14213a;display:grid;place-items:center;font-weight:700;font-size:13px}
+.hb{border:1px solid rgba(255,255,255,.4);background:none;color:#fff;border-radius:8px;padding:3px 10px;cursor:pointer;font-size:12px}
+.shell{display:grid;grid-template-columns:300px minmax(0,1fr) 320px;gap:16px;padding:16px;max-width:1600px;margin:0 auto;align-items:start}
+@media (max-width:1150px){.shell{grid-template-columns:1fr}}
+.card{background:var(--surface);border-radius:18px;padding:16px;box-shadow:0 1px 2px rgba(20,33,58,.06)}
+.drop{display:flex;gap:12px;align-items:center;border:2px dashed var(--line);border-radius:14px;padding:12px;width:100%;background:none;cursor:pointer;text-align:left}
+.drop i{width:40px;height:40px;border-radius:10px;background:var(--accent);color:#fff;display:grid;place-items:center;font-style:normal}
+.drop small{display:block;color:var(--muted)}
+.search{width:100%;margin:10px 0;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.grp{display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--muted);margin:14px 4px 6px}
+.case{display:flex;gap:10px;width:100%;text-align:left;border:2px solid transparent;background:var(--surface);border-radius:14px;padding:10px;margin-bottom:6px;cursor:pointer;align-items:flex-start}
+.case:hover{background:var(--soft)}
+.case.on{border-color:var(--accent)}
+.ini{flex:0 0 36px;height:36px;border-radius:50%;background:var(--soft);display:grid;place-items:center;font-size:12px;font-weight:700}
+.case b{display:flex;justify-content:space-between}.case b span{font-weight:400;color:var(--muted);font-size:13px}
+.case small{color:var(--muted);display:block;line-height:1.3}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;background:var(--accent)}
+.dot.amber{background:#d79a1c}.dot.red{background:var(--red)}.dot.green{background:var(--teal)}.dot.grey{background:#9aa3b8}
+.head{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:flex-start}
+.head h1{margin:0;font-size:26px;line-height:1.2}
+.meta{color:var(--muted);font-size:14px}.meta b{color:var(--ink)}
+.seg{display:flex;background:var(--soft);padding:4px;border-radius:12px;gap:2px}
+.seg button{border:0;background:none;padding:6px 14px;border-radius:9px;cursor:pointer;color:var(--muted);font-weight:500}
+.seg button[aria-selected=true]{background:var(--surface);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.stepper{display:flex;margin:18px 0 0;padding:0 0 16px;border-bottom:1px solid var(--line);overflow-x:auto}
+.st{flex:1;min-width:84px;border:0;background:none;text-align:center;cursor:pointer;position:relative;color:var(--muted);padding:0}
+.st:not(:last-child)::after{content:"";position:absolute;top:28px;left:calc(50% + 34px);right:calc(-50% + 34px);border-top:2px dashed var(--line)}
+.st.done:not(:last-child)::after{border-top:2px solid var(--teal)}
+.c{width:56px;height:56px;margin:0 auto 6px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:20px;font-weight:600;background:var(--surface);color:var(--muted)}
+.st.done .c,.st.issue .c{font-size:9.5px;font-weight:800;line-height:1.05;border:3px double var(--teal);color:var(--teal);transform:rotate(-6deg)}
+.st.issue .c{border-color:var(--red);color:var(--red)}
+.st.cur .c{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 0 0 4px var(--soft);font-size:20px;transform:none}
+.st.cur{color:var(--ink);font-weight:600}
+.body{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:20px;padding-top:16px}
+@media (max-width:820px){.body{grid-template-columns:1fr}}
+.kick{font-size:13px;color:var(--muted)}
+h2.t{font-size:28px;line-height:1.15;margin:2px 0 6px}
+.lead{color:var(--muted);margin:0 0 14px}
+.help{background:var(--soft);border-radius:14px;padding:14px;font-size:14px;color:var(--muted);align-self:start}
+.help b{color:var(--ink);display:block;margin-bottom:6px}.help p{margin:0 0 10px}
+.file{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-bottom:8px;cursor:pointer;background:var(--surface);width:100%;text-align:left}
+.file:hover{background:var(--soft)}
+.file.rd{border:2px solid var(--accent);background:linear-gradient(90deg,var(--soft),var(--surface))}
+.file.wt{opacity:.5}
+.pdf{flex:0 0 38px;height:44px;border-radius:6px;border:1px solid var(--line);display:grid;place-items:end center;font-size:9px;font-weight:800;color:var(--red);padding-bottom:4px;background:var(--soft)}
+.file .n{flex:0 0 190px}.file .n b{display:block}.file .n small{color:var(--muted)}
+.file .d{flex:1;color:var(--muted)}
+.stamp{display:inline-block;border:2px solid var(--teal);color:var(--teal);border-radius:6px;padding:0 8px;font:800 13px/1.5 ui-monospace,Menlo,monospace;letter-spacing:.06em;transform:rotate(-4deg);white-space:nowrap}
+.stamp.red{border-color:var(--red);color:var(--red)}.stamp.vio{border-color:var(--violet);color:var(--violet)}.stamp.amb{border-color:var(--amber);color:var(--amber)}
+.bar{width:90px;height:5px;background:var(--line);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;width:55%;background:var(--accent)}
+.alert{border:2px solid var(--red);border-radius:16px;padding:14px;margin-bottom:12px}
+.alert h3{margin:0 0 10px;color:var(--ink);font-size:18px}.alert h3:before{content:"\25B2  ";color:var(--red)}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+@media (max-width:640px){.three{grid-template-columns:1fr}}
+.src{border:1px solid var(--line);border-radius:12px;padding:10px}.src small{display:block;color:var(--muted)}.src b{font-size:20px;display:block}
+.src.odd{background:var(--red-soft);border-color:var(--red-soft)}.src.odd b{color:var(--red)}
+.ref{display:inline-block;font:600 12px ui-monospace,Menlo,monospace;background:var(--soft);border-radius:6px;padding:0 7px;margin:2px 4px 0 0}
+.opt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:8px;cursor:pointer}
+.opt:has(input:checked){border:2px solid var(--accent);background:var(--soft)}
+.opt b{display:block}.opt small{color:var(--muted)}.opt .why{margin-left:auto;color:var(--teal);background:var(--teal-soft);border-radius:10px;padding:2px 10px;font-size:13px;font-weight:600}
+.okrow{display:flex;gap:16px;background:var(--soft);border-radius:10px;padding:10px 14px;margin-bottom:6px}.okrow:before{content:"\2713";color:var(--teal);font-weight:700}.okrow span:last-child{margin-left:auto;color:var(--muted)}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid var(--line);margin-top:18px;padding-top:14px;color:var(--muted);font-size:14px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 18px;cursor:pointer;font-weight:600}
+.btn.p{background:var(--accent);border-color:var(--accent);color:#fff}.btn[disabled]{opacity:.45;cursor:default}
+.btn.g{background:var(--teal);border-color:var(--teal);color:#fff}
+.draft{border:2px dashed var(--red);background:var(--red-soft);border-radius:12px;padding:10px 14px;display:flex;gap:14px;align-items:center;margin-bottom:10px;font-size:14px}
+.draft b{color:var(--red);letter-spacing:.12em;font-family:ui-monospace,Menlo,monospace;white-space:nowrap}
+table{width:100%;border-collapse:collapse;font-size:14px}
+td,th{padding:8px 10px;border-top:1px solid var(--line);text-align:left;vertical-align:middle}
+th{background:var(--soft);font-size:13px;border:0}
+tr.held{background:var(--red-soft)}tr.held td:nth-child(2){color:var(--red);font-weight:700}
+.chip{display:inline-block;font-size:12px;font-weight:600;border-radius:99px;padding:1px 10px;background:var(--teal-soft);color:var(--teal)}.chip.r{background:var(--red-soft);color:var(--red)}.chip.v{background:var(--violet-soft);color:var(--violet)}.chip.a{background:var(--amber-soft);color:var(--amber)}.chip.n{background:var(--soft);color:var(--muted)}
+.conf{display:inline-block;width:56px;height:5px;border-radius:9px;background:var(--line);vertical-align:middle;margin-right:6px}.conf i{display:block;height:100%;background:var(--teal);border-radius:9px}
+.req{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:12px}
+@media (max-width:760px){.req{grid-template-columns:repeat(2,1fr)}}
+.req div{border-radius:10px;padding:8px;background:var(--teal-soft);color:var(--teal);font-size:13px}.req div b{display:block}.req .miss{background:var(--red-soft);color:var(--red)}
+.aside{border:2px solid var(--violet);border-radius:16px;overflow:hidden;margin-bottom:10px}
+.aside .top{display:flex;gap:14px;padding:14px;align-items:center}.aside .top>div:nth-child(2){flex:1}
+.aside .low{background:var(--violet-soft);padding:12px 14px}
+.lock{width:70px;height:60px;border-radius:8px;background:var(--soft);display:grid;place-items:center;font-size:22px}
+.tl{display:grid;grid-template-columns:70px 1fr 1fr;gap:10px 14px;font-size:14px}
+.tl h4{margin:0;color:var(--muted);font-size:13px;grid-column:2/3}.tl h4+h4{grid-column:3/4}
+.ev{border:1px solid var(--line);border-radius:12px;padding:8px 12px}.ev.v{border:2px solid var(--teal)}.ev.pr{background:var(--accent);color:#fff;border-color:var(--accent)}.ev.bad{background:var(--red-soft);border:2px dashed var(--red)}.ev.nv{border-style:dashed}
+.date{font-weight:600;text-align:right}
+.today{grid-column:1/-1;border-top:2px dotted #d79a1c;color:var(--amber);font-weight:700;font-size:13px}
+.track{position:relative;height:8px;border-radius:9px;background:var(--line);margin:34px 10px 14px}
+.track .f{position:absolute;inset:0 auto 0 0;width:88%;background:var(--accent);border-radius:9px}
+.track span{position:absolute;top:-6px;width:20px;height:20px;border-radius:50%;background:var(--surface);border:3px solid var(--accent)}
+.track span.now{background:var(--accent);left:86%}.track span.x{border:2px dashed var(--red);left:96%}
+.dcards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media (max-width:640px){.dcards{grid-template-columns:1fr}}
+.dcards div{border-radius:12px;padding:10px;background:var(--soft);font-size:13px;color:var(--muted)}.dcards b{display:block;color:var(--ink);font-size:20px}.dcards .p{background:var(--soft)}.dcards .x b{color:var(--red);text-decoration:line-through}.dcards .x{background:var(--red-soft)}
+.pick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+@media (max-width:640px){.pick{grid-template-columns:1fr}}
+.pick label{border:1px solid var(--line);border-radius:12px;padding:12px;cursor:pointer}.pick label:has(input:checked){border:2px solid var(--teal);background:var(--teal-soft)}.pick small{display:block;color:var(--muted)}
+.log .r{display:grid;grid-template-columns:70px 36px 1fr auto;gap:12px;padding:10px 0;border-top:1px solid var(--line);align-items:start}
+.log .r small{color:var(--muted);display:block}.log .tm{color:var(--muted);font-size:13px}
+.log code{display:block;background:var(--soft);padding:4px 8px;border-radius:6px;font-size:12px;margin-top:4px}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.filters button{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:2px 14px;cursor:pointer}.filters .on{border:2px solid var(--accent);font-weight:600}
+.chat{display:flex;flex-direction:column;gap:10px;min-height:560px}
+.ch{display:flex;gap:12px;align-items:center}.ch i{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:grid;place-items:center;font-style:normal}.ch small{display:block;color:var(--muted);line-height:1.3}
+.me{align-self:flex-end;background:var(--bubble);color:#fff;border-radius:16px;padding:8px 14px;max-width:90%}
+.bot{background:var(--soft);border-radius:14px;padding:10px 12px;font-size:14px}.bot small{display:block;color:var(--muted);margin-bottom:2px}
+.sug{display:flex;flex-wrap:wrap;gap:6px}.sug button{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:4px 12px;cursor:pointer;font-size:13px}
+.warn{color:var(--amber);font-size:12px;font-weight:600;margin-top:4px}
+.comp{margin-top:auto;display:flex;gap:8px;border:1px solid var(--line);border-radius:14px;padding:6px}.comp input{flex:1;border:0;background:none;padding:6px;outline:0}.comp button{width:38px;border:0;border-radius:10px;background:var(--accent);color:#fff}
+.view{display:none}.view.on{display:block}
+.drawer{position:fixed;inset:0 0 0 auto;width:min(760px,100%);background:var(--surface);box-shadow:-8px 0 30px rgba(0,0,0,.25);transform:translateX(100%);transition:transform .2s;z-index:10;display:grid;grid-template-columns:1fr 250px;overflow:auto}
+.drawer.open{transform:none}
+@media (max-width:700px){.drawer{grid-template-columns:1fr}}
+.drawer .pg{background:var(--soft);padding:16px}
+.paper{background:#fff;color:#14213a;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.2);overflow:hidden;font-size:12px}
+.paper .bn{background:#14325a;color:#fff;padding:6px 12px;font-size:10px;font-weight:700}.paper .in{padding:12px 16px}
+.paper .ln{display:flex;gap:12px;padding:3px 6px;margin:2px 0;border-radius:4px}.paper .ln b{flex:0 0 120px}
+.paper .hl{background:#fdecc1;outline:2px solid #d79a1c}.paper .hg{outline:1.5px solid #4caf92;background:#eaf7f2}
+.drawer .rd{padding:16px;border-left:1px solid var(--line)}
+.drawer .rd dt{color:var(--muted);font-size:13px}.drawer .rd dd{margin:0 0 8px;font-weight:600}
+.shade{position:fixed;inset:0;background:rgba(10,15,30,.45);display:none;z-index:9}.shade.on{display:block}
+@media (prefers-reduced-motion:no-preference){.stamp,.st.done .c{animation:land .18s ease-out}@keyframes land{from{transform:scale(1.3) rotate(-14deg)}}.file.rd .bar i{animation:sh 1.4s ease-in-out infinite alternate}@keyframes sh{to{width:85%}}}
+</style>
+</head>
+<body data-role="paralegal">
+<header>
+  <div class="logo"><i>CD</i>Case Desk</div>
+  <div class="roles" role="group" aria-label="Role">
+    <button class="role" id="rP" aria-pressed="true">Paralegal<small>prepare cases</small></button>
+    <button class="role" id="rA" aria-pressed="false">Attorney<small>review and decide</small></button>
+  </div>
+  <div class="who"><span>Thursday 23 Oct</span><span id="whoN">Priya S.</span><span class="av" id="whoA">PS</span><button class="hb" id="theme">Theme</button></div>
+</header>
+<main class="shell">
+  <aside class="card" id="queue" aria-label="Case queue"></aside>
+  <section class="card" aria-label="Case view">
+    <div class="head">
+      <div><h1 id="cn"></h1><div class="meta" id="cm"></div></div>
+      <div class="seg" id="tabs" role="tablist"></div>
+    </div>
+    <div id="v-steps" class="view on"><div class="stepper" id="stepper"></div><div class="body"><div id="step"></div><aside class="help" id="help"></aside></div></div>
+    <div id="v-docs" class="view"></div>
+    <div id="v-time" class="view"></div>
+    <div id="v-act" class="view"></div>
+  </section>
+  <aside class="card chat" id="chat" aria-label="Case assistant"></aside>
+</main>
+
+<div class="shade" id="shade"></div>
+<div class="drawer" id="drawer" role="dialog" aria-label="Document viewer">
+  <div class="pg">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><div><b>scan_1_upload.pdf</b><div class="meta">UP-000001 Passport page 1 of 1</div></div><span class="stamp">USABLE</span> <button class="btn" id="close">Close</button></div>
+    <div class="meta" style="margin-bottom:8px">Highlighted: <span class="chip a">used in Facts</span> <span class="chip">read from page</span></div>
+    <div class="paper"><div class="bn">FICTIONAL IMMIGRATION FIRM | HACKATHON TEST DATA</div><div class="in">
+      <h3 style="margin:0 0 8px">Identity / travel document</h3>
+      <div class="ln hl"><b>Applicant:</b>Mira Dhawan</div>
+      <div class="ln"><b>Synthetic Matter:</b>CASE-0001</div>
+      <div class="ln"><b>Reference:</b>DOCREF-000001</div>
+      <div class="ln hg"><b>Document Identifier:</b>SYN-P-00001</div>
+      <div class="ln hg"><b>Date of Birth:</b>1982-04-08</div>
+      <div class="ln"><b>Nationality:</b>Fictional Republic of Testland</div>
+      <div class="ln hg"><b>Expires:</b>2031-03-04</div></div></div>
+    <p class="meta">Rest of page is blank. Text read directly from the PDF, no guessing.</p>
+  </div>
+  <div class="rd"><b>What we read from this page</b>
+    <dl><dt>Applicant (legal name) 99%</dt><dd>Mira Dhawan</dd><dt>Document identifier 99%</dt><dd>SYN-P-00001</dd><dt>Date of birth 99%</dt><dd>1982-04-08</dd><dt>Expires 99%</dt><dd>2031-03-04</dd><dt>Belongs to case</dt><dd>CASE-0001 &#10003;</dd></dl>
+    <b>About this file</b><dl><dt>Detected as</dt><dd>Passport (from content)</dd><dt>Checks</dt><dd>Readable, not expired, right client</dd><dt>Copies</dt><dd>UP-000007 is an exact copy</dd><dt>Fingerprint</dt><dd>572d66d4...e312a0</dd></dl>
+    <button class="btn">Wrong document type?</button></div>
+</div>
+
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)};
+var root=document.documentElement,role='paralegal',tab='steps',cur={paralegal:1,attorney:2},sel={paralegal:0,attorney:0};
+var stamp=function(t,c){return '<span class="stamp '+(c||'')+'">'+t+'</span>'};
+var ref=function(t){return '<span class="ref">'+t+'</span>'};
+var CASES={
+paralegal:{who:['Priya S.','PS'],groups:[
+ ['Working on now',[['MD','Mira Dhawan','0001','Step 2 of 6: check facts','b']]],
+ ['Sent back to you',[['LD','Leena Dhawan','0003','Attorney asked: confirm passport owner','a']]],
+ ['New, not started',[['AD','Ayan Dhawan','0002','Uploaded 6 files, 5 Oct','g'],['KD','Kiran Dhawan','0004','Uploaded 6 files, 6 Oct','g'],['AS','Arun Suri','0006','Uploaded 5 files, 8 Oct','g']]],
+ ['With attorney',[['RS','Riya Suri','0009','Waiting for Anand R.','b']]]],
+ name:'Mira Dhawan',meta:'CASE-0001 &nbsp; Work status renewal &nbsp; Attorney <b>Meena K.</b>',
+ steps:[['Documents','6 OF 6<br>OK','done'],['Facts','1<br>FLAG','issue'],['Form draft'],['Deadlines'],['Client reply'],['Send']]},
+attorney:{who:['Anand R.','AR'],groups:[
+ ['Waiting for your decision',[['RS','Riya Suri','0009','Deadline tomorrow, from Rahul M.','r'],['MD','Mira Dhawan','0001','Name spelling to confirm','a'],['ND','Nila Dhawan','0005','Clean file, from Priya S.','b'],['RS','Ravi Shah','0017','Suspicious text in a letter','r']]],
+ ['Decided this week',[['DS','Devika Suri','0007','Approved yesterday','g'],['LD','Leena Dhawan','0003','Sent back for more info','a']]]],
+ name:'Riya Suri',meta:'CASE-0009 &nbsp; Prepared by <b>Rahul M.</b> &nbsp; Portal status <b>Processing</b> '+ref('EV-0009-2'),
+ steps:[['Overview','READ','done'],['Documents and facts','NO<br>ISSUES','done'],['Deadline'],['Client reply'],['Decision']]}};
+var DOT={b:'',a:'amber',r:'red',g:'green'};
+
+function queue(){var c=CASES[role],h='';
+ if(role==='paralegal')h+='<button class="drop"><i>&#8679;</i><span><b>Upload a new case</b><small>Drop PDFs here or browse</small></span></button>';
+ h+='<input class="search" placeholder="Search by name or case number" aria-label="Search cases">';
+ var k=0;c.groups.forEach(function(g){h+='<div class="grp"><span>'+g[0]+'</span><span>'+g[1].length+'</span></div>';
+  g[1].forEach(function(x){var on=k===sel[role];h+='<button class="case'+(on?' on':'')+'" data-k="'+k+'"><span class="ini">'+x[0]+'</span><span style="flex:1"><b>'+x[1]+'<span>'+x[2]+'</span></b><small><i class="dot '+(x[4]==='g'&&x[3].indexOf('Uploaded')<0?'green':(x[4]==='g'?'grey':DOT[x[4]]))+'"></i>'+x[3]+'</small></span></button>';k++})});
+ $('#queue').innerHTML=h;
+ [].forEach.call(document.querySelectorAll('.case'),function(b){b.onclick=function(){sel[role]=+b.dataset.k;queue()}});}
+
+function steppers(){var c=CASES[role],h='';
+ c.steps.forEach(function(s,i){var isCur=i===cur[role],past=i<cur[role],flag=s[2]==='issue'&&!isCur,stamped=(past||flag)&&!isCur;
+  h+='<button class="st '+(isCur?'cur ':'')+(stamped?(flag?'issue':'done'):'')+'" data-i="'+i+'"><div class="c">'+(stamped?(s[1]||'&#10003;'):(i+1))+'</div>'+s[0]+'</button>'});
+ $('#stepper').innerHTML=h;
+ [].forEach.call(document.querySelectorAll('.st'),function(b){b.onclick=function(){cur[role]=+b.dataset.i;render()}});}
+
+var P={
+ 'paralegal0':function(){return ['Step 1 of 6','Reading Mira\'s documents','Each file is sorted by what is written inside it, not by its file name. Files that can\'t be used are set aside with a reason.',
+  [['scan_1_upload.pdf','UP-000001','Passport, valid to Mar 2031'],['travel_2_upload.pdf','UP-000002','Arrival record, 10 Jun 2025'],['letter_3_upload.pdf','UP-000003','Employer letter, 2 Oct 2026'],['pay_4_upload.pdf','UP-000004','Pay statement, August'],['pay_5_upload.pdf','UP-000005','Pay statement, September']].map(function(f){return '<button class="file" data-doc><span class="pdf">PDF</span><span class="n"><b>'+f[0]+'</b><small>'+f[1]+'</small></span><span class="d">'+f[2]+'</span>'+stamp('USABLE')+'</button>'}).join('')+
+  '<div class="file rd"><span class="pdf">PDF</span><span class="n"><b>notice_6_upload.pdf</b><small>UP-000006</small></span><span class="d">Reading page 1...</span><span class="bar"><i></i></span></div><div class="file wt"><span class="pdf">PDF</span><span class="n"><b>scan_7_upload.pdf</b><small>UP-000007</small></span><span class="d">Waiting</span></div>',
+  'Back','Next: check facts','dis',['Nothing to do yet','This step runs on its own and takes about 20 seconds.','You can ask the case assistant questions while it works.']]},
+ 'paralegal1':function(){return ['Step 2 of 6','Do the facts match?','We compared 9 facts across the passport, the verified profile and the intake call. 8 match. 1 needs your call.',
+  '<div class="alert"><h3>The surname is spelled two ways</h3><div class="three"><div class="src"><small>Passport</small><b>Mira Dhawan</b>'+ref('UP-000001 page 1')+'</div><div class="src"><small>Verified profile, 16 Sep</small><b>Mira Dhawan</b>'+ref('PROFILE full_name')+'</div><div class="src odd"><small>Intake call notes (unverified)</small><b>Mira Dawan</b>'+ref('Z-0001')+'</div></div>'+
+  '<label class="opt"><input type="radio" name="f" checked><span><b>Suggest the passport spelling, Dhawan</b><small>The attorney confirms it before it goes on the form</small></span><span class="why">Client asked for this on 22 Oct</span></label><label class="opt"><input type="radio" name="f"><span><b>Leave it for the attorney to decide</b><small>No suggestion is sent</small></span></label></div>'+
+  '<div class="okrow"><b>Date of birth</b><span>8 Apr 1982</span><span>2 sources agree</span></div><div class="okrow"><b>Last entry</b><span>10 Jun 2025</span><span>3 sources agree</span></div><a class="meta" href="#">Show 6 more matching facts</a>',
+  'Back','Next: form draft','',['Why this matters','A name that doesn\'t match the passport can delay the case. We never pick a spelling on our own.','Ask the assistant "What did the client say about the name?"']]},
+ 'paralegal2':function(){var r=function(a,b,s,c,rf,h){return '<tr class="'+(h?'held':'')+'"><td>'+a+'</td><td>'+b+'</td><td><span class="chip '+(h?'r':'')+'">'+s+'</span></td><td>'+(c?'<span class="conf"><i style="width:'+c+'%"></i></span>'+c+'%':'')+'</td><td>'+rf+'</td></tr>'};
+  return ['Step 3 of 6','Check the form draft','8 of 9 fields are filled, each from a source. Legal name stays empty until the attorney confirms it.',
+  '<div class="draft"><b>DRAFT - NOT FOR FILING</b><span>Review-only worksheet SYN-WORK-RENEWAL-DRAFT-V2. Values can only come from case evidence.</span></div><table><tr><th colspan="5">Applicant details</th></tr>'+
+  r('Legal name','Empty, sources disagree','Held for review','',ref('UP-000001')+ref('Z-0001'),1)+r('Date of birth','1982-04-08','Proposed',97,ref('UP-000001')+ref('PROFILE'))+r('Passport number','SYN-P-00001','Proposed',80,ref('UP-000001'))+r('Passport expiry','2031-03-04','Proposed',80,ref('UP-000001'))+r('Mailing address','101 Invented Way, Unit 2','Proposed',97,ref('PROFILE')+ref('Z-0001'))+
+  '<tr><th colspan="5">Recent travel and employment</th></tr>'+r('Last entry','2025-06-10','Proposed',97,ref('UP-000002'))+r('Employer','Fictional Employer 01 LLC','Proposed',97,ref('UP-000003'))+r('Employment start','2024-05-07','Proposed',97,ref('UP-000003'))+r('Prior receipt','SYN-RCPT-00001','Proposed',97,ref('UP-000006'))+'</table><p><button class="btn">Download JSON</button> <button class="btn">Download PDF</button></p>',
+  'Back','Next: deadlines','',['Why this matters','Every value shows where it came from. A value with no source stays empty.']]},
+ 'paralegal3':function(){return ['Step 4 of 6','Is there a deadline to propose?','Only a verified portal event starts a deadline. This case has none yet.','<div class="okrow"><b>Portal events</b><span>Receipt created, Status: Processing</span><span>No request for evidence</span></div><p class="meta">The deadline step fills in on its own when a verified request arrives.</p>','Back','Next: client reply','',['Why this matters','Calendar entries never set a deadline.']]},
+ 'paralegal4':function(){return ['Step 5 of 6','Client reply','Drafted from the case records. You can edit it before it goes to the attorney.','<div class="src"><span class="stamp amb">DRAFT, NOT SENT</span><p>Hello Mira, thank you for your message. We are checking one spelling detail on your passport and will update you soon. Could you confirm how your surname is written on your passport?</p>'+ref('MSG-0001-4')+ref('UP-000001 page 1')+'<p class="warn">&#9873; Outcome predictions are not given</p></div>','Back','Next: send','',['Why this matters','Nothing is sent from this app. The attorney approves the wording first.']]},
+ 'paralegal5':function(){return ['Step 6 of 6','Send to the attorney','Check the summary, then pick who reviews it.','<div class="okrow"><b>Documents</b><span>6 OF 6 OK</span><span><a href="#">Edit</a></span></div><div class="okrow"><b>Facts</b><span>1 flag, name spelling</span><span><a href="#">Edit</a></span></div><div class="okrow"><b>Form draft</b><span>8 of 9 fields</span><span><a href="#">Edit</a></span></div><div class="okrow"><b>Client reply</b><span>Draft, not sent</span><span><a href="#">Edit</a></span></div><label class="meta">Attorney <select><option>Meena K.</option><option>Anand R.</option></select></label><p><textarea style="width:100%;border:1px solid var(--line);border-radius:12px;padding:10px;background:var(--surface)" rows="3" placeholder="Note for the attorney">Please confirm the surname spelling.</textarea></p>','Back','Send to Meena K. for review','',['Why this matters','Nothing is applied until an attorney approves it.']]},
+ 'attorney0':function(){return ['Step 1 of 5','Overview','Rahul prepared this case on 23 Oct.','<div class="okrow"><b>Documents</b><span>6 of 6 usable</span><span>No issues</span></div><div class="okrow"><b>Facts</b><span>9 of 9 match</span><span>No issues</span></div><div class="okrow"><b>Deadline</b><span>24 Oct proposed</span><span>Needs you</span></div><div class="okrow"><b>Client reply</b><span>Draft, not sent</span><span>Needs you</span></div>','Back','Next: documents and facts','',['Your decisions so far','Nothing is saved until you finish step 5.']]},
+ 'attorney1':function(){return ['Step 2 of 5','Documents and facts look right?','Open any file to see what was read and where.','<button class="file" data-doc><span class="pdf">PDF</span><span class="n"><b>file_1.pdf</b><small>UP-000041</small></span><span class="d">Passport</span>'+stamp('USABLE')+'</button><button class="file" data-doc><span class="pdf">PDF</span><span class="n"><b>file_2.pdf</b><small>UP-000042</small></span><span class="d">Arrival record</span>'+stamp('USABLE')+'</button>','Back','Next: deadline','',['Your decisions so far','Nothing is saved until you finish step 5.']]},
+ 'attorney2':function(){return ['Step 3 of 5','Is 24 October the right deadline?','The portal recorded a request for more evidence on 14 Oct. The firm\'s rule gives 10 calendar days. The office calendar shows a different date that did not come from the portal.',
+  '<div class="card" style="border:1px solid var(--line);box-shadow:none"><div class="track"><div class="f"></div><span style="left:0"></span><span class="now"></span><span class="x"></span></div><div class="dcards"><div>Request received (portal, verified)<b>14 Oct 2026</b>'+ref('EV-0009-RFE')+'</div><div class="p">Proposed deadline, request + 10 days<b>24 Oct 2026, tomorrow</b>Rule SYN-DEADLINE-V1</div><div class="x">Office calendar (typed by hand)<b>27 Oct 2026</b>'+ref('EV-0009-CAL')+'</div></div></div>'+
+  '<div class="pick"><label><input type="radio" name="d" checked> <b>Approve 24 Oct</b><small>Activates the deadline and marks the calendar entry as wrong</small></label><label><input type="radio" name="d"> <b>Use a different date</b><small>You must give a reason</small></label><label><input type="radio" name="d"> <b>Ask Rahul</b><small>Send back with a question</small></label></div>','Back','Next: client reply','',['Your decisions so far','&#10003; Documents and facts look right','&#9675; Deadline','&#9675; Client reply','Nothing is saved until you finish step 5.']]},
+ 'attorney3':function(){return ['Step 4 of 5','Client reply','Check the wording. Nothing is sent from this app.','<div class="src"><span class="stamp amb">DRAFT, NOT SENT</span><p>Hello Riya, we received your request. The portal status is Processing. We cannot estimate a decision date.</p>'+ref('EV-0009-2')+ref('EV-0009-RFE')+'<p class="warn">&#9873; Outcome predictions are not given</p></div>','Back','Next: decision','',['Your decisions so far','Nothing is saved until you finish step 5.']]},
+ 'attorney4':function(){return ['Step 5 of 5','Your decision','Choose one. Your reason is saved in the activity log.','<div class="pick"><label><input type="radio" name="x" checked> <b>Approve</b><small>Deadline 24 Oct and reply</small></label><label><input type="radio" name="x"> <b>Reject</b><small>A reason is required</small></label><label><input type="radio" name="x"> <b>Ask for more info</b><small>From the client or the paralegal</small></label></div>','Back','Save my decision','g',['Your decisions so far','Included: deadline 24 Oct, client reply draft.']]}};
+
+function step(){var f=P[role+cur[role]];if(!f){$('#step').innerHTML='';return}
+ var d=f(),last=cur[role]===CASES[role].steps.length-1;
+ $('#step').innerHTML='<div class="kick">'+d[0]+'</div><h2 class="t">'+d[1]+'</h2><p class="lead">'+d[2]+'</p>'+d[3]+'<div class="foot"><button class="btn" id="bk">&larr; '+d[4]+'</button><span>'+(d[6]==='dis'?'You can continue when reading finishes':'')+'</span><button class="btn '+(d[6]==='g'?'g':'p')+'" id="nx" '+(d[6]==='dis'?'disabled':'')+'>'+d[5]+(last?'':' &rarr;')+'</button></div>';
+ $('#help').innerHTML='<b>'+d[7][0]+'</b>'+d[7].slice(1).map(function(x){return '<p>'+x+'</p>'}).join('');
+ $('#bk').onclick=function(){cur[role]=Math.max(0,cur[role]-1);render()};
+ $('#nx').onclick=function(){if(!last){cur[role]++;render()}};
+ [].forEach.call(document.querySelectorAll('[data-doc]'),function(b){b.onclick=openDoc});}
+
+function docs(){$('#v-docs').innerHTML='<h2 class="t">6 files uploaded, 5 can be used</h2><p class="lead">One file belongs to a different client, so the passport is still missing.</p><div class="req"><div class="miss"><b>&#10005; Passport</b>missing</div><div><b>&#10003; Arrival record</b>UP-000014</div><div><b>&#10003; Employer letter</b>UP-000015</div><div><b>&#10003; Pay, August</b>UP-000016</div><div><b>&#10003; Pay, September</b>UP-000017</div><div><b>&#10003; Prior notice</b>UP-000018</div></div>'+
+ '<div class="aside"><div class="top"><div class="lock">&#128274;</div><div><b>file_6.pdf</b> <span class="meta">UP-000019, uploaded by client 4 Oct</span><br>The pages name a different client and case. To protect that client, their details are hidden and the file can\'t be used here.</div>'+stamp('WRONG CLIENT','vio')+'</div><div class="low"><p class="meta">Leena wrote on 21 Oct: "I might have dragged a passport from a shared folder by accident. Can you check which person it belongs to?" '+ref('MSG-0003-4')+'</p><button class="btn p">Ask Leena for her own passport</button> <button class="btn">Report misfiled upload</button> <button class="btn" style="border:0">Keep set aside</button></div></div>'+
+ '<p class="meta">Other reasons a file is set aside: '+['Duplicate','Unreadable','Rotated scan','Expired','Older version','Needs translation','Mixed clients by page','Suspicious text'].map(function(x){return '<span class="chip n">'+x+'</span> '}).join('')+'</p>'}
+
+function time(){$('#v-time').innerHTML='<h2 class="t">Case timeline</h2><p class="lead">Only verified portal events can set a deadline. Calendar entries are shown for comparison.</p><div class="tl"><span></span><h4>Government portal</h4><h4>Office calendar</h4>'+
+ '<span class="date">9 Sep</span><div class="ev v"><b>Receipt created</b><br>SYN-RCPT-00009 '+ref('EV-0009-1')+'</div><span></span>'+
+ '<span class="date">14 Oct</span><div class="ev v"><b>Request for more evidence</b><br>Starts the 10-day clock '+ref('EV-0009-RFE')+'</div><span></span>'+
+ '<span class="date">15 Oct</span><div class="ev v"><b>Status: Processing</b><br>No decision estimate given '+ref('EV-0009-2')+'</div><span></span>'+
+ '<div class="today">Today 23 Oct</div>'+
+ '<span class="date">24 Oct</span><div class="ev pr"><b>Evidence deadline (proposed)</b><br>14 Oct + 10 days, waiting for your approval<br>SYN-DEADLINE-V1</div><span></span>'+
+ '<span class="date">27 Oct</span><span></span><div class="ev bad"><b><s>"Deadline"</s></b><br>Typed by hand, does not match the portal '+ref('EV-0009-CAL')+'</div>'+
+ '<span class="date">30 Oct</span><span></span><div class="ev nv"><b>Internal follow-up reminder</b><br>Not a government date '+ref('CAL-0009')+'</div></div>'}
+
+function act(){var R=[['14:43:10','RM','Rahul M. clicked Apply again','Same change key as 14:43:02, so nothing changed.','Duplicate ignored','n'],['14:43:02','RM','Rahul M. applied 4 approved changes','Deadline active 24 Oct. Calendar entry marked wrong. Reply approved. Stage changed.','Applied','v'],['14:41:37','AR','Anand R. approved ACT-000014','"Portal date is verified. The calendar entry was typed by hand. Use 24 Oct."','Approved',''],['14:36:05','RM','Rahul M. tried to approve the deadline','Only an attorney can approve deadlines. Nothing changed.','Refused','r'],['14:30:48','RM','Rahul M. sent the case to Anand R. for review','Proposed: deadline 24 Oct, reply to Riya','Proposed','v'],['14:29:12','AI','Case assistant drafted the reply to Riya','Sources EV-0009-2, EV-0009-RFE. No outcome prediction.','AI draft','n'],['14:21:03','SY','Analysis run 1 finished','6 of 6 documents usable. Deadline 24 Oct proposed. Calendar disagrees.<code>rule SYN-DEADLINE-V1: EV-0009-RFE 2026-10-14 + 10 days = 2026-10-24</code>','Analysis','n'],['14:20:30','SY','2 new events imported','EV-0009-RFE from the portal (verified). EV-0009-CAL from the calendar (not verified).','Data import','a']];
+ $('#v-act').innerHTML='<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><div><h2 class="t">Everything that happened on this case</h2><p class="lead">Every action is recorded here and can\'t be edited or deleted.</p></div><div><button class="btn">Download log</button> <button class="btn g" id="vf">Verify chain</button></div></div><div id="vr" class="meta"></div><div class="filters"><button class="on">All 8</button><button>Decisions 2</button><button>Refused 1</button><button>Analysis 1</button><button>Data imports 1</button></div><div class="log">'+
+ R.map(function(r){return '<div class="r"><span class="tm">'+r[0]+'</span><span class="ini">'+r[1]+'</span><span><b>'+r[2]+'</b><small>'+r[3]+'</small></span><span class="chip '+r[5]+'">'+r[4]+'</span></div>'}).join('')+'</div>';
+ $('#vf').onclick=function(){$('#vr').innerHTML='<span class="chip">Chain valid</span> 14 entries checked. Each entry links to the one before it.'}}
+
+function chatPane(){var P1=role==='paralegal';
+ $('#chat').innerHTML='<div class="ch"><i>&#10022;</i><div><b>Case assistant</b><small>Answers from this case\'s records only, with sources</small></div></div><div class="seg"><button aria-selected="true" style="flex:1">Chat</button><button aria-selected="false" style="flex:1">Earlier chats (3)</button></div>'+
+ (P1?'<div class="meta" style="text-align:center">Today 14:20</div><div class="me">What did the client say about the name?</div><div class="bot"><small>Assistant</small>On 22 Oct Mira emailed: "Zoom transcription of my surname may be wrong. It might be Dawan or Dhawan. Please use the correct passport spelling after checking." '+ref('MSG-0001-4')+'</div><div class="me">Will her case be approved?</div><div class="bot"><small>Assistant</small>I can\'t predict outcomes. The latest portal status is Processing (15 Oct), with no decision estimate. '+ref('EV-0001-2')+'<div class="warn">&#9873; Outcome predictions are not given</div></div><div class="sug"><button>Summarise this case</button><button>Which file was set aside?</button></div>'
+ :'<div class="meta" style="text-align:center">Today 14:24</div><div class="me">Why not 27 Oct like the calendar?</div><div class="bot"><small>Assistant</small>The 27 Oct entry was typed into the office calendar by hand and is not from the portal. Deadlines are only set from verified portal events: 14 Oct + 10 days = <b>24 Oct</b>. '+ref('EV-0009-RFE')+ref('EV-0009-CAL')+'</div><div class="me">Did Riya ask about this?</div><div class="bot"><small>Assistant</small>Yes, on 22 Oct: "I saw a different deadline in the calendar. Which date is correct?" You\'ll review the reply in step 4. '+ref('MSG-0009-4')+'</div><div class="sug"><button>Any other open issues?</button><button>Show the form draft</button></div>')+
+ '<div class="comp"><input placeholder="Ask anything about this case..." aria-label="Ask"><button aria-label="Send question">&uarr;</button></div>'}
+
+function render(){
+ root.dataset.role=role;var c=CASES[role];
+ $('#rP').setAttribute('aria-pressed',role==='paralegal');$('#rA').setAttribute('aria-pressed',role==='attorney');
+ $('#whoN').textContent=c.who[0];$('#whoA').textContent=c.who[1];
+ $('#cn').textContent=c.name;$('#cm').innerHTML=c.meta;
+ $('#tabs').innerHTML=['steps','docs','time','act'].map(function(t,i){return '<button role="tab" data-t="'+t+'" aria-selected="'+(tab===t)+'">'+['Steps','Documents','Timeline','Activity'][i]+'</button>'}).join('');
+ [].forEach.call(document.querySelectorAll('#tabs button'),function(b){b.onclick=function(){tab=b.dataset.t;render()}});
+ ['steps','docs','time','act'].forEach(function(t){$('#v-'+t).classList.toggle('on',t===tab)});
+ queue();steppers();step();docs();time();act();chatPane();}
+function openDoc(){$('#drawer').classList.add('open');$('#shade').classList.add('on')}
+function closeDoc(){$('#drawer').classList.remove('open');$('#shade').classList.remove('on')}
+$('#close').onclick=closeDoc;$('#shade').onclick=closeDoc;
+$('#rP').onclick=function(){role='paralegal';render()};$('#rA').onclick=function(){role='attorney';render()};
+$('#theme').onclick=function(){root.dataset.theme=root.dataset.theme==='dark'?'light':'dark'};
+render();
+})();
+</script>
+</body>
+</html>

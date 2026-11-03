@@ -1,0 +1,380 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 2060" width="1500" height="2060" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <marker id="arrowc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7C5CD6"/>
+    </marker>
+    <style>
+      .bg { fill: #F8FAFC; }
+      .code { fill: #EAF2FF; stroke: #3B7DD8; stroke-width: 1.6; }
+      .claude { fill: #F3EEFF; stroke: #7C5CD6; stroke-width: 1.6; }
+      .human { fill: #FFF4E0; stroke: #D98E04; stroke-width: 1.6; }
+      .ok { fill: #E7F7EE; stroke: #16A34A; stroke-width: 1.6; }
+      .claim { fill: #F1F5F9; stroke: #64748B; stroke-width: 1.6; }
+      .stop { fill: #FDECEC; stroke: #DC2626; stroke-width: 1.6; }
+      .term { fill: #1F2937; }
+      .panel { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.2; }
+      .sub-graph { fill: #FBFAFF; stroke: #7C5CD6; stroke-width: 1.4; stroke-dasharray: 6 4; }
+      .t { font-family: JetBrains Mono, Consolas, Menlo, monospace; font-size: 14px; font-weight: 700; fill: #0F172A; text-anchor: middle; }
+      .s { font-size: 11px; fill: #334155; text-anchor: middle; }
+      .tl { font-size: 12px; fill: #334155; }
+      .h { font-size: 16px; font-weight: 700; fill: #0F172A; }
+      .title { font-size: 22px; font-weight: 800; fill: #0F172A; }
+      .tw { font-family: JetBrains Mono, Consolas, Menlo, monospace; font-size: 13px; font-weight: 700; fill: #FFFFFF; text-anchor: middle; }
+      .e { fill: none; stroke: #475569; stroke-width: 1.6; }
+      .ec { fill: none; stroke: #475569; stroke-width: 1.6; stroke-dasharray: 6 4; }
+      .el { fill: none; stroke: #7C5CD6; stroke-width: 1.6; stroke-dasharray: 6 4; }
+      .lbl { font-size: 11px; fill: #1E293B; font-style: italic; }
+      .lblbg { fill: #F8FAFC; }
+      .audit { fill: #10B981; stroke: #FFFFFF; stroke-width: 1.5; }
+      .mono { font-family: JetBrains Mono, Consolas, Menlo, monospace; font-size: 11px; fill: #334155; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1500" height="2060"/>
+
+  <!-- ============ MAIN GRAPH: edges ============ -->
+  <!-- START to ingest -->
+  <path class="e" d="M470,80 L470,108" marker-end="url(#arrow)"/>
+  <!-- rerun trigger to ingest -->
+  <path class="ec" d="M260,138 L318,138" marker-end="url(#arrow)"/>
+  <path class="e" d="M470,166 L470,198" marker-end="url(#arrow)"/>
+  <path class="e" d="M470,256 L470,288" marker-end="url(#arrow)"/>
+  <path class="e" d="M470,346 L470,378" marker-end="url(#arrow)"/>
+  <path class="e" d="M470,436 L470,464" marker-end="url(#arrow)"/>
+  <!-- gate1 to classify -->
+  <path class="ec" d="M470,534 L470,588" marker-end="url(#arrow)"/>
+  <rect class="lblbg" x="478" y="552" width="150" height="16"/>
+  <text class="lbl" x="482" y="564">readable, own client, new</text>
+  <!-- gate1 skip to decide -->
+  <path class="ec" d="M580,500 L700,500 L700,898 L622,898" marker-end="url(#arrow)"/>
+  <rect class="lblbg" x="708" y="640" width="150" height="46"/>
+  <text class="lbl" x="712" y="652">blank, rotated, duplicate</text>
+  <text class="lbl" x="712" y="666">or another client's pages:</text>
+  <text class="lbl" x="712" y="680">skip Claude</text>
+  <path class="e" d="M470,646 L470,678" marker-end="url(#arrow)"/>
+  <path class="e" d="M470,736 L470,768" marker-end="url(#arrow)"/>
+  <path class="e" d="M470,826 L470,868" marker-end="url(#arrow)"/>
+  <!-- decide fan out -->
+  <path class="ec" d="M440,926 L440,946 L190,946 L190,978" marker-end="url(#arrow)"/>
+  <path class="ec" d="M470,926 L470,978" marker-end="url(#arrow)"/>
+  <path class="ec" d="M500,926 L500,946 L750,946 L750,978" marker-end="url(#arrow)"/>
+  <rect class="lblbg" x="230" y="950" width="64" height="16"/>
+  <text class="lbl" x="234" y="962">evidence</text>
+  <rect class="lblbg" x="476" y="954" width="44" height="16"/>
+  <text class="lbl" x="480" y="966">claim</text>
+  <rect class="lblbg" x="610" y="950" width="100" height="16"/>
+  <text class="lbl" x="614" y="962">not usable</text>
+  <!-- outcomes converge -->
+  <path class="e" d="M190,1044 L190,1064 L440,1064 L440,1088" marker-end="url(#arrow)"/>
+  <path class="e" d="M470,1044 L470,1088" marker-end="url(#arrow)"/>
+  <path class="e" d="M750,1044 L750,1064 L500,1064 L500,1088" marker-end="url(#arrow)"/>
+  <path class="e" d="M470,1146 L470,1188" marker-end="url(#arrow)"/>
+  <!-- starter kit to facts -->
+  <path class="e" d="M270,1218 L318,1218" marker-end="url(#arrow)"/>
+  <path class="e" d="M470,1246 L470,1274" marker-end="url(#arrow)"/>
+  <!-- gate2 -->
+  <path class="ec" d="M580,1310 L628,1310" marker-end="url(#arrow)"/>
+  <rect class="lblbg" x="586" y="1286" width="40" height="16"/>
+  <text class="lbl" x="588" y="1298">yes</text>
+  <path class="e" d="M750,1338 L750,1366" marker-end="url(#arrow)"/>
+  <path class="e" d="M750,1422 L750,1478 L622,1478" marker-end="url(#arrow)"/>
+  <path class="ec" d="M470,1344 L470,1448" marker-end="url(#arrow)"/>
+  <rect class="lblbg" x="478" y="1388" width="70" height="16"/>
+  <text class="lbl" x="482" y="1400">no conflict</text>
+  <!-- proposals fan out -->
+  <path class="e" d="M440,1506 L440,1530 L150,1530 L150,1558" marker-end="url(#arrow)"/>
+  <path class="e" d="M460,1506 L460,1530 L370,1530 L370,1558" marker-end="url(#arrow)"/>
+  <path class="e" d="M480,1506 L480,1530 L590,1530 L590,1558" marker-end="url(#arrow)"/>
+  <path class="e" d="M500,1506 L500,1530 L810,1530 L810,1558" marker-end="url(#arrow)"/>
+  <!-- generators converge -->
+  <path class="e" d="M150,1624 L150,1652 L440,1652 L440,1678" marker-end="url(#arrow)"/>
+  <path class="e" d="M370,1624 L370,1652" />
+  <path class="e" d="M590,1624 L590,1652" />
+  <path class="e" d="M810,1624 L810,1652 L500,1652 L500,1678" marker-end="url(#arrow)"/>
+  <path class="e" d="M470,1736 L470,1774" marker-end="url(#arrow)"/>
+  <!-- legal review routes -->
+  <path class="ec" d="M470,1846 L470,1898" marker-end="url(#arrow)"/>
+  <rect class="lblbg" x="478" y="1862" width="60" height="16"/>
+  <text class="lbl" x="482" y="1874">approve</text>
+  <path class="ec" d="M360,1810 L292,1810" marker-end="url(#arrow)"/>
+  <rect class="lblbg" x="304" y="1786" width="40" height="16"/>
+  <text class="lbl" x="306" y="1798">reject</text>
+  <path class="ec" d="M580,1810 L648,1810" marker-end="url(#arrow)"/>
+  <rect class="lblbg" x="586" y="1786" width="62" height="16"/>
+  <text class="lbl" x="588" y="1798">send back</text>
+  <!-- send back loops to propose -->
+  <path class="ec" d="M870,1810 L900,1810 L900,1708 L622,1708" marker-end="url(#arrow)"/>
+  <rect class="lblbg" x="760" y="1692" width="128" height="16"/>
+  <text class="lbl" x="764" y="1704">OPS revises, proposes</text>
+  <!-- commit and reject to END -->
+  <path class="e" d="M470,1956 L470,1978" marker-end="url(#arrow)"/>
+  <path class="e" d="M180,1838 L180,2000 L408,2000" marker-end="url(#arrow)"/>
+
+  <!-- ============ MAIN GRAPH: nodes ============ -->
+  <!-- START -->
+  <rect class="term" x="410" y="40" width="120" height="40" rx="20"/>
+  <text class="tw" x="470" y="65">__start__</text>
+
+  <!-- rerun trigger -->
+  <rect class="claim" x="40" y="110" width="220" height="56" rx="10"/>
+  <text class="t" x="150" y="133">new_input</text>
+  <text class="s" x="150" y="152">upload, message or event: rerun</text>
+
+  <g><rect class="code" x="320" y="110" width="300" height="56" rx="10"/>
+    <text class="t" x="470" y="133">ingest_files</text>
+    <text class="s" x="470" y="152">OPS only, sha256 hash, store file, PENDING</text>
+    <circle class="audit" cx="610" cy="120" r="6"/></g>
+
+  <g><rect class="code" x="320" y="200" width="300" height="56" rx="10"/>
+    <text class="t" x="470" y="223">claim_upload</text>
+    <text class="s" x="470" y="242">PENDING to READING, one reader at a time</text></g>
+
+  <g><rect class="code" x="320" y="290" width="300" height="56" rx="10"/>
+    <text class="t" x="470" y="313">load_pages</text>
+    <text class="s" x="470" y="332">PDF text layer, render poor pages to images</text></g>
+
+  <g><rect class="code" x="320" y="380" width="300" height="56" rx="10"/>
+    <text class="t" x="470" y="403">check_pages</text>
+    <text class="s" x="470" y="422">page owner, exact duplicate, blank or rotated</text></g>
+
+  <!-- gate 1 -->
+  <polygon class="code" points="470,466 580,500 470,534 360,500"/>
+  <text class="t" x="470" y="505">route_read</text>
+
+  <g><rect class="claude" x="320" y="590" width="300" height="56" rx="10"/>
+    <text class="t" x="470" y="613">classify</text>
+    <text class="s" x="470" y="632">prompt classify, untrusted data envelope</text></g>
+
+  <g><rect class="claude" x="320" y="680" width="300" height="56" rx="10"/>
+    <text class="t" x="470" y="703">read_by_category</text>
+    <text class="s" x="470" y="722">read_passport, read_pay_statement ... vision</text></g>
+
+  <g><rect class="code" x="320" y="770" width="300" height="56" rx="10"/>
+    <text class="t" x="470" y="793">verify_quotes</text>
+    <text class="s" x="470" y="812">quote must exist on the cited page</text></g>
+
+  <g><rect class="code" x="320" y="870" width="300" height="56" rx="10"/>
+    <text class="t" x="470" y="893">decide_outcome</text>
+    <text class="s" x="470" y="912">document rules and cross checks, by code</text></g>
+
+  <!-- outcomes -->
+  <g><rect class="ok" x="70" y="980" width="240" height="64" rx="10"/>
+    <text class="t" x="190" y="1004">USABLE</text>
+    <text class="s" x="190" y="1022">evidence for the fact table</text></g>
+  <g><rect class="claim" x="350" y="980" width="240" height="64" rx="10"/>
+    <text class="t" x="470" y="1004">CLAIM_SOURCE</text>
+    <text class="s" x="470" y="1022">messages and notes kept as claims</text></g>
+  <g><rect class="stop" x="630" y="980" width="240" height="64" rx="10"/>
+    <text class="t" x="750" y="1000">needs_a_person</text>
+    <text class="s" x="750" y="1017">INVALID, SUPERSEDED, DUPLICATE,</text>
+    <text class="s" x="750" y="1032">QUARANTINED, NEEDS_HUMAN_REVIEW</text></g>
+
+  <g><rect class="code" x="320" y="1090" width="300" height="56" rx="10"/>
+    <text class="t" x="470" y="1113">persist_and_audit</text>
+    <text class="s" x="470" y="1132">pages, reads, outcome, one transaction</text>
+    <circle class="audit" cx="610" cy="1100" r="6"/></g>
+
+  <!-- starter kit -->
+  <rect class="claim" x="40" y="1190" width="230" height="56" rx="10"/>
+  <text class="t" x="155" y="1213">starter_kit</text>
+  <text class="s" x="155" y="1232">profiles, Zoom, messages, events</text>
+
+  <g><rect class="code" x="320" y="1190" width="300" height="56" rx="10"/>
+    <text class="t" x="470" y="1213">rebuild_facts</text>
+    <text class="s" x="470" y="1232">one fact per source, kind, quote and page</text>
+    <circle class="audit" cx="610" cy="1200" r="6"/></g>
+
+  <!-- gate 2 -->
+  <polygon class="code" points="470,1276 580,1310 470,1344 360,1310"/>
+  <text class="t" x="470" y="1315">conflict?</text>
+
+  <g><rect class="claude" x="630" y="1282" width="240" height="56" rx="10"/>
+    <text class="t" x="750" y="1305">explain_conflicts</text>
+    <text class="s" x="750" y="1324">prompt case_consistency, cached</text></g>
+
+  <g><rect class="code" x="630" y="1368" width="240" height="56" rx="10"/>
+    <text class="t" x="750" y="1391">open_review_request</text>
+    <text class="s" x="750" y="1410">cite both sides, claim stays claim</text>
+    <circle class="audit" cx="860" cy="1378" r="6"/></g>
+
+  <g><rect class="code" x="320" y="1450" width="300" height="56" rx="10"/>
+    <text class="t" x="470" y="1473">build_proposals</text>
+    <text class="s" x="470" y="1492">idempotency key, skip prior rejections</text></g>
+
+  <!-- generators -->
+  <g><rect class="code" x="50" y="1560" width="200" height="64" rx="10"/>
+    <text class="t" x="150" y="1582">deadline</text>
+    <text class="s" x="150" y="1599">verified portal event</text>
+    <text class="s" x="150" y="1613">plus 10 days, SYN-DEADLINE-V1</text></g>
+  <g><rect class="code" x="270" y="1560" width="200" height="64" rx="10"/>
+    <text class="t" x="370" y="1582">form_draft</text>
+    <text class="s" x="370" y="1599">cited values or unknown</text>
+    <text class="s" x="370" y="1613">NOT FOR FILING</text></g>
+  <g><rect class="code" x="490" y="1560" width="200" height="64" rx="10"/>
+    <text class="t" x="590" y="1582">packet_index</text>
+    <text class="s" x="590" y="1599">checklist and packet</text>
+    <text class="s" x="590" y="1613">from USABLE documents</text></g>
+  <g><rect class="claude" x="710" y="1560" width="200" height="64" rx="10"/>
+    <text class="t" x="810" y="1582">client_reply</text>
+    <text class="s" x="810" y="1599">client_triage labels only</text>
+    <text class="s" x="810" y="1613">template text, DRAFT_NOT_SENT</text></g>
+
+  <g><rect class="human" x="320" y="1680" width="300" height="56" rx="10"/>
+    <text class="t" x="470" y="1703">propose (OPS)</text>
+    <text class="s" x="470" y="1722">status PENDING_LEGAL_REVIEW</text>
+    <circle class="audit" cx="610" cy="1690" r="6"/></g>
+
+  <!-- gate 3 -->
+  <polygon class="human" points="470,1776 580,1810 470,1844 360,1810"/>
+  <text class="t" x="470" y="1815">LEGAL review</text>
+  <circle class="audit" cx="545" cy="1790" r="6"/>
+
+  <g><rect class="stop" x="70" y="1782" width="220" height="56" rx="10"/>
+    <text class="t" x="180" y="1805">REJECTED</text>
+    <text class="s" x="180" y="1824">permanent until a person changes it</text></g>
+
+  <g><rect class="human" x="650" y="1782" width="220" height="56" rx="10"/>
+    <text class="t" x="760" y="1805">SENT_BACK</text>
+    <text class="s" x="760" y="1824">note or new date back to OPS</text>
+    <circle class="audit" cx="860" cy="1792" r="6"/></g>
+
+  <g><rect class="human" x="320" y="1900" width="300" height="56" rx="10"/>
+    <text class="t" x="470" y="1923">commit (OPS)</text>
+    <text class="s" x="470" y="1942">refused unless APPROVED, then COMMITTED</text>
+    <circle class="audit" cx="610" cy="1910" r="6"/></g>
+
+  <!-- END -->
+  <rect class="term" x="410" y="1980" width="120" height="40" rx="20"/>
+  <text class="tw" x="470" y="2005">__end__</text>
+
+  <!-- ============ RIGHT COLUMN ============ -->
+  <!-- title and legend -->
+  <rect class="panel" x="960" y="30" width="510" height="220" rx="12"/>
+  <text class="title" x="980" y="64">Immigration Case Co-Pilot</text>
+  <text class="tl" x="980" y="86">Current case pipeline drawn as a state graph</text>
+  <rect class="claude" x="980" y="104" width="22" height="16" rx="4"/>
+  <text class="tl" x="1010" y="117">Claude node, returns JSON only</text>
+  <rect class="code" x="980" y="130" width="22" height="16" rx="4"/>
+  <text class="tl" x="1010" y="143">Deterministic code node</text>
+  <rect class="human" x="980" y="156" width="22" height="16" rx="4"/>
+  <text class="tl" x="1010" y="169">Human decision node</text>
+  <rect class="ok" x="1230" y="104" width="22" height="16" rx="4"/>
+  <text class="tl" x="1260" y="117">Usable outcome</text>
+  <rect class="stop" x="1230" y="130" width="22" height="16" rx="4"/>
+  <text class="tl" x="1260" y="143">Stopped for a person</text>
+  <rect class="claim" x="1230" y="156" width="22" height="16" rx="4"/>
+  <text class="tl" x="1260" y="169">Claim or outside input</text>
+  <path class="e" d="M980,196 L1030,196" marker-end="url(#arrow)"/>
+  <text class="tl" x="1040" y="200">normal edge</text>
+  <path class="ec" d="M1140,196 L1190,196" marker-end="url(#arrow)"/>
+  <text class="tl" x="1200" y="200">conditional edge</text>
+  <circle class="audit" cx="988" cy="226" r="6"/>
+  <text class="tl" x="1000" y="230">writes a line to the audit ledger through audit.record()</text>
+
+  <!-- prompt registry -->
+  <rect class="panel" x="960" y="280" width="510" height="200" rx="12"/>
+  <text class="h" x="980" y="310">Prompt registry (database)</text>
+  <text class="mono" x="980" y="336">classify, read_passport, read_employer_letter,</text>
+  <text class="mono" x="980" y="352">read_pay_statement, read_prior_notice, read_generic,</text>
+  <text class="mono" x="980" y="368">read_zoom_notes, read_whatsapp_chat, read_email_message,</text>
+  <text class="mono" x="980" y="384">case_consistency, client_triage, case_investigate</text>
+  <text class="tl" x="980" y="412">Versioned. Model and effort live in the registry, not in code.</text>
+  <text class="tl" x="980" y="430">Results cached by file sha256 plus prompt version.</text>
+  <text class="tl" x="980" y="448">stop_reason is checked. Refusal or failure goes to human review.</text>
+  <text class="tl" x="980" y="466">Every call is logged in prompt_runs.</text>
+
+  <!-- investigate subgraph -->
+  <rect class="sub-graph" x="960" y="510" width="510" height="490" rx="14"/>
+  <text class="h" x="980" y="540">investigate (read-only agent loop)</text>
+  <text class="tl" x="980" y="560">Max 6 rounds, 80k tokens. No tool can change state.</text>
+
+  <g><rect class="human" x="1080" y="580" width="260" height="50" rx="10"/>
+    <text class="t" x="1210" y="602">ask</text>
+    <text class="s" x="1210" y="619">"Why is this blocked?" panel</text></g>
+  <path class="e" d="M1210,630 L1210,668" marker-end="url(#arrow)"/>
+
+  <g><rect class="claude" x="1080" y="670" width="260" height="56" rx="10"/>
+    <text class="t" x="1210" y="693">agent</text>
+    <text class="s" x="1210" y="712">prompt case_investigate</text></g>
+
+  <path class="el" d="M1150,726 L1150,798" marker-end="url(#arrowc)"/>
+  <rect class="lblbg" x="1084" y="752" width="60" height="16"/>
+  <text class="lbl" x="1088" y="764">tool_use</text>
+  <path class="el" d="M1270,798 L1270,728" marker-end="url(#arrowc)"/>
+  <rect class="lblbg" x="1276" y="752" width="70" height="16"/>
+  <text class="lbl" x="1280" y="764">tool_result</text>
+
+  <g><rect class="code" x="1000" y="800" width="340" height="100" rx="10"/>
+    <text class="t" x="1170" y="822">tools</text>
+    <text class="mono" x="1170" y="842" text-anchor="middle">list_documents, get_checklist,</text>
+    <text class="mono" x="1170" y="857" text-anchor="middle">list_facts_and_conflicts, list_events,</text>
+    <text class="mono" x="1170" y="872" text-anchor="middle">list_communications, get_audit_tail,</text>
+    <text class="mono" x="1170" y="887" text-anchor="middle">get_exceptions, compare_*, add_days</text></g>
+
+  <path class="ec" d="M1340,698 L1420,698 L1420,948 L1342,948" marker-end="url(#arrow)"/>
+  <rect class="lblbg" x="1380" y="800" width="64" height="16"/>
+  <text class="lbl" x="1384" y="812">end_turn</text>
+
+  <g><rect class="code" x="1080" y="920" width="260" height="56" rx="10"/>
+    <text class="t" x="1210" y="943">answer</text>
+    <text class="s" x="1210" y="962">check cited ids, fallback if invalid</text>
+    <circle class="audit" cx="1330" cy="930" r="6"/></g>
+
+  <!-- audit ledger -->
+  <rect class="panel" x="960" y="1040" width="510" height="300" rx="12"/>
+  <text class="h" x="980" y="1070">Audit ledger (Postgres, insert only)</text>
+  <g font-family="JetBrains Mono, Consolas, Menlo, monospace" font-size="11">
+    <rect x="980" y="1090" width="100" height="58" rx="6" fill="#ECFDF5" stroke="#10B981"/>
+    <text x="1030" y="1110" text-anchor="middle" fill="#065F46" font-weight="700">seq 1</text>
+    <text x="1030" y="1126" text-anchor="middle" fill="#065F46">prev 000..0</text>
+    <text x="1030" y="1140" text-anchor="middle" fill="#065F46">hash a3f..</text>
+    <rect x="1100" y="1090" width="100" height="58" rx="6" fill="#ECFDF5" stroke="#10B981"/>
+    <text x="1150" y="1110" text-anchor="middle" fill="#065F46" font-weight="700">seq 2</text>
+    <text x="1150" y="1126" text-anchor="middle" fill="#065F46">prev a3f..</text>
+    <text x="1150" y="1140" text-anchor="middle" fill="#065F46">hash 7c1..</text>
+    <rect x="1220" y="1090" width="100" height="58" rx="6" fill="#ECFDF5" stroke="#10B981"/>
+    <text x="1270" y="1110" text-anchor="middle" fill="#065F46" font-weight="700">seq 3</text>
+    <text x="1270" y="1126" text-anchor="middle" fill="#065F46">prev 7c1..</text>
+    <text x="1270" y="1140" text-anchor="middle" fill="#065F46">hash e90..</text>
+    <rect x="1340" y="1090" width="110" height="58" rx="6" fill="#ECFDF5" stroke="#10B981" stroke-dasharray="4 3"/>
+    <text x="1395" y="1110" text-anchor="middle" fill="#065F46" font-weight="700">audit_heads</text>
+    <text x="1395" y="1126" text-anchor="middle" fill="#065F46">last_seq 3</text>
+    <text x="1395" y="1140" text-anchor="middle" fill="#065F46">last_hash e90..</text>
+  </g>
+  <path class="e" d="M1080,1119 L1098,1119" marker-end="url(#arrow)"/>
+  <path class="e" d="M1200,1119 L1218,1119" marker-end="url(#arrow)"/>
+  <path class="e" d="M1320,1119 L1338,1119" marker-end="url(#arrow)"/>
+  <text class="tl" x="980" y="1178">audit.record() is the only writer, in the same transaction.</text>
+  <text class="tl" x="980" y="1196">Denied attempts are written after the rollback.</text>
+  <text class="tl" x="980" y="1214">One chain per case plus a SYSTEM chain.</text>
+  <text class="tl" x="980" y="1232">row_hash = SHA-256(canonical entry + prev_hash).</text>
+  <text class="tl" x="980" y="1250">A trigger blocks UPDATE, DELETE and TRUNCATE.</text>
+  <text class="tl" x="980" y="1268">Head hashes are also written to a checkpoint file.</text>
+  <text class="mono" x="980" y="1296">GET /api/cases/{id}/audit/verify</text>
+  <text class="mono" x="980" y="1312">GET /api/audit/verify</text>
+  <text class="tl" x="980" y="1330">Recompute every chain, report the first broken seq.</text>
+
+  <!-- trust zones -->
+  <rect class="panel" x="960" y="1380" width="510" height="230" rx="12"/>
+  <text class="h" x="980" y="1410">Trust zones</text>
+  <rect class="claude" x="980" y="1426" width="470" height="50" rx="8"/>
+  <text class="tl" x="996" y="1447" font-weight="700">Claude</text>
+  <text class="tl" x="996" y="1465">Reads documents, explains conflicts, drafts words. Never writes.</text>
+  <rect class="code" x="980" y="1484" width="470" height="50" rx="8"/>
+  <text class="tl" x="996" y="1505" font-weight="700">Code</text>
+  <text class="tl" x="996" y="1523">Scoping, duplicates, rules, date math, permissions, audit.</text>
+  <rect class="human" x="980" y="1542" width="470" height="50" rx="8"/>
+  <text class="tl" x="996" y="1563" font-weight="700">Humans</text>
+  <text class="tl" x="996" y="1581">OPS proposes and commits. LEGAL approves or rejects.</text>
+
+  <!-- safety note -->
+  <rect class="panel" x="960" y="1640" width="510" height="130" rx="12"/>
+  <text class="h" x="980" y="1670">Guarantees</text>
+  <text class="tl" x="980" y="1694">Nothing is filed or sent. Drafts are DRAFT_NOT_SENT.</text>
+  <text class="tl" x="980" y="1712">Every query is scoped by case_id. Unclear ownership is quarantined.</text>
+  <text class="tl" x="980" y="1730">A value is verified only when code finds its quote in the source.</text>
+  <text class="tl" x="980" y="1748">A rerun never edits or deletes a human decision.</text>
+</svg>

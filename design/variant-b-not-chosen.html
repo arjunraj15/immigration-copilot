@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case Desk Variant B Workbench</title>
+<style>
+:root{--hdr:#1c2a5a;--accent:#1c2a5a;--bg:#e8ecf4;--surface:#fff;--soft:#eef0f8;--ink:#14213a;--muted:#5c6884;--line:#d9deea;--teal:#0f7a63;--teal-soft:#e0f3ec;--red:#b3261e;--red-soft:#fbe4e2;--amber:#9a6200;--amber-soft:#fdf0d0;--violet:#5b3aa8;--violet-soft:#ece6f8}
+:root[data-role=attorney]{--hdr:#5e1f3d;--accent:#5e1f3d;--soft:#f6ecf1}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0d1220;--surface:#161d30;--soft:#1e2740;--ink:#e8ecf5;--muted:#9ba7c3;--line:#2b3552;--teal:#4fd1a8;--teal-soft:#10372e;--red:#ff8d86;--red-soft:#41191a;--amber:#f0c060;--amber-soft:#40310f;--violet:#c4a8f4;--violet-soft:#2b2047;--accent:#5b72d6}:root[data-role=attorney]:not([data-theme=light]){--soft:#2a1a24;--accent:#c4607f}}
+:root[data-theme=dark]{--bg:#0d1220;--surface:#161d30;--soft:#1e2740;--ink:#e8ecf5;--muted:#9ba7c3;--line:#2b3552;--teal:#4fd1a8;--teal-soft:#10372e;--red:#ff8d86;--red-soft:#41191a;--amber:#f0c060;--amber-soft:#40310f;--violet:#c4a8f4;--violet-soft:#2b2047;--accent:#5b72d6}
+:root[data-theme=dark][data-role=attorney]{--soft:#2a1a24;--accent:#c4607f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14.5px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select{font:inherit;color:inherit}
+header{background:var(--hdr);color:#fff;display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:8px 20px;transition:background .2s}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px}.logo i{width:32px;height:32px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;font:700 11px system-ui}
+.roles{display:flex;gap:4px;background:rgba(255,255,255,.12);padding:3px;border-radius:10px;margin-left:16px}
+.role{border:0;background:none;color:#fff;opacity:.75;padding:4px 12px;border-radius:8px;cursor:pointer}.role[aria-pressed=true]{background:#fff;color:#14213a;opacity:1;font-weight:600}
+.hs{margin-left:auto;display:flex;gap:10px;align-items:center;font-size:13px}.hb{border:1px solid rgba(255,255,255,.4);background:none;color:#fff;border-radius:8px;padding:3px 10px;cursor:pointer}
+.banner{background:var(--amber-soft);color:var(--amber);font-size:12.5px;text-align:center;padding:4px 10px}
+main{padding:16px;max-width:1700px;margin:0 auto}
+.card{background:var(--surface);border-radius:16px;padding:14px;box-shadow:0 1px 2px rgba(20,33,58,.06)}
+h1{font-size:22px;margin:0}h2{font-size:16px;margin:0 0 8px}.meta{color:var(--muted);font-size:13.5px}.meta b{color:var(--ink)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.sp{margin-left:auto}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:7px 14px;cursor:pointer;font-weight:600}.btn.p{background:var(--accent);border-color:var(--accent);color:#fff}.btn.g{background:var(--teal);border-color:var(--teal);color:#fff}.btn.n{border-color:var(--red);color:var(--red)}
+.ref{display:inline-block;font:600 11.5px ui-monospace,Menlo,monospace;background:var(--soft);border-radius:6px;padding:0 6px;margin:1px 3px 0 0}
+.chip{display:inline-block;font-size:12px;font-weight:600;border-radius:99px;padding:0 9px;background:var(--teal-soft);color:var(--teal)}.chip.r{background:var(--red-soft);color:var(--red)}.chip.v{background:var(--violet-soft);color:var(--violet)}.chip.a{background:var(--amber-soft);color:var(--amber)}.chip.n{background:var(--soft);color:var(--muted)}
+.stamp{display:inline-block;border:2px solid var(--teal);color:var(--teal);border-radius:6px;padding:0 7px;font:800 12px/1.5 ui-monospace,Menlo,monospace;letter-spacing:.06em;transform:rotate(-4deg);white-space:nowrap}.stamp.red{border-color:var(--red);color:var(--red)}.stamp.vio{border-color:var(--violet);color:var(--violet)}.stamp.amb{border-color:var(--amber);color:var(--amber)}
+.view{display:none}.view.on{display:block}
+/* board */
+.tools{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}.tools input{flex:1;min-width:200px;padding:9px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.board{display:grid;grid-template-columns:repeat(5,minmax(210px,1fr));gap:12px;overflow-x:auto;padding-bottom:8px}
+.col{background:var(--soft);border-radius:14px;padding:10px;min-height:300px}.col h3{margin:0 0 8px;font-size:13px;display:flex;justify-content:space-between;color:var(--muted)}
+.kc{display:block;width:100%;text-align:left;background:var(--surface);border:2px solid transparent;border-radius:12px;padding:10px;margin-bottom:8px;cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.06)}.kc:hover{border-color:var(--accent)}
+.kc b{display:flex;justify-content:space-between}.kc b span{font-weight:400;color:var(--muted);font-size:12.5px}.kc small{display:block;color:var(--muted);margin:2px 0 6px}
+.pips{display:flex;gap:3px}.pips i{flex:1;height:5px;border-radius:9px;background:var(--line)}.pips i.d{background:var(--teal)}.pips i.f{background:var(--red)}.pips i.c{background:var(--accent)}
+/* workspace */
+.ws{display:grid;grid-template-columns:minmax(300px,.8fr) minmax(0,1.4fr);gap:14px;align-items:start}
+@media (max-width:1000px){.ws{grid-template-columns:1fr}}
+.rd{position:sticky;top:8px}
+.strip{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.sc{flex:1;min-width:120px;border:1px solid var(--line);border-radius:12px;padding:6px 10px;background:var(--surface);cursor:pointer;text-align:left}
+.sc small{display:block;color:var(--muted);font-size:12px}.sc.ok{border-color:var(--teal);background:var(--teal-soft)}.sc.bad{border-color:var(--red);background:var(--red-soft)}.sc.todo{border-style:dashed}.sc.on{box-shadow:0 0 0 2px var(--accent)}
+.paper{background:#fff;color:#14213a;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.25);overflow:hidden;font-size:12px}.paper .bn{background:#14325a;color:#fff;padding:6px 12px;font-size:10px;font-weight:700}.paper .in{padding:12px 14px}
+.ln{display:flex;gap:10px;padding:3px 6px;margin:2px 0;border-radius:4px}.ln b{flex:0 0 118px}.hl{background:#fdecc1;outline:2px solid #d79a1c}.hg{outline:1.5px solid #4caf92;background:#eaf7f2}
+.pgs{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}.pgs button{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:2px 10px;cursor:pointer;font-size:12.5px}.pgs .on{border:2px solid var(--accent);font-weight:600}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:12px;overflow-x:auto}.tabs button{border:0;background:none;padding:8px 14px;cursor:pointer;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap}.tabs button[aria-selected=true]{color:var(--ink);font-weight:700;border-color:var(--accent)}
+.pane{display:none}.pane.on{display:block}
+.alert{border:2px solid var(--red);border-radius:14px;padding:12px;margin-bottom:10px}.alert h3{margin:0 0 8px;font-size:16px}.alert h3:before{content:"\25B2  ";color:var(--red)}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}@media (max-width:640px){.three{grid-template-columns:1fr}}
+.src{border:1px solid var(--line);border-radius:10px;padding:8px;cursor:pointer;background:var(--surface)}.src small{display:block;color:var(--muted)}.src b{font-size:18px;display:block}.src.odd{background:var(--red-soft);border-color:var(--red-soft)}.src.odd b{color:var(--red)}.src:hover{outline:2px solid var(--accent)}
+.opt{display:flex;gap:10px;border:1px solid var(--line);border-radius:10px;padding:10px;margin-top:8px;cursor:pointer;align-items:flex-start}.opt:has(input:checked){border:2px solid var(--accent);background:var(--soft)}.opt small{display:block;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}td,th{padding:7px 8px;border-top:1px solid var(--line);text-align:left}th{background:var(--soft);border:0;font-size:12.5px}tr.held{background:var(--red-soft)}tr.held td:nth-child(2){color:var(--red);font-weight:700}tr.pk{cursor:pointer}tr.pk:hover{background:var(--soft)}
+.conf{display:inline-block;width:46px;height:5px;border-radius:9px;background:var(--line);vertical-align:middle;margin-right:5px}.conf i{display:block;height:100%;background:var(--teal);border-radius:9px}
+.draft{border:2px dashed var(--red);background:var(--red-soft);border-radius:10px;padding:8px 12px;display:flex;gap:12px;align-items:center;margin-bottom:8px;font-size:13px}.draft b{color:var(--red);letter-spacing:.1em;font-family:ui-monospace,Menlo,monospace;white-space:nowrap}
+.tl{display:grid;grid-template-columns:56px 1fr 1fr;gap:8px 12px;font-size:13.5px}.tl h4{margin:0;color:var(--muted);font-size:12.5px;grid-column:2}.tl h4+h4{grid-column:3}.date{font-weight:700;text-align:right}
+.ev{border:1px solid var(--line);border-radius:10px;padding:6px 10px}.ev.v{border:2px solid var(--teal)}.ev.pr{background:var(--accent);color:#fff;border-color:var(--accent)}.ev.bad{background:var(--red-soft);border:2px dashed var(--red)}.ev.nv{border-style:dashed}.today{grid-column:1/-1;border-top:2px dotted #d79a1c;color:var(--amber);font-weight:700;font-size:12.5px}
+.pick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}@media (max-width:640px){.pick{grid-template-columns:1fr}}.pick label{border:1px solid var(--line);border-radius:10px;padding:10px;cursor:pointer}.pick label:has(input:checked){border:2px solid var(--teal);background:var(--teal-soft)}.pick small{display:block;color:var(--muted)}
+.log .r{display:grid;grid-template-columns:62px 1fr auto;gap:10px;padding:8px 0;border-top:1px solid var(--line)}.log small{display:block;color:var(--muted)}.log code{display:block;background:var(--soft);padding:3px 8px;border-radius:6px;font-size:12px;margin-top:3px}
+.set{border:2px solid var(--violet);border-radius:14px;padding:12px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:8px}.set .lk{font-size:24px;width:54px;height:48px;border-radius:8px;background:var(--soft);display:grid;place-items:center}
+.dock{position:fixed;right:16px;bottom:16px;width:min(360px,calc(100% - 32px));z-index:5}
+.dock .hd{display:flex;gap:10px;align-items:center;background:var(--accent);color:#fff;border-radius:14px;padding:10px 14px;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.dock .bd{display:none;background:var(--surface);border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.3);padding:12px;margin-bottom:8px;max-height:60vh;overflow:auto}
+.dock.open .bd{display:block}
+.me{background:var(--accent);color:#fff;border-radius:14px;padding:6px 12px;margin:8px 0 8px 40px}.bot{background:var(--soft);border-radius:12px;padding:8px 10px;margin:6px 0;font-size:13.5px}.warn{color:var(--amber);font-size:12px;font-weight:600}
+.sug{display:flex;gap:6px;flex-wrap:wrap}.sug button{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:2px 10px;cursor:pointer;font-size:12.5px}
+.comp{display:flex;gap:6px;border:1px solid var(--line);border-radius:12px;padding:4px;margin-top:8px}.comp input{flex:1;border:0;background:none;padding:6px;outline:0}.comp button{width:34px;border:0;border-radius:8px;background:var(--accent);color:#fff}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;position:sticky;bottom:0;background:var(--surface);border-top:1px solid var(--line);margin-top:12px;padding-top:10px}
+</style>
+</head>
+<body data-role="paralegal">
+<header>
+  <div class="logo"><i>CD</i>Case Desk</div>
+  <div class="roles"><button class="role" id="rP" aria-pressed="true">Paralegal</button><button class="role" id="rA" aria-pressed="false">Attorney</button></div>
+  <div class="hs"><span>Thursday 23 Oct</span><b id="who">Priya S.</b><button class="hb" id="theme">Theme</button></div>
+</header>
+<div class="banner">Synthetic data. Drafts are DRAFT, NOT SENT. Nothing is filed or sent. Only an attorney decides.</div>
+
+<main>
+  <section id="v-board" class="view on">
+    <div class="row" style="margin-bottom:10px"><h1>All cases</h1><span class="meta" id="bsub"></span><button class="btn p sp" id="up">Upload a new case</button></div>
+    <div class="tools"><input placeholder="Search by name or case number" aria-label="Search cases"><button class="btn">Mine only</button><button class="btn">Needs action</button></div>
+    <div class="board" id="board"></div>
+  </section>
+
+  <section id="v-case" class="view">
+    <div class="row"><button class="btn" id="back">&larr; Board</button><div><h1 id="cn"></h1><div class="meta" id="cm"></div></div><span class="sp"></span><span id="cs"></span></div>
+    <div class="strip" id="strip"></div>
+    <div class="ws">
+      <div class="card rd">
+        <div class="row"><b id="dn">scan_1_upload.pdf</b><span class="meta">UP-000001</span><span class="stamp sp">USABLE</span></div>
+        <div class="pgs" id="pgs"></div>
+        <div class="paper"><div class="bn">FICTIONAL IMMIGRATION FIRM | HACKATHON TEST DATA</div><div class="in" id="paper"></div></div>
+        <p class="meta">Highlighted: <span class="chip a">used in Facts</span> <span class="chip">read from page</span>. Text read directly from the PDF, no guessing.</p>
+        <p class="meta">Detected as <b>Passport (from content)</b>. Readable, not expired, right client. UP-000007 is an exact copy.</p>
+      </div>
+      <div class="card">
+        <div class="tabs" id="tabs" role="tablist"></div>
+        <div id="panes"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="dock" id="dock"><div class="bd" id="chat"></div><div class="hd" id="dh"><b>&#10022; Case assistant</b><small>Answers from this case only</small><span class="sp">&#9650;</span></div></div>
+
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)},root=document.documentElement,role='paralegal',openCase=null,tab='facts';
+var ref=function(t){return '<span class="ref">'+t+'</span>'},stamp=function(t,c){return '<span class="stamp '+(c||'')+'">'+t+'</span>'};
+var BOARD={paralegal:[['New, not started',[['Ayan Dhawan','0002','Uploaded 6 files, 5 Oct','',[]],['Kiran Dhawan','0004','Uploaded 6 files, 6 Oct','',[]],['Arun Suri','0006','Uploaded 5 files, 8 Oct','',[]]]],
+ ['Working on now',[['Mira Dhawan','0001','Step 2 of 6: check facts','mira',['d','f','c','','','']]]],
+ ['Sent back to you',[['Leena Dhawan','0003','Attorney asked: confirm passport owner','leena',['f','d','d','d','d','']]]],
+ ['With attorney',[['Riya Suri','0009','Waiting for Anand R.','riya',['d','d','d','d','d','c']],['Nila Dhawan','0005','Waiting for Anand R.','',['d','d','d','d','d','c']]]],
+ ['Approved, ready to apply',[['Devika Suri','0007','Anand R. approved 14:41','',['d','d','d','d','d','d']]]]],
+ attorney:[['Waiting for your decision',[['Riya Suri','0009','Deadline tomorrow, from Rahul M.','riya',['d','d','c','','']],['Mira Dhawan','0001','Name spelling to confirm','mira',['d','f','','','']],['Ravi Shah','0017','Suspicious text in a letter','',['f','','','','']]]],
+ ['Decided this week',[['Devika Suri','0007','Approved yesterday','',['d','d','d','d','d']],['Leena Dhawan','0003','Sent back for more info','leena',['d','d','d','d','d']]]]]};
+function board(){var h='';BOARD[role].forEach(function(c){h+='<div class="col"><h3><span>'+c[0]+'</span><span>'+c[1].length+'</span></h3>'+c[1].map(function(k){return '<button class="kc" data-c="'+(k[3]||'mira')+'"><b>'+k[0]+'<span>'+k[1]+'</span></b><small>'+k[2]+'</small><div class="pips">'+(k[4].length?k[4].map(function(p){return '<i class="'+p+'"></i>'}).join(''):'<i></i><i></i><i></i><i></i><i></i><i></i>')+'</div></button>'}).join('')+'</div>'});
+ $('#board').innerHTML=h;$('#bsub').textContent=role==='paralegal'?'Prepare cases. Each bar shows the steps from documents to send.':'Review and decide. Nothing is applied until you approve.';
+ $('#up').style.display=role==='paralegal'?'':'none';
+ [].forEach.call(document.querySelectorAll('.kc'),function(b){b.onclick=function(){openCase=b.dataset.c;if(role==='attorney'&&openCase==='mira')openCase='mira';tab=role==='attorney'?'deadline':'facts';show()}})}
+
+var CASE={mira:{n:'Mira Dhawan',m:'CASE-0001 &nbsp; Work status renewal &nbsp; Attorney <b>Meena K.</b>',s:[['Documents','6 OF 6 OK','ok','docs'],['Facts','1 FLAG','bad','facts'],['Form draft','8 of 9 fields','todo','form'],['Deadline','None yet','todo','deadline'],['Client reply','Draft ready','todo','reply'],['Activity','4 entries','todo','act']]},
+ leena:{n:'Leena Dhawan',m:'CASE-0003 &nbsp; Attorney <b>Anand R.</b> &nbsp; Stage <b>Waiting for portal</b>',s:[['Documents','1 WRONG CLIENT','bad','docs'],['Facts','Not started','todo','facts'],['Form draft','Not started','todo','form'],['Deadline','None yet','todo','deadline'],['Client reply','Draft ready','todo','reply'],['Activity','3 entries','todo','act']]},
+ riya:{n:'Riya Suri',m:'CASE-0009 &nbsp; Prepared by <b>Rahul M.</b> &nbsp; Portal status <b>Processing</b> '+ref('EV-0009-2'),s:[['Documents','READ','ok','docs'],['Facts','NO ISSUES','ok','facts'],['Form draft','9 of 9 fields','ok','form'],['Deadline','24 Oct proposed','bad','deadline'],['Client reply','Draft ready','todo','reply'],['Activity','8 entries','todo','act']]}};
+function strip(){var c=CASE[openCase];$('#strip').innerHTML=c.s.map(function(s){return '<button class="sc '+s[2]+(tab===s[3]?' on':'')+'" data-t="'+s[3]+'"><b>'+s[0]+'</b><small>'+s[1]+'</small></button>'}).join('');
+ [].forEach.call(document.querySelectorAll('.sc'),function(b){b.onclick=function(){tab=b.dataset.t;show()}})}
+var TABS=[['facts','Facts'],['docs','Documents'],['form','Form draft'],['deadline','Deadline'],['reply','Client reply'],['time','Timeline'],['act','Activity']];
+
+var PAPER={1:[['Applicant:','Mira Dhawan','hl'],['Synthetic Matter:','CASE-0001',''],['Reference:','DOCREF-000001',''],['Document Identifier:','SYN-P-00001','hg'],['Date of Birth:','1982-04-08','hg'],['Nationality:','Fictional Republic of Testland',''],['Expires:','2031-03-04','hg']],2:[['Entry date:','2025-06-10','hg'],['Synthetic Matter:','CASE-0001',''],['Port:','Testland Airport','']],3:[['Employer:','Fictional Employer 01 LLC','hg'],['Employment start:','2024-05-07','hg'],['Synthetic Matter:','CASE-0001','']]};
+var TITLE={1:'Identity / travel document',2:'Travel entry record',3:'Employer verification letter'};
+function paper(p){$('#pgs').innerHTML=['Passport','Arrival','Employer letter'].map(function(x,i){return '<button class="'+(p===i+1?'on':'')+'" data-p="'+(i+1)+'">'+x+'</button>'}).join('');
+ $('#paper').innerHTML='<h3 style="margin:0 0 8px">'+TITLE[p]+'</h3>'+PAPER[p].map(function(r){return '<div class="ln '+r[2]+'"><b>'+r[0]+'</b>'+r[1]+'</div>'}).join('');
+ $('#dn').textContent=['scan_1_upload.pdf','travel_2_upload.pdf','letter_3_upload.pdf'][p-1];
+ [].forEach.call(document.querySelectorAll('#pgs button'),function(b){b.onclick=function(){paper(+b.dataset.p)}})}
+
+function panes(){var r=function(a,b,s,c,rf,h){return '<tr class="pk '+(h?'held':'')+'"><td>'+a+'</td><td>'+b+'</td><td><span class="chip '+(h?'r':'')+'">'+s+'</span></td><td>'+(c?'<span class="conf"><i style="width:'+c+'%"></i></span>'+c+'%':'')+'</td><td>'+rf+'</td></tr>'};
+ var P={};
+ P.facts='<h2>Do the facts match?</h2><p class="meta">We compared 9 facts. 8 match. 1 needs your call. Click a source to see it on the page.</p><div class="alert"><h3>The surname is spelled two ways</h3><div class="three"><div class="src" data-pg="1"><small>Passport</small><b>Mira Dhawan</b>'+ref('UP-000001 page 1')+'</div><div class="src" data-pg="1"><small>Verified profile, 16 Sep</small><b>Mira Dhawan</b>'+ref('PROFILE full_name')+'</div><div class="src odd"><small>Intake call notes (unverified)</small><b>Mira Dawan</b>'+ref('Z-0001')+'</div></div><p><span class="chip v">Claude explains</span> The intake note is a claim. The passport and the verified profile agree. We never pick a spelling on our own.</p>'+
+  '<label class="opt"><input type="radio" name="f" checked><span><b>Suggest the passport spelling, Dhawan</b><small>The attorney confirms it before it goes on the form. Client asked for this on 22 Oct.</small></span></label><label class="opt"><input type="radio" name="f"><span><b>Leave it for the attorney to decide</b><small>No suggestion is sent</small></span></label></div>'+
+  '<table><tr><th>Field</th><th>Value</th><th>Sources</th></tr><tr class="pk" data-pg="1"><td>Date of birth</td><td>8 Apr 1982</td><td><span class="chip">2 sources agree</span></td></tr><tr class="pk" data-pg="2"><td>Last entry</td><td>10 Jun 2025</td><td><span class="chip">3 sources agree</span></td></tr><tr class="pk" data-pg="3"><td>Employer</td><td>Fictional Employer 01 LLC</td><td><span class="chip">2 sources agree</span></td></tr></table>';
+ P.docs='<h2>6 files uploaded, 5 can be used</h2><p class="meta">One file belongs to a different client, so the passport is still missing.</p>'+
+  '<div class="set"><div class="lk">&#128274;</div><div style="flex:1;min-width:200px"><b>file_6.pdf</b> <span class="meta">UP-000019</span><br>The pages name a different client. Their details are hidden and the file can\'t be used here.</div>'+stamp('WRONG CLIENT','vio')+'</div><p class="meta">Leena wrote on 21 Oct: "I might have dragged a passport from a shared folder by accident." '+ref('MSG-0003-4')+'</p><p><button class="btn p">Ask Leena for her own passport</button> <button class="btn">Report misfiled upload</button> <button class="btn">Keep set aside</button></p>'+
+  '<table><tr><th>File</th><th>Read as</th><th>Outcome</th></tr>'+[['file_1.pdf','Arrival record, 1 Apr 2025'],['file_2.pdf','Employer letter, Oct 2026'],['file_3.pdf','Pay statement, August'],['file_4.pdf','Pay statement, September'],['file_5.pdf','Prior notice']].map(function(x){return '<tr class="pk" data-pg="1"><td>'+x[0]+'</td><td>'+x[1]+'</td><td>'+stamp('USABLE')+'</td></tr>'}).join('')+'</table>';
+ P.form='<h2>Check the form draft</h2><div class="draft"><b>DRAFT - NOT FOR FILING</b><span>Review-only worksheet SYN-WORK-RENEWAL-DRAFT-V2</span></div><table><tr><th colspan="5">Applicant details</th></tr>'+r('Legal name','Empty, sources disagree','Held for review','',ref('UP-000001')+ref('Z-0001'),1)+r('Date of birth','1982-04-08','Proposed',97,ref('UP-000001'))+r('Passport number','SYN-P-00001','Proposed',80,ref('UP-000001'))+r('Passport expiry','2031-03-04','Proposed',80,ref('UP-000001'))+'<tr><th colspan="5">Recent travel and employment</th></tr>'+r('Last entry','2025-06-10','Proposed',97,ref('UP-000002'))+r('Employer','Fictional Employer 01 LLC','Proposed',97,ref('UP-000003'))+r('Prior receipt','SYN-RCPT-00001','Proposed',97,ref('UP-000006'))+'</table><p><button class="btn">Download JSON</button> <button class="btn">Download PDF</button></p>';
+ P.deadline='<h2>Is 24 October the right deadline?</h2><p class="meta">The portal recorded a request for more evidence on 14 Oct. The firm\'s rule gives 10 calendar days. The office calendar shows a different date that did not come from the portal.</p><div class="three"><div class="src"><small>Request received (portal, verified)</small><b>14 Oct 2026</b>'+ref('EV-0009-RFE')+'</div><div class="src" style="background:var(--soft)"><small>Proposed, request + 10 days</small><b>24 Oct 2026</b>Rule SYN-DEADLINE-V1</div><div class="src odd"><small>Office calendar (typed by hand)</small><b><s>27 Oct 2026</s></b>'+ref('EV-0009-CAL')+'</div></div>'+
+  (role==='attorney'?'<div class="pick"><label><input type="radio" name="d" checked> <b>Approve 24 Oct</b><small>Activates the deadline and marks the calendar entry as wrong</small></label><label><input type="radio" name="d"> <b>Use a different date</b><small>You must give a reason</small></label><label><input type="radio" name="d"> <b>Ask Rahul</b><small>Send back with a question</small></label></div>':'<p><span class="chip a">Proposed by you</span> Waiting for an attorney. Only an attorney can approve a deadline.</p>');
+ P.reply='<h2>Client reply</h2><div class="src" style="cursor:default"><span class="stamp amb">DRAFT, NOT SENT</span><p>Hello, thank you for your message. We are checking one spelling detail on your passport and will update you soon. Could you confirm how your surname is written on your passport?</p>'+ref('MSG-0001-4')+ref('UP-000001 page 1')+'<p class="warn">&#9873; Outcome predictions are not given</p></div>';
+ P.time='<h2>Case timeline</h2><p class="meta">Only verified portal events can set a deadline. Calendar entries are shown for comparison.</p><div class="tl"><span></span><h4>Government portal</h4><h4>Office calendar</h4><span class="date">9 Sep</span><div class="ev v"><b>Receipt created</b> '+ref('EV-0009-1')+'</div><span></span><span class="date">14 Oct</span><div class="ev v"><b>Request for more evidence</b><br>Starts the 10-day clock '+ref('EV-0009-RFE')+'</div><span></span><span class="date">15 Oct</span><div class="ev v"><b>Status: Processing</b> '+ref('EV-0009-2')+'</div><span></span><div class="today">Today 23 Oct</div><span class="date">24 Oct</span><div class="ev pr"><b>Evidence deadline (proposed)</b><br>14 Oct + 10 days</div><span></span><span class="date">27 Oct</span><span></span><div class="ev bad"><b><s>"Deadline"</s></b><br>Typed by hand '+ref('EV-0009-CAL')+'</div><span class="date">30 Oct</span><span></span><div class="ev nv"><b>Internal reminder</b><br>Not a government date</div></div>';
+ var L=[['14:43:10','Rahul M. clicked Apply again','Same change key as 14:43:02, so nothing changed.','Duplicate ignored','n'],['14:43:02','Rahul M. applied 4 approved changes','Deadline active 24 Oct. Calendar entry marked wrong.','Applied','v'],['14:41:37','Anand R. approved ACT-000014','"Portal date is verified. Use 24 Oct."','Approved',''],['14:36:05','Rahul M. tried to approve the deadline','Only an attorney can approve deadlines. Nothing changed.','Refused','r'],['14:30:48','Rahul M. sent the case to Anand R.','Proposed: deadline 24 Oct, reply to Riya','Proposed','v'],['14:21:03','Analysis run 1 finished','6 of 6 usable.<code>rule SYN-DEADLINE-V1: EV-0009-RFE 2026-10-14 + 10 days = 2026-10-24</code>','Analysis','n']];
+ P.act='<div class="row"><h2 style="margin:0">Everything that happened on this case</h2><span class="sp"></span><button class="btn g" id="vf">Verify chain</button></div><p class="meta" id="vr">Every action is recorded here and can\'t be edited or deleted.</p><div class="log">'+L.map(function(x){return '<div class="r"><span class="meta">'+x[0]+'</span><span><b>'+x[1]+'</b><small>'+x[2]+'</small></span><span class="chip '+x[4]+'">'+x[3]+'</span></div>'}).join('')+'</div>';
+ return P}
+
+function caseView(){var c=CASE[openCase];$('#cn').textContent=c.n;$('#cm').innerHTML=c.m;
+ $('#cs').innerHTML=role==='attorney'?'<button class="btn n">Reject</button> <button class="btn">Ask for more info</button> <button class="btn g">Approve</button>':'<button class="btn p">Send to Meena K. for review</button>';
+ strip();paper(1);var P=panes();
+ $('#tabs').innerHTML=TABS.map(function(t){return '<button role="tab" data-t="'+t[0]+'" aria-selected="'+(tab===t[0])+'">'+t[1]+'</button>'}).join('');
+ $('#panes').innerHTML=TABS.map(function(t){return '<div class="pane'+(tab===t[0]?' on':'')+'">'+P[t[0]]+'</div>'}).join('');
+ [].forEach.call(document.querySelectorAll('#tabs button'),function(b){b.onclick=function(){tab=b.dataset.t;caseView()}});
+ [].forEach.call(document.querySelectorAll('[data-pg]'),function(e){e.onclick=function(){paper(+e.dataset.pg)}});
+ var v=$('#vf');if(v)v.onclick=function(){$('#vr').innerHTML='<span class="chip">Chain valid</span> 14 entries checked. Each entry links to the one before it.'};
+ chat()}
+function chat(){var A=role==='attorney';$('#chat').innerHTML=(A?'<div class="me">Why not 27 Oct like the calendar?</div><div class="bot">The 27 Oct entry was typed into the office calendar by hand and is not from the portal. 14 Oct + 10 days = <b>24 Oct</b>. '+ref('EV-0009-RFE')+ref('EV-0009-CAL')+'</div><div class="me">What happens if we miss 24 Oct?</div><div class="bot">I can\'t give legal advice about consequences. That is a judgement for you as the attorney. I can show the request details.<div class="warn">&#9873; No legal advice</div></div>':'<div class="me">What did the client say about the name?</div><div class="bot">On 22 Oct Mira emailed: "It might be Dawan or Dhawan. Please use the correct passport spelling after checking." '+ref('MSG-0001-4')+'</div><div class="me">Will her case be approved?</div><div class="bot">I can\'t predict outcomes. The latest portal status is Processing (15 Oct). '+ref('EV-0001-2')+'<div class="warn">&#9873; Outcome predictions are not given</div></div>')+'<div class="sug"><button>Summarise this case</button><button>Which file was set aside?</button></div><div class="comp"><input placeholder="Ask anything about this case..." aria-label="Ask"><button aria-label="Send">&uarr;</button></div>'}
+function show(){var inCase=openCase!==null;$('#v-board').classList.toggle('on',!inCase);$('#v-case').classList.toggle('on',inCase);$('#dock').style.display=inCase?'':'none';if(inCase)caseView();else board()}
+function setRole(r){role=r;root.dataset.role=r;$('#rP').setAttribute('aria-pressed',r==='paralegal');$('#rA').setAttribute('aria-pressed',r==='attorney');$('#who').textContent=r==='paralegal'?'Priya S.':'Anand R.';openCase=null;show()}
+$('#rP').onclick=function(){setRole('paralegal')};$('#rA').onclick=function(){setRole('attorney')};
+$('#back').onclick=function(){openCase=null;show()};$('#dh').onclick=function(){$('#dock').classList.toggle('open')};
+$('#theme').onclick=function(){root.dataset.theme=root.dataset.theme==='dark'?'light':'dark'};
+show();
+})();
+</script>
+</body>
+</html>

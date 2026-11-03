@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+/* Tokens come from design/variant-a-FROZEN.html. Role switches the accent through data-role on <html>. */
+:root {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --soft: #eef0f8;
+  --ink: #14213a;
+  --muted: #5c6884;
+  --line: #d9deea;
+  --ok: #0f7a63;
+  --ok-soft: #e0f3ec;
+  --bad: #b3261e;
+  --bad-soft: #fbe4e2;
+  --warn: #9a6200;
+  --warn-soft: #fdf0d0;
+  --ai: #5b3aa8;
+  --ai-soft: #ece6f8;
+  --header: #1c2a5a;
+  --accent: #1c2a5a;
+}
+
+:root[data-role="attorney"] {
+  --header: #1f5c3a;
+  --accent: #1f5c3a;
+  --soft: #e9f3ed;
+}
+
+/* Dark palette is opt-in with data-theme="dark" on <html>. The default is the white theme. */
+:root[data-theme="dark"] {
+  --bg: #0d1220;
+  --surface: #161d30;
+  --soft: #1e2740;
+  --ink: #e8ecf5;
+  --muted: #9ba7c3;
+  --line: #2b3552;
+  --ok: #4fd1a8;
+  --ok-soft: #10372e;
+  --bad: #ff8d86;
+  --bad-soft: #41191a;
+  --warn: #f0c060;
+  --warn-soft: #40310f;
+  --ai: #c4a8f4;
+  --ai-soft: #2b2047;
+  --accent: #5b72d6;
+}
+
+:root[data-theme="dark"][data-role="attorney"] {
+  --soft: #172a20;
+  --accent: #4fb083;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Inter Variable", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "cv11", "ss03";
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+th,
+td {
+  font-variant-numeric: tabular-nums;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

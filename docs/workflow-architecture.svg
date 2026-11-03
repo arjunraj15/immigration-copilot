@@ -1,0 +1,355 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1120" width="1600" height="1120" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <marker id="arrowc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7C5CD6"/>
+    </marker>
+    <marker id="arrowg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#16A34A"/>
+    </marker>
+    <style>
+      .bg { fill: #F8FAFC; }
+      .code { fill: #EAF2FF; stroke: #3B7DD8; stroke-width: 1.6; }
+      .claude { fill: #F3EEFF; stroke: #7C5CD6; stroke-width: 1.6; }
+      .human { fill: #FFF4E0; stroke: #D98E04; stroke-width: 1.6; }
+      .store { fill: #FFFFFF; stroke: #94A3B8; stroke-width: 1.4; }
+      .ledger { fill: #ECFDF5; stroke: #16A34A; stroke-width: 1.6; }
+      .block { fill: #FFFFFF; stroke: #16A34A; stroke-width: 1.4; }
+      .panel { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.2; }
+      .lane-h { fill: #FFFBF3; }
+      .lane-c { fill: #F5F9FF; }
+      .lane-a { fill: #FBF9FF; }
+      .lane-line { stroke: #CBD5E1; stroke-width: 1; }
+      .col-line { stroke: #E2E8F0; stroke-width: 1; stroke-dasharray: 4 4; }
+      .t { font-family: JetBrains Mono, Consolas, Menlo, monospace; font-size: 14px; font-weight: 700; fill: #0F172A; text-anchor: middle; }
+      .s { font-size: 11px; fill: #334155; text-anchor: middle; }
+      .sl { font-size: 12px; fill: #334155; }
+      .h { font-size: 15px; font-weight: 700; fill: #0F172A; }
+      .hc { font-size: 13px; font-weight: 700; fill: #0F172A; text-anchor: middle; }
+      .title { font-size: 24px; font-weight: 800; fill: #0F172A; }
+      .sub { font-size: 13px; fill: #475569; }
+      .lane-t { font-size: 15px; font-weight: 800; text-anchor: middle; }
+      .e { fill: none; stroke: #475569; stroke-width: 1.6; }
+      .ec { fill: none; stroke: #475569; stroke-width: 1.6; stroke-dasharray: 6 4; }
+      .el { fill: none; stroke: #7C5CD6; stroke-width: 1.6; stroke-dasharray: 6 4; }
+      .eg { fill: none; stroke: #16A34A; stroke-width: 1.6; stroke-dasharray: 6 4; }
+      .lbl { font-size: 11px; fill: #1E293B; font-style: italic; }
+      .lblbg { fill: #FFFFFF; stroke: #E2E8F0; stroke-width: 0.8; }
+      .audit { fill: #10B981; stroke: #FFFFFF; stroke-width: 1.5; }
+      .mono { font-family: JetBrains Mono, Consolas, Menlo, monospace; font-size: 11px; fill: #334155; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1600" height="1120"/>
+
+  <!-- ============ TITLE ============ -->
+  <text class="title" x="30" y="40">Immigration Case Co-Pilot: workflow architecture</text>
+  <text class="sub" x="30" y="60">How a case moves from intake to a committed, audited decision. Claude reads and drafts, code decides facts and permissions, humans decide anything legal.</text>
+
+  <!-- ============ REQUEST PATH ============ -->
+  <rect class="code" x="30" y="80" width="280" height="62" rx="10"/>
+  <text class="t" x="170" y="105">React UI</text>
+  <text class="s" x="170" y="125">"Acting as" OPS-xx or LEGAL-xx</text>
+
+  <rect class="code" x="345" y="80" width="280" height="62" rx="10"/>
+  <text class="t" x="485" y="105">api/client.ts</text>
+  <text class="s" x="485" y="125">adds the X-Actor header, TanStack Query</text>
+
+  <rect class="code" x="660" y="80" width="280" height="62" rx="10"/>
+  <text class="t" x="800" y="105">FastAPI routes</text>
+  <text class="s" x="800" y="125">thin, permissions checked on the server</text>
+
+  <rect class="code" x="975" y="80" width="280" height="62" rx="10"/>
+  <text class="t" x="1115" y="105">Services</text>
+  <text class="s" x="1115" y="125">rules and date math as pure functions</text>
+
+  <rect class="code" x="1290" y="80" width="280" height="62" rx="10"/>
+  <text class="t" x="1430" y="105">Repositories</text>
+  <text class="s" x="1430" y="125">SQLAlchemy 2, every query takes case_id</text>
+
+  <path class="e" d="M310,111 L343,111" marker-end="url(#arrow)"/>
+  <path class="e" d="M625,111 L658,111" marker-end="url(#arrow)"/>
+  <path class="e" d="M940,111 L973,111" marker-end="url(#arrow)"/>
+  <path class="e" d="M1255,111 L1288,111" marker-end="url(#arrow)"/>
+
+  <!-- ============ SWIMLANES ============ -->
+  <rect class="panel" x="30" y="165" width="1540" height="560" rx="10"/>
+  <rect class="lane-h" x="31" y="205" width="1538" height="140"/>
+  <rect class="lane-c" x="31" y="345" width="1538" height="200"/>
+  <rect class="lane-a" x="31" y="545" width="1538" height="140"/>
+  <line class="lane-line" x1="30" y1="205" x2="1570" y2="205"/>
+  <line class="lane-line" x1="30" y1="345" x2="1570" y2="345"/>
+  <line class="lane-line" x1="30" y1="545" x2="1570" y2="545"/>
+  <line class="lane-line" x1="30" y1="685" x2="1570" y2="685"/>
+  <line class="lane-line" x1="160" y1="165" x2="160" y2="725"/>
+
+  <!-- column separators -->
+  <line class="col-line" x1="365" y1="170" x2="365" y2="685"/>
+  <line class="col-line" x1="565" y1="170" x2="565" y2="685"/>
+  <line class="col-line" x1="765" y1="170" x2="765" y2="685"/>
+  <line class="col-line" x1="965" y1="170" x2="965" y2="685"/>
+  <line class="col-line" x1="1165" y1="170" x2="1165" y2="685"/>
+  <line class="col-line" x1="1365" y1="170" x2="1365" y2="685"/>
+
+  <!-- stage headers -->
+  <text class="hc" x="95" y="191">Stage</text>
+  <text class="hc" x="265" y="191">1. Ingest</text>
+  <text class="hc" x="465" y="191">2. Read</text>
+  <text class="hc" x="665" y="191">3. Interpret</text>
+  <text class="hc" x="865" y="191">4. Verify</text>
+  <text class="hc" x="1065" y="191">5. Facts and conflicts</text>
+  <text class="hc" x="1265" y="191">6. Proposals</text>
+  <text class="hc" x="1465" y="191">7. Review and commit</text>
+
+  <!-- lane labels -->
+  <text class="lane-t" x="95" y="270" fill="#B45309">Humans</text>
+  <text class="s" x="95" y="290">OPS proposes</text>
+  <text class="s" x="95" y="305">LEGAL decides</text>
+
+  <text class="lane-t" x="95" y="440" fill="#1D4ED8">Code</text>
+  <text class="s" x="95" y="460">deterministic</text>
+  <text class="s" x="95" y="475">owns every write</text>
+
+  <text class="lane-t" x="95" y="610" fill="#6D28D9">Claude</text>
+  <text class="s" x="95" y="630">returns JSON only</text>
+  <text class="s" x="95" y="645">no state-changing tools</text>
+
+  <!-- ============ EDGES (drawn under boxes) ============ -->
+  <!-- H1 to C1 -->
+  <path class="e" d="M265,325 L265,378" marker-end="url(#arrow)"/>
+  <!-- C1 to C2 -->
+  <path class="e" d="M357,445 L371,445" marker-end="url(#arrow)"/>
+  <!-- C2 to vision -->
+  <path class="ec" d="M465,510 L465,563" marker-end="url(#arrow)"/>
+  <rect class="lblbg" x="472" y="528" width="74" height="16" rx="3"/>
+  <text class="lbl" x="478" y="540">scanned page</text>
+  <!-- C2 to C3 -->
+  <path class="e" d="M557,445 L571,445" marker-end="url(#arrow)"/>
+  <!-- vision to classify -->
+  <path class="el" d="M557,615 L571,615" marker-end="url(#arrowc)"/>
+  <!-- C3 to classify -->
+  <path class="e" d="M665,510 L665,563" marker-end="url(#arrow)"/>
+  <rect class="lblbg" x="672" y="528" width="80" height="16" rx="3"/>
+  <text class="lbl" x="678" y="540">envelope</text>
+  <!-- classify back to verify -->
+  <path class="el" d="M757,615 L765,615 L765,445 L771,445" marker-end="url(#arrowc)"/>
+  <!-- C4 to C5 -->
+  <path class="e" d="M957,445 L971,445" marker-end="url(#arrow)"/>
+  <!-- C5 up to review request -->
+  <path class="ec" d="M1065,380 L1065,327" marker-end="url(#arrow)"/>
+  <rect class="lblbg" x="1072" y="346" width="62" height="16" rx="3"/>
+  <text class="lbl" x="1078" y="358">conflict</text>
+  <!-- C5 down to explain -->
+  <path class="ec" d="M1065,510 L1065,563" marker-end="url(#arrow)"/>
+  <rect class="lblbg" x="1072" y="528" width="54" height="16" rx="3"/>
+  <text class="lbl" x="1078" y="540">explain</text>
+  <!-- C5 to C6 -->
+  <path class="e" d="M1157,445 L1171,445" marker-end="url(#arrow)"/>
+  <!-- C6 down to draft reply -->
+  <path class="ec" d="M1265,510 L1265,563" marker-end="url(#arrow)"/>
+  <rect class="lblbg" x="1272" y="528" width="80" height="16" rx="3"/>
+  <text class="lbl" x="1278" y="540">reply text</text>
+  <!-- C6 up to LEGAL review -->
+  <path class="e" d="M1357,420 L1365,420 L1365,275 L1371,275" marker-end="url(#arrow)"/>
+  <!-- LEGAL review down to commit gate -->
+  <path class="e" d="M1465,325 L1465,378" marker-end="url(#arrow)"/>
+  <rect class="lblbg" x="1472" y="346" width="62" height="16" rx="3"/>
+  <text class="lbl" x="1478" y="358">decision</text>
+  <!-- rerun loop -->
+  <path class="ec" d="M1388,705 L265,705 L265,512" marker-end="url(#arrow)"/>
+  <rect class="lblbg" x="560" y="697" width="430" height="16" rx="3"/>
+  <text class="lbl" x="568" y="709">rerun for that case only. Prior human decisions are kept, never edited.</text>
+  <rect class="claude" x="1390" y="692" width="170" height="26" rx="13" style="fill:#F1F5F9;stroke:#64748B"/>
+  <text class="s" x="1475" y="709">new upload, message or event</text>
+
+  <!-- ============ STAGE BOXES ============ -->
+  <!-- 1 Ingest -->
+  <rect class="human" x="173" y="225" width="184" height="100" rx="10"/>
+  <text class="t" x="265" y="253">OPS uploads</text>
+  <text class="s" x="265" y="273">PDF from the upload page</text>
+  <text class="s" x="265" y="289">or the starter kit manifest</text>
+  <text class="s" x="265" y="305">filename never decides type</text>
+
+  <rect class="code" x="173" y="380" width="184" height="130" rx="10"/>
+  <text class="t" x="265" y="408">hash_and_scope</text>
+  <text class="s" x="265" y="428">sha256 per file</text>
+  <text class="s" x="265" y="444">exact duplicates count once</text>
+  <text class="s" x="265" y="460">case_id set, status PENDING</text>
+  <text class="s" x="265" y="476">background job, UI polls</text>
+  <circle class="audit" cx="345" cy="392" r="6"/>
+
+  <!-- 2 Read -->
+  <rect class="code" x="373" y="380" width="184" height="130" rx="10"/>
+  <text class="t" x="465" y="408">load_pages</text>
+  <text class="s" x="465" y="428">PDF text layer first</text>
+  <text class="s" x="465" y="444">pages with no text layer</text>
+  <text class="s" x="465" y="460">rendered to page images</text>
+  <text class="s" x="465" y="476">blank, rotated, wrong owner</text>
+
+  <rect class="claude" x="373" y="565" width="184" height="100" rx="10"/>
+  <text class="t" x="465" y="593">vision_read</text>
+  <text class="s" x="465" y="613">page image to Claude</text>
+  <text class="s" x="465" y="629">for pages with no text</text>
+  <text class="s" x="465" y="645">values stay unverified</text>
+
+  <!-- 3 Interpret -->
+  <rect class="code" x="573" y="380" width="184" height="130" rx="10"/>
+  <text class="t" x="665" y="408">wrap_untrusted</text>
+  <text class="s" x="665" y="428">document text goes inside</text>
+  <text class="s" x="665" y="444">the untrusted data envelope</text>
+  <text class="s" x="665" y="460">instructions found inside</text>
+  <text class="s" x="665" y="476">are flagged, not followed</text>
+  <circle class="audit" cx="745" cy="392" r="6"/>
+
+  <rect class="claude" x="573" y="565" width="184" height="100" rx="10"/>
+  <text class="t" x="665" y="593">classify, read</text>
+  <text class="s" x="665" y="613">registry prompt per type</text>
+  <text class="s" x="665" y="629">every field has quote, page</text>
+  <text class="s" x="665" y="645">stop_reason checked</text>
+
+  <!-- 4 Verify -->
+  <rect class="code" x="773" y="380" width="184" height="130" rx="10"/>
+  <text class="t" x="865" y="408">verify_and_decide</text>
+  <text class="s" x="865" y="428">quote must exist on the page</text>
+  <text class="s" x="865" y="444">or the value is unverified</text>
+  <text class="s" x="865" y="460">document rules by code</text>
+  <text class="s" x="865" y="476">USABLE, INVALID,</text>
+  <text class="s" x="865" y="492">SUPERSEDED, QUARANTINED</text>
+  <circle class="audit" cx="945" cy="392" r="6"/>
+
+  <!-- 5 Facts and conflicts -->
+  <rect class="human" x="973" y="225" width="184" height="100" rx="10"/>
+  <text class="t" x="1065" y="253">review request</text>
+  <text class="s" x="1065" y="273">both sides cited</text>
+  <text class="s" x="1065" y="289">a claim never becomes</text>
+  <text class="s" x="1065" y="305">a fact by copying</text>
+  <circle class="audit" cx="1145" cy="237" r="6"/>
+
+  <rect class="code" x="973" y="380" width="184" height="130" rx="10"/>
+  <text class="t" x="1065" y="408">rebuild_facts</text>
+  <text class="s" x="1065" y="428">one fact per source</text>
+  <text class="s" x="1065" y="444">documents are evidence</text>
+  <text class="s" x="1065" y="460">notes, messages are claims</text>
+  <text class="s" x="1065" y="476">compare values per field</text>
+  <circle class="audit" cx="1145" cy="392" r="6"/>
+
+  <rect class="claude" x="973" y="565" width="184" height="100" rx="10"/>
+  <text class="t" x="1065" y="593">explain_conflict</text>
+  <text class="s" x="1065" y="613">plain words for staff</text>
+  <text class="s" x="1065" y="629">cached per prompt version</text>
+  <text class="s" x="1065" y="645">decides nothing</text>
+
+  <!-- 6 Proposals -->
+  <rect class="code" x="1173" y="380" width="184" height="130" rx="10"/>
+  <text class="t" x="1265" y="408">build_proposals</text>
+  <text class="s" x="1265" y="428">checklist and packet index</text>
+  <text class="s" x="1265" y="444">form values cited or unknown</text>
+  <text class="s" x="1265" y="460">deadline: portal event + 10d</text>
+  <text class="s" x="1265" y="476">idempotency key per proposal</text>
+  <text class="s" x="1265" y="492">skips prior rejections</text>
+
+  <rect class="claude" x="1173" y="565" width="184" height="100" rx="10"/>
+  <text class="t" x="1265" y="593">draft_reply</text>
+  <text class="s" x="1265" y="613">client reply wording</text>
+  <text class="s" x="1265" y="629">marked DRAFT_NOT_SENT</text>
+  <text class="s" x="1265" y="645">never sent anywhere</text>
+
+  <!-- 7 Review and commit -->
+  <rect class="human" x="1373" y="225" width="184" height="100" rx="10"/>
+  <text class="t" x="1465" y="253">LEGAL review</text>
+  <text class="s" x="1465" y="273">OPS proposes</text>
+  <text class="s" x="1465" y="289">LEGAL approves or rejects</text>
+  <text class="s" x="1465" y="305">a rejection is permanent</text>
+  <circle class="audit" cx="1545" cy="237" r="6"/>
+
+  <rect class="code" x="1373" y="380" width="184" height="130" rx="10"/>
+  <text class="t" x="1465" y="408">commit_gate</text>
+  <text class="s" x="1465" y="428">OPS commits</text>
+  <text class="s" x="1465" y="444">refused unless APPROVED</text>
+  <text class="s" x="1465" y="460">role checked on X-Actor</text>
+  <text class="s" x="1465" y="476">denied attempts logged</text>
+  <text class="s" x="1465" y="492">nothing filed or sent</text>
+  <circle class="audit" cx="1545" cy="392" r="6"/>
+
+  <!-- ============ AUDIT LEDGER ============ -->
+  <rect class="ledger" x="30" y="745" width="1540" height="100" rx="10"/>
+  <text class="h" x="50" y="772">Audit ledger (Postgres, insert only, hash-chained)</text>
+  <text class="sl" x="50" y="794">Every green dot writes one line through audit.record(), in the same transaction as the change.</text>
+  <text class="sl" x="50" y="812">One chain per case plus a SYSTEM chain. A trigger blocks UPDATE, DELETE and TRUNCATE.</text>
+  <text class="sl" x="50" y="830">GET /api/cases/{id}/audit/verify recomputes the chain and reports the first broken seq.</text>
+
+  <rect class="block" x="880" y="765" width="140" height="60" rx="8"/>
+  <text class="mono" x="892" y="785">seq 1</text>
+  <text class="mono" x="892" y="801">prev 000..0</text>
+  <text class="mono" x="892" y="817">hash a3f..</text>
+  <rect class="block" x="1050" y="765" width="140" height="60" rx="8"/>
+  <text class="mono" x="1062" y="785">seq 2</text>
+  <text class="mono" x="1062" y="801">prev a3f..</text>
+  <text class="mono" x="1062" y="817">hash 7c1..</text>
+  <rect class="block" x="1220" y="765" width="140" height="60" rx="8"/>
+  <text class="mono" x="1232" y="785">seq 3</text>
+  <text class="mono" x="1232" y="801">prev 7c1..</text>
+  <text class="mono" x="1232" y="817">hash e90..</text>
+  <rect class="block" x="1390" y="765" width="160" height="60" rx="8" style="fill:#D1FAE5"/>
+  <text class="mono" x="1402" y="785">audit_heads</text>
+  <text class="mono" x="1402" y="801">last_seq 3</text>
+  <text class="mono" x="1402" y="817">+ checkpoint file</text>
+  <path class="eg" d="M1020,795 L1048,795" marker-end="url(#arrowg)"/>
+  <path class="eg" d="M1190,795 L1218,795" marker-end="url(#arrowg)"/>
+  <path class="eg" d="M1360,795 L1388,795" marker-end="url(#arrowg)"/>
+
+  <!-- ============ SHARED SERVICES AND STORES ============ -->
+  <text class="h" x="30" y="880">Shared services and stores</text>
+
+  <rect class="store" x="30" y="892" width="300" height="78" rx="10"/>
+  <text class="t" x="180" y="916">PostgreSQL + pgvector</text>
+  <text class="s" x="180" y="936">uploads, facts, conflicts, proposals</text>
+  <text class="s" x="180" y="952">search filtered by case_id first</text>
+
+  <rect class="store" x="340" y="892" width="300" height="78" rx="10"/>
+  <text class="t" x="490" y="916">Prompt registry</text>
+  <text class="s" x="490" y="936">seeded from ai/prompts/*.yaml, versioned</text>
+  <text class="s" x="490" y="952">model and effort live here, not in code</text>
+
+  <rect class="store" x="650" y="892" width="300" height="78" rx="10"/>
+  <text class="t" x="800" y="916">prompt_runs</text>
+  <text class="s" x="800" y="936">key, version, model, tokens, input hash</text>
+  <text class="s" x="800" y="952">cache by file sha256 + prompt version</text>
+
+  <rect class="store" x="960" y="892" width="300" height="78" rx="10"/>
+  <text class="t" x="1110" y="916">Local embeddings</text>
+  <text class="s" x="1110" y="936">semantic search over case text</text>
+  <text class="s" x="1110" y="952">downloaded at build, works offline</text>
+
+  <rect class="store" x="1270" y="892" width="300" height="78" rx="10"/>
+  <text class="t" x="1420" y="916">Investigate agent</text>
+  <text class="s" x="1420" y="936">"Why is this blocked?" panel</text>
+  <text class="s" x="1420" y="952">read-only tools, bounded rounds</text>
+
+  <!-- ============ LEGEND AND GUARANTEES ============ -->
+  <rect class="panel" x="30" y="990" width="740" height="110" rx="10"/>
+  <text class="h" x="50" y="1015">Legend</text>
+  <rect class="human" x="50" y="1030" width="26" height="18" rx="4"/>
+  <text class="sl" x="84" y="1044">Human decision</text>
+  <rect class="code" x="210" y="1030" width="26" height="18" rx="4"/>
+  <text class="sl" x="244" y="1044">Deterministic code</text>
+  <rect class="claude" x="390" y="1030" width="26" height="18" rx="4"/>
+  <text class="sl" x="424" y="1044">Claude call, JSON only</text>
+  <circle class="audit" cx="590" cy="1039" r="6"/>
+  <text class="sl" x="604" y="1044">Writes an audit line</text>
+  <path class="e" d="M50,1075 L100,1075" marker-end="url(#arrow)"/>
+  <text class="sl" x="110" y="1079">main flow</text>
+  <path class="ec" d="M210,1075 L260,1075" marker-end="url(#arrow)"/>
+  <text class="sl" x="270" y="1079">conditional</text>
+  <path class="el" d="M390,1075 L440,1075" marker-end="url(#arrowc)"/>
+  <text class="sl" x="450" y="1079">Claude output back to code</text>
+
+  <rect class="panel" x="790" y="990" width="780" height="110" rx="10"/>
+  <text class="h" x="810" y="1015">Guarantees</text>
+  <text class="sl" x="810" y="1037">No legal advice, no filing, no sending. Drafts are DRAFT_NOT_SENT, forms NOT FOR FILING.</text>
+  <text class="sl" x="810" y="1055">Every query is scoped by case_id. Unclear ownership means the document is quarantined.</text>
+  <text class="sl" x="810" y="1073">A value is verified only when code finds its quote in the source text.</text>
+  <text class="sl" x="810" y="1091">Deadlines come only from a verified portal event plus 10 days, computed by code.</text>
+</svg>
